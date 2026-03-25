@@ -25,12 +25,13 @@ export default function BottomDock({
 
   return (
     <div
-      className="bottom-dock absolute inset-x-0 bottom-0 z-[5] bg-white shadow-[0_-20px_60px_rgba(0,0,0,0.1)]"
+      className="bottom-dock absolute inset-x-0 bottom-0 z-[5] max-h-[min(58dvh,calc(100dvh-5.5rem))] overflow-y-auto overscroll-y-contain bg-white shadow-[0_-20px_60px_rgba(0,0,0,0.1)] md:max-h-none md:overflow-visible"
       style={{
         transform: `translateY(${(1 - Math.max(0, Math.min(1, slideUp))) * 100}%)`,
+        paddingBottom: "max(0px, env(safe-area-inset-bottom, 0px))",
       }}
     >
-      <div className="mx-auto grid max-w-[1200px] gap-6 px-5 py-7 md:grid-cols-[1fr_1fr] md:items-start md:gap-20 md:px-12 md:py-10">
+      <div className="mx-auto grid max-w-[1200px] gap-6 px-5 pb-6 pt-7 md:grid-cols-[1fr_1fr] md:items-start md:gap-20 md:px-12 md:py-10">
         <div>
           <p className="font-mono text-[10px] font-medium uppercase tracking-[0.26em] text-[var(--gray-mid)]">
             {label}

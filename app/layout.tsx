@@ -30,9 +30,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${ibmPlexMono.variable}`}>
       <body className="font-sans antialiased text-[var(--ink)]">
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>

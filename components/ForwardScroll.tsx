@@ -138,7 +138,7 @@ export default function ForwardScroll() {
   return (
     <div
       ref={pinRef}
-      className="relative h-screen w-screen overflow-hidden bg-neutral-950"
+      className="relative h-[100dvh] min-h-[100dvh] w-full max-w-[100vw] overflow-hidden bg-neutral-950"
       style={{ zIndex: 1 }}
     >
       {!loaded && (
@@ -163,8 +163,12 @@ export default function ForwardScroll() {
       />
 
       {p < 0.04 && loaded && (
-        <div className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2 font-mono text-[10px] font-medium uppercase tracking-[0.35em] text-white/50">
-          SCROLL TO EXPLORE
+        <div className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2">
+          <div className="rounded-full border border-white/[0.12] bg-[rgba(8,8,10,0.52)] px-4 py-2 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl backdrop-saturate-150 sm:px-5 sm:py-2.5">
+            <p className="font-mono text-[10px] font-medium uppercase tracking-[0.35em] text-white/70 md:text-[11px]">
+              Scroll down to explore
+            </p>
+          </div>
         </div>
       )}
 
@@ -188,7 +192,7 @@ export default function ForwardScroll() {
         style={{ opacity: capOp }}
         aria-hidden={capOp < 0.01}
       >
-        <div className="flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-56 md:px-[8vw] md:pb-52">
+        <div className="relative z-[1] flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-[min(46vh,15rem)] pt-4 md:px-[8vw] md:pb-52 md:pt-0">
           <h2 className="max-w-[min(100%,52rem)] font-sans text-[clamp(1.6rem,5.5vw,3.8rem)] font-medium leading-[1.05] tracking-[-0.04em] text-white">
             <ScrollRevealText text={cap.hero} progress={capHeroReveal} />
           </h2>
@@ -209,7 +213,7 @@ export default function ForwardScroll() {
         style={{ opacity: workOp }}
         aria-hidden={workOp < 0.01}
       >
-        <div className="flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-56 md:px-[8vw] md:pb-52">
+        <div className="relative z-[1] flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-[min(46vh,15rem)] pt-4 md:px-[8vw] md:pb-52 md:pt-0">
           <h2 className="max-w-[min(100%,52rem)] font-sans text-[clamp(1.6rem,5.5vw,3.8rem)] font-medium leading-[1.05] tracking-[-0.04em] text-white">
             <ScrollRevealText text={work.hero} progress={workHeroReveal} />
           </h2>

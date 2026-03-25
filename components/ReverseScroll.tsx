@@ -131,7 +131,7 @@ export default function ReverseScroll() {
   return (
     <div
       ref={pinRef}
-      className="relative h-screen w-screen overflow-hidden bg-neutral-950"
+      className="relative h-[100dvh] min-h-[100dvh] w-full max-w-[100vw] overflow-hidden bg-neutral-950"
     >
       <VideoCanvas
         ref={canvasHandle}
@@ -195,7 +195,7 @@ export default function ReverseScroll() {
         style={{ opacity: chapOp }}
         aria-hidden={chapOp < 0.01}
       >
-        <div className="relative z-[1] flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-56 md:px-[8vw] md:pb-52">
+        <div className="relative z-[1] flex min-h-0 flex-1 flex-col items-start justify-end px-6 pb-[min(46vh,15rem)] pt-4 md:px-[8vw] md:pb-52 md:pt-0">
           <h2 className="max-w-[min(100%,52rem)] font-sans text-[clamp(1.5rem,5vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.04em] text-white">
             <ScrollRevealText text={chap.hero} progress={chapHeroReveal} />
           </h2>

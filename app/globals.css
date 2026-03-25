@@ -66,29 +66,6 @@ body {
   }
 }
 
-/* Skip link */
-.skip-link {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  z-index: 9999;
-  padding: 8px 16px;
-  background: var(--white);
-  color: var(--black);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: var(--radius-sm);
-  transform: translateY(-120%);
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.skip-link:focus {
-  outline: none;
-  transform: translateY(0);
-  box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--electric);
-}
-
 ::-webkit-scrollbar {
   display: none;
 }

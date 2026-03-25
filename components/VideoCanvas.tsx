@@ -72,8 +72,9 @@ const VideoCanvas = forwardRef<VideoCanvasHandle, Props>(function VideoCanvas(
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(1, rect.width);
+      const h = Math.max(1, rect.height);
       cssRef.current = { w, h };
       canvas.width = Math.floor(w * dpr);
       canvas.height = Math.floor(h * dpr);
@@ -84,8 +85,11 @@ const VideoCanvas = forwardRef<VideoCanvasHandle, Props>(function VideoCanvas(
     };
 
     resize();
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(canvas);
     window.addEventListener("resize", resize);
     return () => {
+      ro.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, []);
