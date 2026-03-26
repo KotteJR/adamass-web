@@ -159,12 +159,6 @@ export default function ReverseScroll() {
             transform: `translateX(${(1 - Math.min(1, fadeIn(p, 0.05, 0.06))) * 100}%)`,
           }}
         >
-          <p
-            className="font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--electric)]"
-            style={{ opacity: fogTextIn }}
-          >
-            The fog returns
-          </p>
           <h2
             className="mt-6 font-sans text-[clamp(1.85rem,4.2vw,2.65rem)] font-medium leading-tight tracking-[-0.035em] text-[var(--black)]"
             style={{ opacity: fogTextIn }}
@@ -219,12 +213,12 @@ export default function ReverseScroll() {
         }}
         aria-hidden={contactIn < 0.05}
       >
-        <p className="font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--electric)]">
+        <p className="font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--gray)]">
           Contact
         </p>
         <a
           href="mailto:hello@adamass.se"
-          className="mt-10 block max-w-[min(100%,18ch)] break-all font-sans text-[clamp(1.75rem,6.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[var(--black)] no-underline transition-opacity hover:opacity-75"
+          className="mt-10 block max-w-[min(100%,18ch)] break-all font-sans text-[clamp(1.75rem,6.5vw,3.75rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[var(--electric)] no-underline transition-opacity hover:opacity-75"
         >
           hello@adamass.se
         </a>

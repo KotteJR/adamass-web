@@ -7,7 +7,7 @@ export default function StaticSection() {
       <section id="studio" className="scroll-mt-24">
         <div className="mx-auto max-w-[1200px] px-5 pb-24 pt-24 md:px-10 md:pb-32 md:pt-32">
           <h2 className="max-w-[22ch] font-sans text-[clamp(2.5rem,7vw,4.5rem)] font-medium leading-[1.02] tracking-[-0.045em] text-[var(--black)]">
-            Boutique AI and ML delivery
+            Boutique AI and software delivery
           </h2>
           <div className="mt-12 grid gap-12 md:mt-16 md:grid-cols-[1fr_1fr] md:gap-20">
             <div className="max-w-lg space-y-6 text-[16px] leading-[1.8] text-[var(--gray-dark)]">
@@ -17,14 +17,15 @@ export default function StaticSection() {
               <p>
                 Adamass AB, Malmö, Sweden (est. 2019). Boutique practice:
                 generative AI, machine learning engineering, legacy
-                modernisation, and technical due diligence for investors.
+                modernisation, and technical due diligence for investors as well as
+                preparation for founders.
                 Mostly team augmentation with written scope and milestones —
-                engagements have run from a few months to about two years.
+                engagements have run from a few months to about three years.
               </p>
               <p>
                 Most failures happen at handoff: between strategy and
                 engineering, prototype and production, or documentation and
-                operations. We close that gap with explicit scope, written
+                operations. We close that gap with explicit scope, augmentation, written
                 artefacts, and a single accountable lead. We do not introduce
                 process for its own sake.
               </p>
@@ -35,9 +36,11 @@ export default function StaticSection() {
                   01
                 </span>
                 <p className="text-[15px] font-medium leading-relaxed text-[var(--black)]">
-                  We usually augment your team in your repos, tools, and
-                  ceremonies — not as a separate vendor silo. One named
-                  technical lead per engagement.
+                  We augment our team into yours — same repos, tools, and
+                  ceremonies — not as a separate vendor silo. We aim for a
+                  family-style way of working: trust, shared context, and
+                  pace, because that delivers better outcomes and everyday
+                  efficiency. One named technical lead per engagement.
                 </p>
               </div>
               <div className="flex items-start gap-4">
@@ -68,7 +71,7 @@ export default function StaticSection() {
           </p>
           <h2 className="mt-5 max-w-[min(100%,36ch)] font-sans text-[clamp(1.75rem,3.6vw,2.5rem)] font-medium leading-[1.12] tracking-[-0.03em] text-[var(--black)]">
             Clients include AI product companies, teams modernising legacy
-            platforms, and investors requiring technical review of ML and
+            platforms, and investors requiring technical review of
             software assets.
           </h2>
 
@@ -118,17 +121,17 @@ export default function StaticSection() {
             {
               num: "01",
               title: "Embedded delivery",
-              body: "Embedded with your engineers on site or remote. Typical duration from roughly three months to two years: shared backlog, agreed milestones, and artefacts in your systems. Formal handover when the assignment ends.",
+              body: "Embedded with your engineers hybrid or remote. Typical duration from roughly three months to two years: shared backlog, agreed milestones, and artefacts in your systems. Formal handover when the assignment ends.",
             },
             {
               num: "02",
               title: "Technical due diligence",
-              body: "Structured report for investors or boards: architecture, team, data and model practices, risk register. Typical turnaround two to three weeks.",
+              body: "Structured report for investors, boards and founders: architecture, team, data and model practices, risk register. Typical turnaround one to two months.",
             },
             {
               num: "03",
               title: "Strategic advisory",
-              body: "Fixed cadence calls for leadership teams without a full-time ML lead. Agenda-driven; minutes and action items issued after each session.",
+              body: "We advise from experience on direction, trade-offs, and next steps — whether you already have a technical lead or not. Clear options and a credible path forward, not process for its own sake.",
             },
           ].map((e) => (
             <article

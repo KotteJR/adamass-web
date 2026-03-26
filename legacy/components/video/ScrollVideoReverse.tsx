@@ -223,12 +223,6 @@ export default function ScrollVideoReverse() {
         >
           <div className="min-h-0 flex-1" aria-hidden />
           <div className="bottom-info-dock flex min-h-[min(50dvh,50%)] w-full flex-col justify-center bg-[var(--white)] px-6 py-10 text-[var(--ink)] shadow-[0_-32px_80px_rgba(0,0,0,0.12)] md:px-14 md:py-14">
-            <p
-              className="font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--electric)]"
-              style={{ opacity: reverseLabelOpacity }}
-            >
-              The fog returns
-            </p>
             <h2
               className="font-sans mt-6 text-[clamp(1.85rem,4.8vw,2.85rem)] font-medium leading-tight tracking-[-0.035em] text-[var(--black)]"
               style={{ opacity: reverseHeadOpacity }}

@@ -41,7 +41,7 @@ const CAPS = [
   {
     tag: "Capability 03",
     title: "Legacy modernisation",
-    desc: "Assessment and phased replacement of outdated data and application stacks. We prioritise risk, cost, and interoperability so new AI and ML capabilities can be adopted without a big-bang rewrite.",
+    desc: "Assessment and phased replacement of outdated data and application stacks. We prioritise risk, cost, and interoperability so new capabilities can be adopted without a big-bang rewrite.",
     hero: "Modern, maintainable architecture — so AI initiatives can land safely.",
   },
 ] as const;
@@ -49,10 +49,9 @@ const CAPS = [
 const WORK = [
   {
     tag: "Capability 04",
-    client: "Undisclosed",
-    title: "Due diligence · enterprise investor",
-    desc: "Technical review of an AI-heavy platform for an institutional investor. Scope covered architecture, data and model practices, team capability, and delivery risk. Written report delivered within three weeks.",
-    hero: "Investor-grade technical assessment — structured, cited, decision-ready.",
+    title: "Technical due diligence",
+    desc: "We take a structured look at software assets when you need to decide with confidence: acquisitions, investment, or internal strategy. We examine architecture, operations, data & security, team capability, and delivery risk. Our written reports are the judgements we would act on ourselves.",
+    hero: "What the system really is, and what that means for your decision.",
   },
 ] as const;
 
@@ -166,7 +165,7 @@ export default function ForwardScroll() {
         <div className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2">
           <div className="rounded-full border border-white/[0.12] bg-[rgba(8,8,10,0.52)] px-4 py-2 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl backdrop-saturate-150 sm:px-5 sm:py-2.5">
             <p className="font-mono text-[10px] font-medium uppercase tracking-[0.35em] text-white/70 md:text-[11px]">
-              Scroll down to explore
+              Scroll down
             </p>
           </div>
         </div>
