@@ -1,69 +1,61 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Outfit } from "next/font/google";
-import OrganizationJsonLd from "@/components/OrganizationJsonLd";
+import { Familjen_Grotesk, Martian_Mono } from "next/font/google";
 import LenisProvider from "@/components/LenisProvider";
+import OrganizationJsonLd from "@/components/OrganizationJsonLd";
 import { defaultDescription, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const outfit = Outfit({
+const sans = Familjen_Grotesk({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const mono = Martian_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["300", "400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
-  colorScheme: "dark light",
-};
+const title = `${SITE_NAME} | Boutique IT consultancy, Malmö`;
 
-const titleDefault = `${SITE_NAME} | Boutique IT & software consultancy, Malmö`;
+export const viewport: Viewport = {
+  themeColor: "#050b16",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: titleDefault,
-    template: `%s | ${SITE_NAME}`,
-  },
+  title,
   description: defaultDescription,
   applicationName: "Adamass",
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
   keywords: [
-    "software consultancy",
     "IT consultancy Malmö",
-    "Sweden software engineering",
-    "technical due diligence",
+    "software consultancy Sweden",
+    "embedded software delivery",
     "legacy modernisation",
-    "embedded software team",
-    "boutique consultancy",
-    "software delivery",
+    "technical due diligence",
+    "strategic IT advisory",
     "generative AI consultancy",
   ],
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "/",
+    url: SITE_URL,
     siteName: SITE_NAME,
-    title: titleDefault,
+    title,
     description: defaultDescription,
   },
   twitter: {
     card: "summary_large_image",
-    title: titleDefault,
+    title,
     description: defaultDescription,
   },
   robots: {
@@ -81,12 +73,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${ibmPlexMono.variable}`}>
-      <body className="font-sans antialiased text-[var(--ink)]">
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body>
         <OrganizationJsonLd />
         <LenisProvider>{children}</LenisProvider>
       </body>

@@ -1,41 +1,156 @@
+"use client";
+
+import type { MouseEvent } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ContactModalTrigger } from "@/components/ContactModal";
+import ContactModalTrigger from "./ContactModal";
+import { scrollToId, scrollToTop } from "@/lib/lenis-bridge";
+
+const SHOW_EDGE = 88;
+const HIDE_AFTER = 36;
+const SHOW_AFTER = 20;
 
 export default function Header() {
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const invertTargets = [
+      ...document.querySelectorAll(".film-stage"),
+      ...document.querySelectorAll(".contact-section"),
+    ];
+    const visible = new Set<Element>();
+
+    const syncOverFilm = () => {
+      const invert = [...visible].some((target) => {
+        if (target.classList.contains("contact-section")) return true;
+        const journey = target.closest(".film-journey");
+        return journey?.getAttribute("data-wash-plate") !== "true";
+      });
+      header.dataset.overFilm = invert ? "true" : "false";
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        });
+        syncOverFilm();
+      },
+      { threshold: 0.45 },
+    );
+    invertTargets.forEach((target) => observer.observe(target));
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let previous = 0;
+    let hidden = false;
+    let travel = 0;
+    let lastDirection = 0;
+    let maxScroll = 0;
+
+    const measureScroll = () => {
+      maxScroll = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        0,
+      );
+    };
+    measureScroll();
+    const resizeObserver = new ResizeObserver(measureScroll);
+    resizeObserver.observe(document.documentElement);
+
+    const setHidden = (next: boolean) => {
+      if (hidden === next) return;
+      hidden = next;
+      header.dataset.hidden = next ? "true" : "false";
+    };
+
+    const update = (event: Event) => {
+      if (reduced.matches || document.documentElement.dataset.modal === "open") {
+        setHidden(false);
+        travel = 0;
+        return;
+      }
+
+      const { scroll, direction } = (
+        event as CustomEvent<{ scroll: number; direction: number }>
+      ).detail;
+      const delta = scroll - previous;
+      previous = scroll;
+      const atEnd = maxScroll > 0 && scroll >= maxScroll - 48;
+
+      if (scroll < SHOW_EDGE || atEnd) {
+        travel = 0;
+        lastDirection = 0;
+        setHidden(false);
+        return;
+      }
+
+      if (direction === 0 || Math.abs(delta) < 0.4) return;
+
+      if (direction !== lastDirection) {
+        travel = 0;
+        lastDirection = direction;
+      }
+
+      travel += Math.abs(delta);
+
+      if (direction > 0 && travel > HIDE_AFTER) {
+        setHidden(true);
+      } else if (direction < 0 && travel > SHOW_AFTER) {
+        setHidden(false);
+      }
+
+      syncOverFilm();
+    };
+
+    window.addEventListener("adamass:scroll", update);
+    return () => {
+      observer.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener("adamass:scroll", update);
+    };
+  }, []);
+
+  const goTo = (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!document.getElementById(id)) return;
+    event.preventDefault();
+    scrollToId(id);
+  };
+
   return (
-    <header className="pointer-events-none fixed left-0 right-0 top-0 z-[70] flex justify-center px-4 pt-4 md:pt-5">
-      <nav
-        className="pointer-events-auto flex max-w-[calc(100vw-2rem)] items-center gap-2 overflow-visible rounded-full border border-white/[0.12] bg-[rgba(8,8,10,0.52)] px-3 py-2 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl backdrop-saturate-150 sm:gap-3 sm:px-4 md:gap-5 md:px-5 md:py-2.5"
-        aria-label="Main"
-      >
+    <header ref={headerRef} className="site-header" data-hidden="false" data-over-film="false">
+      <nav className="site-nav" aria-label="Main navigation">
         <Link
+          className="site-wordmark"
           href="/"
-          className="flex h-8 shrink-0 -translate-y-px items-center justify-center no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent md:h-9 md:-translate-y-0.5"
+          aria-label="Adamass home"
+          onClick={(event) => {
+            if (window.location.pathname !== "/") return;
+            event.preventDefault();
+            scrollToTop();
+          }}
         >
           <img
             src="/logo.svg"
-            alt="Adamass"
+            alt=""
             width={370}
             height={80}
-            decoding="async"
             fetchPriority="high"
-            className="block h-[14px] w-auto max-w-[min(72px,30vw)] shrink-0 object-contain object-center sm:h-[14px] sm:max-w-[min(78px,32vw)] md:h-[15px] md:max-w-[74px]"
           />
         </Link>
 
-        <div className="flex min-h-0 min-w-0 flex-1 items-center justify-start gap-0.5">
-          {["Work", "Studio"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
-              className="inline-flex h-8 shrink-0 items-center justify-center rounded-full px-2.5 text-[11px] font-medium leading-none text-white/70 no-underline transition-colors hover:text-white md:h-9 md:px-3 md:text-[13px]"
-            >
-              {item}
-            </a>
-          ))}
+        <div className="site-nav-links" aria-label="Page sections">
+          <a href="/#practice" onClick={goTo("practice")}>
+            Practice
+          </a>
+          <a href="/#work" onClick={goTo("work")}>
+            Work
+          </a>
+          <ContactModalTrigger />
         </div>
-
-        <ContactModalTrigger />
       </nav>
     </header>
   );

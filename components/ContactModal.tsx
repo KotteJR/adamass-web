@@ -1,125 +1,140 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { setLenisPaused } from "@/lib/lenis-bridge";
+import UiButton from "./UiButton";
 
-const contacts = [
-  {
-    name: "Aleksandar Kotevski",
-    email: "aleksandar.kotevski@adamass.se",
-    phone: "+46 70 626 40 85",
-    tel: "+46706264085",
-  },
+const people = [
   {
     name: "Vlatko Kotevski",
+    role: "CEO",
     email: "vlatko.kotevski@adamass.se",
     phone: "+46 70 917 94 98",
     tel: "+46709179498",
   },
+  {
+    name: "Aleksandar Kotevski",
+    role: "Partner, GenAI and ML",
+    email: "aleksandar.kotevski@adamass.se",
+    phone: "+46 70 626 40 85",
+    tel: "+46706264085",
+  },
 ] as const;
 
-export function ContactModalTrigger() {
-  const [open, setOpen] = useState(false);
+type ContactModalProps = {
+  open: boolean;
+  onClose: () => void;
+  variant?: "contact" | "people";
+};
+
+export function ContactModal({
+  open,
+  onClose,
+  variant = "contact",
+}: ContactModalProps) {
   const [mounted, setMounted] = useState(false);
   const titleId = useId();
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const peopleOnly = variant === "people";
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
     };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
+    document.documentElement.dataset.modal = "open";
+    setLenisPaused(true);
+    document.addEventListener("keydown", onKeyDown);
+    closeRef.current?.focus();
+
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
+      document.body.style.overflow = previousOverflow;
+      delete document.documentElement.dataset.modal;
+      setLenisPaused(false);
+      document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, onClose]);
+
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div className="contact-modal-shell">
+      <button
+        type="button"
+        className="contact-modal-backdrop"
+        aria-label="Close contact details"
+        onClick={onClose}
+      />
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className="contact-modal-card"
+      >
+        <div className="contact-modal-heading">
+          <div>
+            <h2 id={titleId}>{peopleOnly ? "People" : "Contact Adamass"}</h2>
+          </div>
+          <button
+            ref={closeRef}
+            type="button"
+            className="contact-modal-close"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            ×
+          </button>
+        </div>
+
+        {peopleOnly ? null : (
+          <>
+            <a className="contact-modal-general" href="mailto:hello@adamass.se">
+              hello@adamass.se
+            </a>
+            <p className="contact-modal-copy ui-body ui-body--secondary">
+              Send a short brief. We reply with availability; a call confirms
+              fit, scope, and timing.
+            </p>
+            <UiButton href="mailto:hello@adamass.se">Write to us</UiButton>
+          </>
+        )}
+
+        <ul className="contact-modal-list">
+          {people.map((person) => (
+            <li key={person.email}>
+              <p>{person.name}</p>
+              <p className="contact-role">{person.role}</p>
+              <a href={`mailto:${person.email}`}>{person.email}</a>
+              <a href={`tel:${person.tel}`}>{person.phone}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>,
+    document.body,
+  );
+}
+
+export default function ContactModalTrigger() {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="ml-auto inline-flex h-8 shrink-0 items-center justify-center rounded-full bg-white px-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--black)] transition-[transform,opacity] hover:opacity-95 active:scale-[0.98] md:h-9 md:px-5 md:text-[11px]"
+        className="site-nav-link"
       >
         Contact
       </button>
-
-      {open && mounted
-        ? createPortal(
-            <div className="pointer-events-auto fixed inset-0 z-[80] flex items-center justify-center p-4 md:p-6">
-              <button
-                type="button"
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                aria-label="Close contact"
-                onClick={() => setOpen(false)}
-              />
-              <div
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby={titleId}
-                className="relative z-[1] w-full max-w-[min(calc(100vw-2rem),22rem)] rounded-[var(--radius-md)] bg-white p-6 text-[var(--black)] shadow-[0_24px_80px_rgba(0,0,0,0.4)] md:p-7"
-              >
-                <div className="mb-5 flex items-start justify-between gap-3">
-                  <h2
-                    id={titleId}
-                    className="font-sans text-lg font-semibold leading-tight tracking-[-0.02em]"
-                  >
-                    Contact
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(false)}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[var(--gray-mid)] transition-colors hover:bg-[var(--gray-light)] hover:text-[var(--black)]"
-                    aria-label="Close"
-                  >
-                    <span className="text-xl leading-none" aria-hidden>
-                      ×
-                    </span>
-                  </button>
-                </div>
-
-                <p className="font-sans text-sm leading-relaxed text-[var(--gray-dark)]">
-                  <a
-                    href="mailto:hello@adamass.se"
-                    className="font-medium text-[var(--black)] underline decoration-black/20 underline-offset-2 transition-colors hover:decoration-[var(--electric)]"
-                  >
-                    hello@adamass.se
-                  </a>
-                </p>
-
-                <ul className="mt-6 space-y-6 border-t border-black/[0.08] pt-6">
-                  {contacts.map((c) => (
-                    <li key={c.email}>
-                      <p className="font-sans text-sm font-semibold tracking-[-0.02em] text-[var(--black)]">
-                        {c.name}
-                      </p>
-                      <a
-                        href={`mailto:${c.email}`}
-                        className="mt-1 block font-sans text-sm text-[var(--electric)] underline decoration-[var(--electric-muted)] underline-offset-2 transition-opacity hover:opacity-80"
-                      >
-                        {c.email}
-                      </a>
-                      <a
-                        href={`tel:${c.tel}`}
-                        className="mt-1 block font-mono text-[13px] text-[var(--gray-dark)] transition-colors hover:text-[var(--black)]"
-                      >
-                        {c.phone}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>,
-            document.body,
-          )
-        : null}
+      <ContactModal open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
