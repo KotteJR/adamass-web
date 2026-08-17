@@ -17,14 +17,13 @@ export default function Header() {
     const header = headerRef.current;
     if (!header) return;
 
-    const invertTargets = [
-      ...document.querySelectorAll(".film-stage"),
-      ...document.querySelectorAll(".contact-section"),
-    ];
+    const invertTargets = Array.from(
+      document.querySelectorAll(".film-stage, .contact-section"),
+    );
     const visible = new Set<Element>();
 
     const syncOverFilm = () => {
-      const invert = [...visible].some((target) => {
+      const invert = Array.from(visible).some((target) => {
         if (target.classList.contains("contact-section")) return true;
         const journey = target.closest(".film-journey");
         return journey?.getAttribute("data-wash-plate") !== "true";

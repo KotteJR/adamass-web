@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 const moves = [
   {
     name: "Frame",
@@ -39,7 +41,12 @@ export default function WorkSequence() {
           <li
             key={move.name}
             aria-label={move.name}
-            style={{ "--work-left": move.left, "--work-span": move.span }}
+            style={
+              {
+                "--work-left": move.left,
+                "--work-span": move.span,
+              } as CSSProperties
+            }
           >
             <p>
               <strong>{move.name}</strong>
