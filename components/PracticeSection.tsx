@@ -31,7 +31,7 @@ export default function PracticeSection() {
               <p className="ui-body ui-body--secondary">
                 We augment our team into yours, using the same repositories,
                 tools, and ceremonies. The aim is a family-style way of working
-                built on trust, shared context, and pace.
+                built on trust, shared contexts, and pace.
               </p>
             </article>
             <article>
