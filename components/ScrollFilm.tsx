@@ -79,6 +79,7 @@ export default function ScrollFilm({
   blendTop = false,
 }: ScrollFilmProps) {
   const rootRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const chapterStackRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<FilmChapterDeckHandle>(null);
@@ -119,17 +120,20 @@ export default function ScrollFilm({
   }, [loadClip]);
 
   useEffect(() => {
-    if (!motionEnabled || !loadClip) return;
+    if (!motionEnabled) return;
 
     const root = rootRef.current;
-    const video = videoRef.current;
-    if (!root || !video) return;
+    const stage = stageRef.current;
+    if (!root || !stage) return;
 
-    const clip = window.matchMedia("(max-width: 767px)").matches
-      ? mobileClip
-      : desktopClip;
-    if (video.getAttribute("src") !== clip) {
-      video.setAttribute("src", clip);
+    const isPhone = window.matchMedia("(max-width: 767px)").matches;
+    const video = videoRef.current;
+
+    if (video) {
+      const clip = isPhone ? mobileClip : desktopClip;
+      if (video.getAttribute("src") !== clip) {
+        video.setAttribute("src", clip);
+      }
     }
 
     const washWords = Array.from(
@@ -250,70 +254,72 @@ export default function ScrollFilm({
       }
     };
 
-    let trigger: ScrollTrigger | null = null;
-    let playheadTween: gsap.core.Tween | null = null;
+    const playhead = { p: 0 };
+    let duration = 0;
 
-    const createScrub = () => {
-      if (trigger || !Number.isFinite(video.duration)) return;
-
-      video.pause();
-      const playhead = { time: 0 };
-      const duration = Math.max(video.duration - 0.05, 0);
-
-      const seek = (raw: number) => {
-        const videoTime = raw * duration;
-        if (Math.abs(video.currentTime - videoTime) <= 0.03) return;
-        try {
-          video.currentTime = videoTime;
-        } catch {
-          // Safari can reject a seek while the media element is warming up.
-        }
-      };
-
-      playheadTween = gsap.to(playhead, {
-        time: duration,
-        paused: true,
-        ease: "none",
-        onUpdate: () => {
-          const raw = duration > 0 ? playhead.time / duration : 0;
-          if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-            seek(raw);
-          }
-          update(raw);
-        },
-      });
-
-      trigger = ScrollTrigger.create({
-        trigger: root,
-        start: "top top",
-        end: "bottom bottom",
-        animation: playheadTween,
-        scrub: 0.55,
-        invalidateOnRefresh: true,
-        onRefresh: (self) => update(self.progress),
-      });
-
-      update(trigger.progress);
-      seek(trigger.progress);
-      video.addEventListener(
-        "loadeddata",
-        () => seek(trigger?.progress ?? 0),
-        { once: true },
-      );
+    const seek = (raw: number) => {
+      if (!video || duration <= 0) return;
+      const videoTime = raw * duration;
+      if (Math.abs(video.currentTime - videoTime) <= 0.03) return;
+      if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+      try {
+        video.currentTime = videoTime;
+      } catch {
+        // Safari can reject a seek while the media element is warming up.
+      }
     };
 
-    video.pause();
-    if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
-      createScrub();
-    } else {
-      video.addEventListener("loadedmetadata", createScrub, { once: true });
+    const playheadTween = gsap.to(playhead, {
+      p: 1,
+      paused: true,
+      ease: "none",
+      onUpdate: () => {
+        update(playhead.p);
+        seek(playhead.p);
+      },
+    });
+
+    const trigger = ScrollTrigger.create({
+      trigger: root,
+      start: "top top",
+      end: "bottom bottom",
+      pin: isPhone ? stage : false,
+      pinSpacing: false,
+      anticipatePin: isPhone ? 1 : 0,
+      animation: playheadTween,
+      scrub: 0.55,
+      invalidateOnRefresh: true,
+      onRefresh: (self) => update(self.progress),
+    });
+
+    const bindVideo = () => {
+      if (!video || !Number.isFinite(video.duration)) return;
+      video.pause();
+      duration = Math.max(video.duration - 0.05, 0);
+      seek(trigger.progress);
+    };
+
+    if (video) {
+      video.pause();
+      if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
+        bindVideo();
+      } else {
+        video.addEventListener("loadedmetadata", bindVideo, { once: true });
+      }
+      video.addEventListener(
+        "loadeddata",
+        () => seek(trigger.progress),
+        { once: true },
+      );
     }
 
+    update(trigger.progress);
+
     return () => {
-      video.removeEventListener("loadedmetadata", createScrub);
-      trigger?.kill();
-      playheadTween?.kill();
-      video.pause();
+      video?.removeEventListener("loadedmetadata", bindVideo);
+      trigger.kill();
+      playheadTween.kill();
+      video?.pause();
     };
   }, [
     chapters.length,
@@ -375,7 +381,7 @@ export default function ScrollFilm({
       data-motion={motionEnabled ? "on" : "off"}
       data-wash-plate={hasIntro ? "true" : undefined}
     >
-      <div className="film-stage">
+      <div ref={stageRef} className="film-stage">
         <div className="film-media">
           <picture>
             <source media="(max-width: 767px)" srcSet={mobilePoster} />
