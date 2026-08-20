@@ -1784,27 +1784,33 @@ a,
 
 .bento-switch {
   display: flex;
-  flex-wrap: wrap;
+  width: fit-content;
+  flex-wrap: nowrap;
   justify-content: center;
-  margin: 0 0 1.15rem;
-  gap: 0.4rem;
+  margin: 0 auto 1.35rem;
+  padding: 0.22rem;
+  gap: 0.15rem;
+  border-radius: var(--radius-pill);
+  background: var(--tint);
 }
 
 .bento-switch button {
   display: inline-flex;
   align-items: center;
-  min-height: 2.75rem;
-  padding-inline: 1.05rem;
+  justify-content: center;
+  height: 2.25rem;
+  padding: 0 1.15rem;
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--tint);
+  background: transparent;
   color: var(--slate);
   cursor: pointer;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.625rem;
+  font-family: var(--font-sans), "Familjen Grotesk", sans-serif;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: none;
 }
 
 .bento-switch button:hover {
@@ -1813,8 +1819,9 @@ a,
 
 .bento-switch button.is-active,
 .bento-switch button.is-active:hover {
-  background: var(--ink);
-  color: white;
+  background: var(--page);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(11, 27, 51, 0.06);
 }
 
 .diligence-bento {

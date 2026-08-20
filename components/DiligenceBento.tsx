@@ -31,7 +31,7 @@ type WorkCase = {
 const cases: WorkCase[] = [
   {
     id: "diligence",
-    pill: "Case 1",
+    pill: "European M&A",
     kicker: "Most recent",
     title: "A fine-tuned model for European M&A.",
     body: "Post-trained on a closed corpus of investment files. It reads the data room, drafts the note, and stays inside the mandate. A partner still signs.",
@@ -74,7 +74,7 @@ const cases: WorkCase[] = [
   },
   {
     id: "diagnosis",
-    pill: "Case 2",
+    pill: "Diagnosis stack",
     kicker: "Modernisation",
     title: "A paediatric diagnosis stack, taken off MATLAB.",
     body: "Scoring left a MATLAB runtime for a Python inference service. Retrieval-augmented chat reads the closed report. A second model emits level specs into a web game engine for intervention.",
