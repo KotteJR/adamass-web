@@ -123,8 +123,7 @@ export default function ScrollFilm({
     if (!motionEnabled) return;
 
     const root = rootRef.current;
-    const stage = stageRef.current;
-    if (!root || !stage) return;
+    if (!root) return;
 
     const isPhone = window.matchMedia("(max-width: 767px)").matches;
     const video = videoRef.current;
@@ -283,9 +282,6 @@ export default function ScrollFilm({
       trigger: root,
       start: "top top",
       end: "bottom bottom",
-      pin: isPhone ? stage : false,
-      pinSpacing: false,
-      anticipatePin: isPhone ? 1 : 0,
       animation: playheadTween,
       scrub: 0.55,
       invalidateOnRefresh: true,
