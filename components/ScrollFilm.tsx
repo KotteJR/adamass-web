@@ -25,7 +25,6 @@ type ScrollFilmProps = {
   washOutLines?: readonly string[];
   intro?: boolean;
   introLines?: readonly string[];
-  reverse?: boolean;
   blendTop?: boolean;
 };
 
@@ -110,7 +109,6 @@ export default function ScrollFilm({
   washOutLines,
   intro = false,
   introLines,
-  reverse = false,
   blendTop = false,
 }: ScrollFilmProps) {
   const rootRef = useRef<HTMLElement>(null);
@@ -121,6 +119,7 @@ export default function ScrollFilm({
   const washRef = useRef<HTMLDivElement>(null);
   const blendRef = useRef<HTMLDivElement>(null);
   const [motionEnabled, setMotionEnabled] = useState(false);
+  const [loadClip, setLoadClip] = useState(firstHeading);
   const hasWash = Boolean(washOutLines?.length);
   const hasLineIntro = Boolean(introLines?.length);
   const dissolveOnly = intro && hasLineIntro;
@@ -137,7 +136,24 @@ export default function ScrollFilm({
   }, []);
 
   useEffect(() => {
-    if (!motionEnabled) return;
+    if (loadClip) return;
+    const root = rootRef.current;
+    if (!root) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setLoadClip(true);
+        observer.disconnect();
+      },
+      { rootMargin: "160% 0px" },
+    );
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [loadClip]);
+
+  useEffect(() => {
+    if (!motionEnabled || !loadClip) return;
 
     const root = rootRef.current;
     const video = videoRef.current;
@@ -299,7 +315,7 @@ export default function ScrollFilm({
       const duration = Math.max(video.duration - 0.05, 0);
 
       const seek = (raw: number) => {
-        const videoTime = reverse ? duration - raw * duration : raw * duration;
+        const videoTime = raw * duration;
         if (Math.abs(video.currentTime - videoTime) <= 0.03) return;
         try {
           video.currentTime = videoTime;
@@ -362,9 +378,9 @@ export default function ScrollFilm({
     hasWash,
     introEnd,
     introLines,
+    loadClip,
     mobileClip,
     motionEnabled,
-    reverse,
     washOutLines,
   ]);
 
@@ -426,13 +442,13 @@ export default function ScrollFilm({
             />
           </picture>
 
-          {motionEnabled ? (
+          {motionEnabled && loadClip ? (
             <video
               ref={videoRef}
               className="film-video"
               muted
               playsInline
-              preload={firstHeading ? "auto" : "metadata"}
+              preload="auto"
               tabIndex={-1}
               aria-hidden
             />
