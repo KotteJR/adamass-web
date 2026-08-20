@@ -1,17 +1,31 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import LegalArticle from "@/components/LegalArticle";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { legalPageGraph } from "@/lib/schema";
+import { SITE_URL } from "@/lib/site";
+
+const title = "Privacy policy";
+const description =
+  "How Adamass AB in Malmö handles personal data on adamass.se and in email correspondence. No marketing cookies or analytics on this site.";
 
 export const metadata: Metadata = {
-  title: `Privacy policy | ${SITE_NAME}`,
-  description:
-    "How Adamass AB handles personal data on adamass.se and in email correspondence.",
+  title,
+  description,
   alternates: { canonical: `${SITE_URL}/privacy` },
+  openGraph: {
+    title: `${title} | Adamass AB`,
+    description,
+    url: `${SITE_URL}/privacy`,
+  },
 };
 
 export default function PrivacyPage() {
   return (
-    <LegalArticle title="Privacy policy" updated="17 August 2026">
+    <>
+      <JsonLd
+        data={legalPageGraph({ title, description, path: "/privacy" })}
+      />
+      <LegalArticle title="Privacy policy" updated="17 August 2026">
       <p>
         This policy explains how Adamass AB (“Adamass”, “we”) handles personal
         data when you use adamass.se or write to us. We are a boutique IT
@@ -85,5 +99,6 @@ export default function PrivacyPage() {
         the date above.
       </p>
     </LegalArticle>
+    </>
   );
 }

@@ -10,6 +10,7 @@ import {
   User,
   Users,
 } from "@phosphor-icons/react";
+import type { FilmFactIconName } from "@/lib/film";
 
 export const filmFactIcons = {
   pin: MapPin,
@@ -23,8 +24,6 @@ export const filmFactIcons = {
   flow: ArrowsClockwise,
   key: Key,
 } as const;
-
-export type FilmFactIconName = keyof typeof filmFactIcons;
 
 type FilmFactIconProps = {
   name: FilmFactIconName;

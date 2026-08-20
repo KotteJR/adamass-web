@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import AdamassImageLogo from "@/components/AdamassImageLogo";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
@@ -13,38 +14,10 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a0a0a",
+          background: "#050B16",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              width: 14,
-              height: 2,
-              background: "#0066ff",
-              marginBottom: 1,
-            }}
-          />
-          <span
-            style={{
-              color: "#ffffff",
-              fontSize: 17,
-              fontWeight: 700,
-              fontFamily:
-                "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
-              lineHeight: 1,
-            }}
-          >
-            A
-          </span>
-        </div>
+        <AdamassImageLogo size={32} variant="reversed" icon />
       </div>
     ),
     { ...size },

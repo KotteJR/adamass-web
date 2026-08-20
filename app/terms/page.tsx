@@ -1,17 +1,31 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import LegalArticle from "@/components/LegalArticle";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { legalPageGraph } from "@/lib/schema";
+import { SITE_URL } from "@/lib/site";
+
+const title = "Terms of use";
+const description =
+  "Terms for using adamass.se, the public website of Adamass AB, a boutique IT consultancy in Malmö, Sweden.";
 
 export const metadata: Metadata = {
-  title: `Terms of use | ${SITE_NAME}`,
-  description:
-    "Terms for using adamass.se, the public website of Adamass AB.",
+  title,
+  description,
   alternates: { canonical: `${SITE_URL}/terms` },
+  openGraph: {
+    title: `${title} | Adamass AB`,
+    description,
+    url: `${SITE_URL}/terms`,
+  },
 };
 
 export default function TermsPage() {
   return (
-    <LegalArticle title="Terms of use" updated="17 August 2026">
+    <>
+      <JsonLd
+        data={legalPageGraph({ title, description, path: "/terms" })}
+      />
+      <LegalArticle title="Terms of use" updated="17 August 2026">
       <p>
         These terms apply to adamass.se, the public website of Adamass AB in
         Malmö, Sweden. By using the site you agree to them. They cover the
@@ -82,5 +96,6 @@ export default function TermsPage() {
         date at the top is the version that applies.
       </p>
     </LegalArticle>
+    </>
   );
 }

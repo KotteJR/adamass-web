@@ -1,12 +1,11 @@
 "use client";
 
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import type { FilmChapter } from "./ScrollFilm";
+import type { FilmChapter } from "@/lib/film";
 import FilmFactIcon from "./FilmFactIcon";
 import ScrollStack, { ScrollStackItem, type ScrollStackHandle } from "./ScrollStack";
 
 export type FilmChapterDeckHandle = {
-  goTo: (index: number) => void;
   setProgress: (progress: number) => void;
 };
 
@@ -23,7 +22,6 @@ const FilmChapterDeck = forwardRef<FilmChapterDeckHandle, FilmChapterDeckProps>(
       setProgress(progress: number) {
         stackRef.current?.setProgress(progress);
       },
-      goTo() {},
     }));
 
     return (

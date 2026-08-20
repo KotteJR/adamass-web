@@ -1,0 +1,43 @@
+# Adamass AB
+
+> Boutique IT and software consultancy in Malmö, Sweden (est. 2019). Senior people take named ownership of embedded software delivery, generative AI and machine learning, legacy modernisation, and technical due diligence.
+
+Adamass AB is not a staffing desk and not a slide factory. One named technical lead stays accountable from the first brief through handover. Work happens in the client's repositories, tools, and ceremonies. Decisions are written down. Engagements close when source, configuration, and operating notes are in the client's hands.
+
+## Facts
+
+- Legal name: Adamass AB
+- Location: Malmö, Sweden
+- Founded: 2019
+- Contact: hello@adamass.se
+- LinkedIn: https://www.linkedin.com/company/adamass-ab
+- Site: https://adamass.se/
+
+## Services
+
+- Embedded software delivery: join the existing engineering team; one named lead; applications, platforms, data, or production AI where it is useful.
+- Modernisation and AI integration: improve ageing applications and data platforms in practical phases; add AI only against real acceptance criteria.
+- Diligence and strategic advisory: written judgement on architecture, operations, security, team capability, and delivery risk before an acquisition, investment, or internal decision.
+
+## People
+
+- Vlatko Kotevski, CEO — vlatko.kotevski@adamass.se — +46 70 917 94 98
+- Aleksandar Kotevski, Partner, GenAI and ML — aleksandar.kotevski@adamass.se — +46 70 626 40 85
+
+## How an engagement runs
+
+1. Frame: write objectives, constraints, assumptions, and success criteria first.
+2. Join: work in the client's systems with one named owner.
+3. Deliver: keep progress and decisions visible; adjust against evidence.
+4. Handover: transfer source, configuration, and operating notes so ownership does not depend on Adamass staying.
+
+## Selected work
+
+- Closed-corpus, on-prem model for European M&A: reads the data room, drafts a first-pass note, stays inside the mandate. A partner still signs.
+- Paediatric diagnosis platform taken off MATLAB onto a Python inference service, with retrieval-augmented chat over the closed report.
+
+## Pages
+
+- [Home](https://adamass.se/): practice, services, selected work, and contact
+- [Privacy policy](https://adamass.se/privacy): how Adamass handles personal data
+- [Terms of use](https://adamass.se/terms): terms for using adamass.se

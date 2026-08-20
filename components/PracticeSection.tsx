@@ -18,10 +18,19 @@ export default function PracticeSection() {
         <div className="practice-grid">
           <div className="practice-copy">
             <p className="ui-body ui-body--secondary">
-              Adamass AB, Malmö, Sweden (est. 2019). Boutique practice: generative AI, machine learning engineering, legacy modernisation, and technical due diligence for investors as well as preparation for founders. Mostly team augmentation with written scope and milestones — engagements have run from a few months to about three years.
+              Adamass AB is a boutique IT consultancy in Malmö, Sweden,
+              founded in 2019. The practice takes named ownership of
+              generative AI, machine learning engineering, legacy
+              modernisation, and technical due diligence for investors and
+              founders. Most work is team augmentation with written scope and
+              milestones — engagements have run from a few months to about
+              three years.
             </p>
             <p className="ui-body ui-body--secondary">
-              Most problems arrive between strategy and engineering, prototype and production, or documentation and operations. We structure the work, deliver it with your team, and keep one person accountable.
+              Most problems arrive between strategy and engineering, prototype
+              and production, or documentation and operations. We structure
+              the work, deliver it with your team, and keep one person
+              accountable.
             </p>
           </div>
 

@@ -1,22 +1,27 @@
+import AdamassLogo from "./AdamassLogo";
 import UiButton from "./UiButton";
 import UiLabel from "./UiLabel";
+import {
+  SITE_EMAIL,
+  SITE_LINKEDIN,
+  SITE_LOCALITY,
+  SITE_COUNTRY_NAME,
+  SITE_NAME,
+  people,
+} from "@/lib/site";
 
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer-main">
         <div className="site-footer-brand">
-          <img
-            src="/logo.svg"
-            alt="Adamass"
-            width={370}
-            height={80}
-          />
+          <AdamassLogo />
           <p>
-            Boutique IT consultancy in Malmö. Senior delivery with a named
-            owner on every engagement.
+            {SITE_NAME} is a boutique IT consultancy in {SITE_LOCALITY},{" "}
+            {SITE_COUNTRY_NAME}. Senior delivery with a named owner on every
+            engagement.
           </p>
-          <UiButton href="mailto:hello@adamass.se">Write to us</UiButton>
+          <UiButton href={`mailto:${SITE_EMAIL}`}>Write to us</UiButton>
         </div>
 
         <div className="site-footer-links">
@@ -27,11 +32,16 @@ export default function SiteFooter() {
             <a href="/#contact">Contact</a>
           </div>
           <div>
-            <UiLabel>Find us</UiLabel>
+            <UiLabel>People</UiLabel>
+            {people.map((person) => (
+              <a key={person.email} href={`mailto:${person.email}`}>
+                {person.name}
+              </a>
+            ))}
             <a
-              href="https://www.linkedin.com/company/adamass-ab"
+              href={SITE_LINKEDIN}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               LinkedIn
             </a>
@@ -45,8 +55,10 @@ export default function SiteFooter() {
       </div>
 
       <div className="site-footer-line">
-        <span>© {new Date().getFullYear()} Adamass AB · 559151-2388</span>
-        <span>Malmö, Sweden</span>
+        <span>© {new Date().getFullYear()} {SITE_NAME}</span>
+        <span>
+          {SITE_LOCALITY}, {SITE_COUNTRY_NAME}
+        </span>
       </div>
     </footer>
   );

@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import AdamassImageLogo from "@/components/AdamassImageLogo";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -13,40 +14,11 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0a0a0a",
-          borderRadius: 36,
+          background: "#050B16",
+          borderRadius: 38,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              width: 72,
-              height: 10,
-              background: "#0066ff",
-              marginBottom: 6,
-            }}
-          />
-          <span
-            style={{
-              color: "#ffffff",
-              fontSize: 88,
-              fontWeight: 600,
-              fontFamily:
-                "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
-              lineHeight: 1,
-              letterSpacing: "-0.04em",
-            }}
-          >
-            A
-          </span>
-        </div>
+        <AdamassImageLogo size={180} variant="reversed" icon />
       </div>
     ),
     { ...size },

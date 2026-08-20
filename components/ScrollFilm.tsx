@@ -3,29 +3,19 @@
 import { useEffect, useId, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { FilmChapter } from "@/lib/film";
 import FilmChapterDeck, { type FilmChapterDeckHandle } from "./FilmChapterDeck";
-import FilmIntroKicker from "./FilmIntroKicker";
+import FilmIntroDissolve, {
+  type FilmIntroDissolveHandle,
+} from "./FilmIntroDissolve";
 import FilmIntroLabels from "./FilmIntroLabels";
-import type { FilmFactIconName } from "./FilmFactIcon";
+import FilmIntroScroll from "./FilmIntroScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export type FilmFact = {
-  icon: FilmFactIconName;
-  value: string;
-  detail: string;
-};
-
-export type FilmChapter = {
-  label: string;
-  title: string;
-  heading: string;
-  body: string;
-  facts: readonly FilmFact[];
-};
-
 type ScrollFilmProps = {
   id: string;
+  ariaLabel: string;
   desktopClip: string;
   mobileClip: string;
   desktopPoster: string;
@@ -37,8 +27,29 @@ type ScrollFilmProps = {
   introLines?: readonly string[];
   reverse?: boolean;
   blendTop?: boolean;
-  coverNext?: boolean;
 };
+
+function IntroTagline({
+  lines,
+  live = false,
+}: {
+  lines: readonly string[];
+  live?: boolean;
+}) {
+  return (
+    <p
+      className={
+        live ? "film-intro-tagline" : "film-intro-tagline film-intro-tagline--slot"
+      }
+    >
+      {lines.map((line) => (
+        <span className="film-intro-tagline-line" key={line}>
+          {line}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 function IntroSentence({
   lines,
@@ -63,10 +74,7 @@ function IntroSentence({
       {lines.map((line, lineIndex) => (
         <tspan key={line} x="800" dy={lineIndex === 0 ? 0 : "1.08em"}>
           {line.split(" ").map((word, wordIndex) => (
-            <tspan
-              key={`${line}-${wordIndex}`}
-              {...{ [wordAttr]: "" }}
-            >
+            <tspan key={`${line}-${wordIndex}`} {...{ [wordAttr]: "" }}>
               {wordIndex > 0 ? ` ${word}` : word}
             </tspan>
           ))}
@@ -78,12 +86,12 @@ function IntroSentence({
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const INTRO_END = 0.13;
+const LINE_INTRO_END = 0.16;
 const CARD_REVEAL = 0.1;
 const WASH_START = 0.8;
 const WASH_PLATE = 0.08;
 const WRITE_START = 0.84;
 const WRITE_SPAN = 0.12;
-const AFTER_SIZE = "50vh";
 
 const smoothstep = (value: number) => {
   const t = clamp(value);
@@ -92,6 +100,7 @@ const smoothstep = (value: number) => {
 
 export default function ScrollFilm({
   id,
+  ariaLabel,
   desktopClip,
   mobileClip,
   desktopPoster,
@@ -103,20 +112,20 @@ export default function ScrollFilm({
   introLines,
   reverse = false,
   blendTop = false,
-  coverNext = false,
 }: ScrollFilmProps) {
   const rootRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const chapterStackRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<FilmChapterDeckHandle>(null);
-  const deckIndexRef = useRef(0);
+  const dissolveRef = useRef<FilmIntroDissolveHandle>(null);
   const washRef = useRef<HTMLDivElement>(null);
   const blendRef = useRef<HTMLDivElement>(null);
   const [motionEnabled, setMotionEnabled] = useState(false);
   const hasWash = Boolean(washOutLines?.length);
   const hasLineIntro = Boolean(introLines?.length);
+  const dissolveOnly = intro && hasLineIntro;
   const hasIntro = intro || hasLineIntro;
-  const introEnd = hasLineIntro ? 0.2 : intro ? INTRO_END : 0;
+  const introEnd = hasLineIntro ? LINE_INTRO_END : intro ? INTRO_END : 0;
   const introMaskId = useId().replace(/:/g, "");
 
   useEffect(() => {
@@ -144,17 +153,14 @@ export default function ScrollFilm({
     const washWords = Array.from(
       root.querySelectorAll<HTMLElement>("[data-wash-word]"),
     );
-    const introEl = root.querySelector<HTMLElement>(".film-intro");
+    const introLayers = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-intro-layer]"),
+    );
     const introChrome = Array.from(
       root.querySelectorAll<HTMLElement>("[data-intro-chrome]"),
     );
-    const letters = Array.from(
-      root.querySelectorAll<SVGTSpanElement>("[data-intro-letter]"),
-    );
-    const delays = [0.02, 0.09, 0, 0.06, 0.13, 0.04, 0.1];
-    const blurStrengths = [3, 5, 2, 4, 3, 5, 2];
     const fillWords = Array.from(
-      root.querySelectorAll<SVGTSpanElement>("[data-intro-fill]"),
+      root.querySelectorAll<HTMLElement>("[data-intro-fill]"),
     );
     const ghostWords = Array.from(
       root.querySelectorAll<SVGTSpanElement>("[data-intro-ghost]"),
@@ -176,20 +182,22 @@ export default function ScrollFilm({
     const closeIntro = () => {
       if (introClosed) return;
       introClosed = true;
-      if (introEl) {
-        introEl.style.visibility = "hidden";
-        introEl.style.display = "none";
-      }
+      introLayers.forEach((layer) => {
+        layer.style.visibility = "hidden";
+        layer.style.display = "none";
+        layer.style.opacity = "";
+      });
       setPlate("false");
     };
 
     const openIntro = () => {
       if (!introClosed) return;
       introClosed = false;
-      if (introEl) {
-        introEl.style.display = "";
-        introEl.style.visibility = "visible";
-      }
+      introLayers.forEach((layer) => {
+        layer.style.display = "";
+        layer.style.visibility = "visible";
+        layer.style.opacity = "";
+      });
     };
 
     const paintWash = (write: number) => {
@@ -208,30 +216,24 @@ export default function ScrollFilm({
       const introProgress = hasIntro ? clamp(p / introEnd) : 1;
       const chapterStart = hasIntro ? introEnd : 0;
       const chapterEnd = hasWash ? WASH_START : 1;
+      const stackStart = hasIntro ? chapterStart + CARD_REVEAL : chapterStart;
       const chapterProgress = clamp(
-        (p - chapterStart) / Math.max(chapterEnd - chapterStart, 0.001),
+        (p - stackStart) / Math.max(chapterEnd - stackStart, 0.001),
       );
-      const count = chapters.length;
 
       if (hasIntro) {
         if (introProgress < 0.999) {
           openIntro();
           setPlate("true");
 
-          if (intro) {
-            const spread = smoothstep((introProgress - 0.16) / 0.82);
-            const copyOut = smoothstep((introProgress - 0.28) / 0.52);
-            letters.forEach((letter, index) => {
-              const local = clamp((spread - delays[index]) / (1 - delays[index]));
-              letter.style.strokeWidth = `${(local ** 1.35 * 1800).toFixed(2)}px`;
-              letter.style.filter = `blur(${(local * blurStrengths[index]).toFixed(2)}px)`;
-            });
+          if (dissolveOnly) {
+            const videoIn = smoothstep((introProgress - 0.08) / 0.8);
+            const copyOut = smoothstep((introProgress - 0.08) / 0.28);
+            dissolveRef.current?.setProgress(videoIn);
             introChrome.forEach((line) => {
               line.style.opacity = (1 - copyOut).toFixed(3);
             });
-          }
-
-          if (hasLineIntro) {
+          } else if (hasLineIntro) {
             const write = clamp((introProgress - 0.04) / 0.44);
             const spread = smoothstep((introProgress - 0.52) / 0.46);
             const cursor = write * fillWords.length;
@@ -239,11 +241,7 @@ export default function ScrollFilm({
               const local = clamp(cursor - index);
               const dissolve = clamp((spread - index * 0.07) / 0.78);
               word.style.opacity = local.toFixed(3);
-              word.style.strokeWidth = `${(dissolve ** 1.35 * 1400).toFixed(2)}px`;
-              word.style.filter =
-                dissolve > 0.01
-                  ? `blur(${(dissolve * (2 + (index % 3))).toFixed(2)}px)`
-                  : "none";
+              word.style.strokeWidth = `${(dissolve ** 1.35 * 900).toFixed(2)}px`;
             });
             ghostWords.forEach((word, index) => {
               const local = clamp(cursor - index);
@@ -260,19 +258,8 @@ export default function ScrollFilm({
         deckRef.current?.setProgress(chapterProgress);
       }
 
-      const nextIndex = Math.min(
-        count - 1,
-        Math.floor(chapterProgress * count * 0.999),
-      );
-      if (nextIndex !== deckIndexRef.current) {
-        deckIndexRef.current = nextIndex;
-        deckRef.current?.goTo(nextIndex);
-      }
-
-      const revealStart = hasIntro ? introEnd * 0.58 : 0;
-      const revealT = hasIntro
-        ? clamp((p - revealStart) / CARD_REVEAL)
-        : 1;
+      const revealStart = hasIntro ? introEnd : 0;
+      const revealT = hasIntro ? clamp((p - revealStart) / CARD_REVEAL) : 1;
       const reveal = hasIntro ? 1 - (1 - revealT) ** 2 : 1;
       const hideForWash = hasWash
         ? 1 - smoothstep((p - WASH_START) / WASH_PLATE)
@@ -327,11 +314,9 @@ export default function ScrollFilm({
         ease: "none",
         onUpdate: () => {
           const raw = duration > 0 ? playhead.time / duration : 0;
-
           if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
             seek(raw);
           }
-
           update(raw);
         },
       });
@@ -339,7 +324,7 @@ export default function ScrollFilm({
       trigger = ScrollTrigger.create({
         trigger: root,
         start: "top top",
-        end: coverNext ? `bottom-=${AFTER_SIZE} bottom` : "bottom bottom",
+        end: "bottom bottom",
         animation: playheadTween,
         scrub: 0.55,
         invalidateOnRefresh: true,
@@ -370,12 +355,11 @@ export default function ScrollFilm({
     };
   }, [
     chapters.length,
-    coverNext,
     desktopClip,
-    hasWash,
+    dissolveOnly,
     hasIntro,
     hasLineIntro,
-    intro,
+    hasWash,
     introEnd,
     introLines,
     mobileClip,
@@ -416,7 +400,6 @@ export default function ScrollFilm({
     "film-journey",
     hasWash ? "film-journey--wash" : "",
     hasIntro ? "film-journey--intro" : "",
-    coverNext ? "film-journey--cover" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -426,6 +409,7 @@ export default function ScrollFilm({
       id={id}
       ref={rootRef}
       className={journeyClass}
+      aria-label={ariaLabel}
       data-motion={motionEnabled ? "on" : "off"}
       data-wash-plate={hasIntro ? "true" : undefined}
     >
@@ -433,7 +417,13 @@ export default function ScrollFilm({
         <div className="film-media">
           <picture>
             <source media="(max-width: 767px)" srcSet={mobilePoster} />
-            <img src={desktopPoster} alt="" aria-hidden />
+            <img
+              src={desktopPoster}
+              alt=""
+              aria-hidden
+              decoding="async"
+              fetchPriority={firstHeading ? "high" : "low"}
+            />
           </picture>
 
           {motionEnabled ? (
@@ -442,7 +432,7 @@ export default function ScrollFilm({
               className="film-video"
               muted
               playsInline
-              preload="auto"
+              preload={firstHeading ? "auto" : "metadata"}
               tabIndex={-1}
               aria-hidden
             />
@@ -453,73 +443,34 @@ export default function ScrollFilm({
           ) : null}
         </div>
 
-        {intro ? (
-          <div className="film-intro">
-            <svg
-              className="film-intro-knockout"
-              viewBox="0 0 1600 900"
-              preserveAspectRatio="xMidYMid slice"
-              aria-hidden
-            >
-              <defs>
-                <mask
-                  id={introMaskId}
-                  maskUnits="userSpaceOnUse"
-                  x="0"
-                  y="0"
-                  width="1600"
-                  height="900"
-                >
-                  <rect
-                    x="-1600"
-                    y="-900"
-                    width="4800"
-                    height="2700"
-                    fill="white"
-                  />
-                  <text
-                    data-intro-name
-                    x="800"
-                    y="450"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill="black"
-                    stroke="black"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    {["A", "D", "A", "M", "A", "S", "S"].map(
-                      (letter, index) => (
-                        <tspan
-                          data-intro-letter
-                          key={`${letter}-${index}`}
-                        >
-                          {letter}
-                        </tspan>
-                      ),
-                    )}
-                  </text>
-                </mask>
-              </defs>
-              <rect
-                x="-1600"
-                y="-900"
-                width="4800"
-                height="2700"
-                fill="#fff"
-                mask={`url(#${introMaskId})`}
-              />
-            </svg>
-            <div className="film-intro-lockup" data-intro-chrome>
-              <FilmIntroKicker />
-              <span className="film-intro-name-slot" aria-hidden />
-              <FilmIntroLabels />
+        {dissolveOnly && introLines ? (
+          <>
+            <div className="film-intro-plate" data-intro-layer aria-hidden>
+              <FilmIntroDissolve ref={dissolveRef} />
+              <div className="film-intro-hero">
+                <IntroTagline lines={introLines} live />
+                <div className="film-intro-labels-wrap">
+                  <FilmIntroLabels />
+                </div>
+              </div>
             </div>
-          </div>
+            <div
+              className={`film-intro film-intro--dissolve${introLines.length <= 2 ? " film-intro--couple" : ""}`}
+              data-intro-layer
+            >
+              <div className="film-intro-hero">
+                <IntroTagline lines={introLines} />
+                <div className="film-intro-labels-wrap" data-intro-chrome>
+                  <FilmIntroLabels />
+                </div>
+              </div>
+              <FilmIntroScroll />
+            </div>
+          </>
         ) : null}
 
-        {introLines ? (
-          <div className="film-intro">
+        {introLines && !dissolveOnly ? (
+          <div className="film-intro" data-intro-layer>
             <svg
               className="film-intro-knockout"
               viewBox="0 0 1600 900"
@@ -594,7 +545,6 @@ export default function ScrollFilm({
           </div>
         ) : null}
       </div>
-      {coverNext ? <div className="film-cover-slot" aria-hidden /> : null}
     </section>
   );
 }

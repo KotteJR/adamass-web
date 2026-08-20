@@ -91,23 +91,38 @@ const ScrollStack = forwardRef<ScrollStackHandle, ScrollStackProps>(
       }
 
       const peek = peekRef.current;
-      const p = 1 + progress * Math.max(count - 1, 0);
+      const holdWeight = 1.15;
+      const travelWeight = 0.85;
+      const totalUnits =
+        count * holdWeight + Math.max(count - 1, 0) * travelWeight;
+      const cursor = progress * totalUnits;
+      const arrivals = cards.map((_, index) => {
+        if (index === 0) return 1;
+        const transitionStart =
+          index * holdWeight + (index - 1) * travelWeight;
+        return Math.max(
+          0,
+          Math.min(1, (cursor - transitionStart) / travelWeight),
+        );
+      });
       const maxH = maxHRef.current;
       let dockH = 0;
 
       cards.forEach((card, index) => {
         const height = heightsRef.current[index] || maxH;
-        const arrive = p - index;
+        const arrive = arrivals[index];
         let translateY = 0;
         let scale = 1;
 
         if (arrive <= 0) {
           translateY = maxH + 40;
-        } else if (arrive <= 1) {
+        } else if (arrive < 1) {
           translateY = (1 - arrive) * (maxH + 40);
           dockH = Math.max(dockH, height * arrive);
         } else {
-          const depth = arrive - 1;
+          const depth = arrivals
+            .slice(index + 1)
+            .reduce((sum, nextArrival) => sum + nextArrival, 0);
           scale = Math.max(baseScaleRef.current, 1 - depth * itemScaleRef.current);
           translateY = -peek * depth + (1 - scale) * height;
           dockH = Math.max(dockH, height);

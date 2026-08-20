@@ -2,25 +2,10 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { people } from "@/lib/site";
 import { setLenisPaused } from "@/lib/lenis-bridge";
 import UiButton from "./UiButton";
-
-const people = [
-  {
-    name: "Vlatko Kotevski",
-    role: "CEO",
-    email: "vlatko.kotevski@adamass.se",
-    phone: "+46 70 917 94 98",
-    tel: "+46709179498",
-  },
-  {
-    name: "Aleksandar Kotevski",
-    role: "Partner, GenAI and ML",
-    email: "aleksandar.kotevski@adamass.se",
-    phone: "+46 70 626 40 85",
-    tel: "+46706264085",
-  },
-] as const;
+import UiIconButton from "./UiIconButton";
 
 type ContactModalProps = {
   open: boolean;
@@ -34,6 +19,10 @@ export function ContactModal({
   variant = "contact",
 }: ContactModalProps) {
   const [mounted, setMounted] = useState(false);
+  const [rendered, setRendered] = useState(open);
+  const [transitionState, setTransitionState] = useState<
+    "opening" | "open" | "closing"
+  >(open ? "open" : "opening");
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
   const peopleOnly = variant === "people";
@@ -41,7 +30,29 @@ export function ContactModal({
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (!open) return;
+    if (open) {
+      setRendered(true);
+      setTransitionState("opening");
+      const frame = window.requestAnimationFrame(() => {
+        setTransitionState("open");
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    if (!rendered) return;
+
+    setTransitionState("closing");
+    const closeDelay = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches
+      ? 0
+      : 360;
+    const timeout = window.setTimeout(() => setRendered(false), closeDelay);
+    return () => window.clearTimeout(timeout);
+  }, [open, rendered]);
+
+  useEffect(() => {
+    if (!rendered) return;
 
     const previousOverflow = document.body.style.overflow;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -52,7 +63,6 @@ export function ContactModal({
     document.documentElement.dataset.modal = "open";
     setLenisPaused(true);
     document.addEventListener("keydown", onKeyDown);
-    closeRef.current?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -60,12 +70,17 @@ export function ContactModal({
       setLenisPaused(false);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open, onClose]);
+  }, [onClose, rendered]);
 
-  if (!open || !mounted) return null;
+  useEffect(() => {
+    if (!open || !rendered) return;
+    closeRef.current?.focus();
+  }, [open, rendered]);
+
+  if (!rendered || !mounted) return null;
 
   return createPortal(
-    <div className="contact-modal-shell">
+    <div className="contact-modal-shell" data-state={transitionState}>
       <button
         type="button"
         className="contact-modal-backdrop"
@@ -82,15 +97,13 @@ export function ContactModal({
           <div>
             <h2 id={titleId}>{peopleOnly ? "People" : "Contact Adamass"}</h2>
           </div>
-          <button
+          <UiIconButton
             ref={closeRef}
-            type="button"
             className="contact-modal-close"
-            aria-label="Close"
+            icon="close"
+            label="Close"
             onClick={onClose}
-          >
-            ×
-          </button>
+          />
         </div>
 
         {peopleOnly ? null : (

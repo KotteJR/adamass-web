@@ -13,8 +13,8 @@ export default function ContactBlock() {
         hello@adamass.se
       </a>
       <p className="contact-intro">
-        Send a short brief. We reply with availability, then use an intro call
-        to confirm fit, scope, and timing.
+        Send a short brief to Adamass AB in Malmö. We reply with availability,
+        then use an intro call to confirm fit, scope, and timing.
       </p>
       <UiButton variant="secondary" onClick={() => setOpen(true)}>
         See people

@@ -15,7 +15,7 @@ export default function LegalArticle({
   return (
     <>
       <Header />
-      <main className="legal-page">
+      <main id="main-content" className="legal-page" tabIndex={-1}>
         <div className="page-shell">
           <h1>{title}</h1>
           <p className="legal-updated">Last updated {updated}</p>

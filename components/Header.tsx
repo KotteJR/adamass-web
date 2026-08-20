@@ -3,6 +3,7 @@
 import type { MouseEvent } from "react";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import AdamassLogo from "./AdamassLogo";
 import ContactModalTrigger from "./ContactModal";
 import { scrollToId, scrollToTop } from "@/lib/lenis-bridge";
 
@@ -132,13 +133,7 @@ export default function Header() {
             scrollToTop();
           }}
         >
-          <img
-            src="/logo.svg"
-            alt=""
-            width={370}
-            height={80}
-            fetchPriority="high"
-          />
+          <AdamassLogo decorative />
         </Link>
 
         <div className="site-nav-links" aria-label="Page sections">
