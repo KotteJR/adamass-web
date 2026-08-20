@@ -2287,6 +2287,7 @@ a,
 
 .site-footer-brand p {
   margin: 0;
+  padding-top: 0.5rem;
   color: var(--slate);
   font-size: var(--type-secondary);
   line-height: 1.55;
@@ -2754,7 +2755,8 @@ a,
   }
 
   .site-footer-brand {
-    max-width: 28rem;
+    max-width: none;
+    width: 100%;
     gap: 0.45rem;
   }
 
@@ -2763,7 +2765,8 @@ a,
   }
 
   .site-footer-brand p {
-    max-width: 34ch;
+    max-width: none;
+    padding-top: 0.5rem;
     font-size: 0.8125rem;
     line-height: 1.45;
   }

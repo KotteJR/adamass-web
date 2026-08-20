@@ -201,12 +201,14 @@ const FilmIntroDissolve = forwardRef<FilmIntroDissolveHandle>(
         const plateBounds = plate?.getBoundingClientRect();
 
         if (!tagline || !plateBounds || !lines.length) return;
+        if (plateBounds.width < 2 || plateBounds.height < 2) return;
 
         const mapHeight = 144;
         const mapWidth = Math.max(
           144,
           Math.round(mapHeight * (plateBounds.width / plateBounds.height)),
         );
+        if (!Number.isFinite(mapWidth) || mapWidth < 1) return;
         const maskCanvas = document.createElement("canvas");
         maskCanvas.width = mapWidth;
         maskCanvas.height = mapHeight;
