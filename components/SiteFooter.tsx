@@ -1,8 +1,6 @@
 import AdamassLogo from "./AdamassLogo";
-import UiButton from "./UiButton";
 import UiLabel from "./UiLabel";
 import {
-  SITE_EMAIL,
   SITE_LINKEDIN,
   SITE_LOCALITY,
   SITE_COUNTRY_NAME,
@@ -21,7 +19,6 @@ export default function SiteFooter() {
             {SITE_COUNTRY_NAME}. Senior delivery with a named owner on every
             engagement.
           </p>
-          <UiButton href={`mailto:${SITE_EMAIL}`}>Write to us</UiButton>
         </div>
 
         <div className="site-footer-links">

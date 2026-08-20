@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { FilmChapter } from "@/lib/film";
@@ -50,39 +50,6 @@ function IntroTagline({
   );
 }
 
-function IntroSentence({
-  lines,
-  wordAttr,
-}: {
-  lines: readonly string[];
-  wordAttr: "data-intro-fill" | "data-intro-ghost";
-}) {
-  return (
-    <text
-      data-intro-lines
-      x="800"
-      y="418"
-      textAnchor="middle"
-      dominantBaseline="middle"
-      xmlSpace="preserve"
-      fill={wordAttr === "data-intro-fill" ? "black" : undefined}
-      stroke={wordAttr === "data-intro-fill" ? "black" : undefined}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {lines.map((line, lineIndex) => (
-        <tspan key={line} x="800" dy={lineIndex === 0 ? 0 : "1.08em"}>
-          {line.split(" ").map((word, wordIndex) => (
-            <tspan key={`${line}-${wordIndex}`} {...{ [wordAttr]: "" }}>
-              {wordIndex > 0 ? ` ${word}` : word}
-            </tspan>
-          ))}
-        </tspan>
-      ))}
-    </text>
-  );
-}
-
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
 const INTRO_END = 0.13;
 const LINE_INTRO_END = 0.16;
@@ -122,10 +89,9 @@ export default function ScrollFilm({
   const [loadClip, setLoadClip] = useState(firstHeading);
   const hasWash = Boolean(washOutLines?.length);
   const hasLineIntro = Boolean(introLines?.length);
-  const dissolveOnly = intro && hasLineIntro;
+  const dissolveOnly = hasLineIntro;
   const hasIntro = intro || hasLineIntro;
   const introEnd = hasLineIntro ? LINE_INTRO_END : intro ? INTRO_END : 0;
-  const introMaskId = useId().replace(/:/g, "");
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -174,12 +140,6 @@ export default function ScrollFilm({
     );
     const introChrome = Array.from(
       root.querySelectorAll<HTMLElement>("[data-intro-chrome]"),
-    );
-    const fillWords = Array.from(
-      root.querySelectorAll<HTMLElement>("[data-intro-fill]"),
-    );
-    const ghostWords = Array.from(
-      root.querySelectorAll<SVGTSpanElement>("[data-intro-ghost]"),
     );
     let dock = chapterStackRef.current?.querySelector<HTMLElement>(".film-dock");
     let introClosed = false;
@@ -248,20 +208,6 @@ export default function ScrollFilm({
             dissolveRef.current?.setProgress(videoIn);
             introChrome.forEach((line) => {
               line.style.opacity = (1 - copyOut).toFixed(3);
-            });
-          } else if (hasLineIntro) {
-            const write = clamp((introProgress - 0.04) / 0.44);
-            const spread = smoothstep((introProgress - 0.52) / 0.46);
-            const cursor = write * fillWords.length;
-            fillWords.forEach((word, index) => {
-              const local = clamp(cursor - index);
-              const dissolve = clamp((spread - index * 0.07) / 0.78);
-              word.style.opacity = local.toFixed(3);
-              word.style.strokeWidth = `${(dissolve ** 1.35 * 900).toFixed(2)}px`;
-            });
-            ghostWords.forEach((word, index) => {
-              const local = clamp(cursor - index);
-              word.style.opacity = (1 - local).toFixed(3);
             });
           }
         } else {
@@ -465,9 +411,11 @@ export default function ScrollFilm({
               <FilmIntroDissolve ref={dissolveRef} />
               <div className="film-intro-hero">
                 <IntroTagline lines={introLines} live />
-                <div className="film-intro-labels-wrap">
-                  <FilmIntroLabels />
-                </div>
+                {intro ? (
+                  <div className="film-intro-labels-wrap">
+                    <FilmIntroLabels />
+                  </div>
+                ) : null}
               </div>
             </div>
             <div
@@ -476,66 +424,15 @@ export default function ScrollFilm({
             >
               <div className="film-intro-hero">
                 <IntroTagline lines={introLines} />
-                <div className="film-intro-labels-wrap" data-intro-chrome>
-                  <FilmIntroLabels />
-                </div>
+                {intro ? (
+                  <div className="film-intro-labels-wrap" data-intro-chrome>
+                    <FilmIntroLabels />
+                  </div>
+                ) : null}
               </div>
-              <FilmIntroScroll />
+              {intro ? <FilmIntroScroll /> : null}
             </div>
           </>
-        ) : null}
-
-        {introLines && !dissolveOnly ? (
-          <div className="film-intro" data-intro-layer>
-            <svg
-              className="film-intro-knockout"
-              viewBox="0 0 1600 900"
-              preserveAspectRatio="xMidYMid slice"
-              aria-hidden
-            >
-              <defs>
-                <mask
-                  id={introMaskId}
-                  maskUnits="userSpaceOnUse"
-                  x="0"
-                  y="0"
-                  width="1600"
-                  height="900"
-                >
-                  <rect
-                    x="-1600"
-                    y="-900"
-                    width="4800"
-                    height="2700"
-                    fill="white"
-                  />
-                  <IntroSentence
-                    lines={introLines}
-                    wordAttr="data-intro-fill"
-                  />
-                </mask>
-              </defs>
-              <rect
-                x="-1600"
-                y="-900"
-                width="4800"
-                height="2700"
-                fill="#fff"
-                mask={`url(#${introMaskId})`}
-              />
-            </svg>
-            <svg
-              className="film-intro-ghost"
-              viewBox="0 0 1600 900"
-              preserveAspectRatio="xMidYMid slice"
-              aria-hidden
-            >
-              <IntroSentence
-                lines={introLines}
-                wordAttr="data-intro-ghost"
-              />
-            </svg>
-          </div>
         ) : null}
 
         <div ref={chapterStackRef} className="film-chapter-stack">

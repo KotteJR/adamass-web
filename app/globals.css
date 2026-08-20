@@ -1615,6 +1615,7 @@ a,
 .work-graph li {
   position: relative;
   min-width: 0;
+  grid-column: var(--work-start) / span var(--work-span);
   transform: translate3d(0, calc(var(--work-level) * 2.55rem), 0);
 }
 
@@ -2445,6 +2446,13 @@ a,
 }
 
 @media (max-width: 767px) {
+  :root {
+    --type-display: clamp(1.65rem, 7.6vw, 2.1rem);
+    --type-section: clamp(1.4rem, 6vw, 1.75rem);
+    --type-lead: 1.125rem;
+    --type-body: 1rem;
+  }
+
   .page-shell {
     width: min(100% - 2rem, 75rem);
   }
@@ -2517,31 +2525,40 @@ a,
 
   .film-intro-knockout [data-intro-lines],
   .film-intro-ghost [data-intro-lines] {
-    font-size: clamp(1.55rem, 7vw, 2.05rem);
+    font-size: clamp(1.18rem, 5.2vw, 1.42rem);
   }
 
   .film-intro-hero {
-    gap: 0.56rem;
-    padding: 4.75rem 1.15rem 4.25rem;
+    gap: 0.7rem;
+    padding: 5.5rem 1.15rem 5rem;
   }
 
   .film-intro-tagline {
-    width: 100%;
-    font-size: clamp(1.85rem, 8.6vw, 2.35rem);
-    line-height: 1.14;
+    width: max-content;
+    max-width: calc(100vw - 2.5rem);
+    font-size: clamp(1.18rem, 4.8vw + 0.12rem, 1.42rem);
+    letter-spacing: -0.03em;
+    line-height: 1.22;
   }
 
   .film-intro-tagline-line {
-    white-space: normal;
+    white-space: nowrap;
   }
 
   .film-intro-labels {
     justify-content: center;
-    width: 100%;
+    width: min(100%, 21rem);
+    gap: 0.38rem;
+  }
+
+  .film-intro-labels .ui-tag {
+    height: 2rem;
+    padding-inline: 0.85rem;
+    font-size: 0.8125rem;
   }
 
   .film-intro-labels-wrap {
-    width: min(100%, 20rem);
+    width: min(100%, 21rem);
   }
 
   .scroll-stack-card,
@@ -2557,8 +2574,8 @@ a,
   }
 
   .film-card-heading {
-    max-width: 20ch;
-    font-size: 1.4rem;
+    max-width: 18ch;
+    font-size: 1.25rem;
   }
 
   .film-chapter-body {
@@ -2591,7 +2608,11 @@ a,
 
   .film-wash p {
     max-width: 22ch;
-    font-size: clamp(1.45rem, 6.4vw, 2rem);
+    font-size: clamp(1.25rem, 5.4vw, 1.65rem);
+  }
+
+  .practice-statement h2 {
+    font-size: clamp(1.6rem, 7vw, 2.05rem);
   }
 
   .practice-grid {
@@ -2650,7 +2671,7 @@ a,
   }
 
   .work-bar {
-    height: 2.75rem;
+    height: 2.375rem;
     padding-inline: 0.65rem;
     font-size: 0.6875rem;
   }
@@ -2708,45 +2729,66 @@ a,
   }
 
   .contact-email {
-    font-size: clamp(2rem, 10vw, 3.2rem);
+    font-size: clamp(1.55rem, 8vw, 2.15rem);
   }
 
   .site-footer {
-    padding: 1.2rem 1.15rem 1rem;
-    gap: 1.1rem;
+    padding: 1.15rem 1.1rem 0.95rem;
+    gap: 1.25rem;
   }
 
   .site-footer-main {
     grid-template-columns: 1fr;
     align-content: start;
-    gap: 1.15rem;
+    gap: 1.25rem;
   }
 
   .site-footer-brand {
-    max-width: none;
-    gap: 0.7rem;
+    max-width: 28rem;
+    gap: 0.45rem;
+  }
+
+  .site-footer-brand .adamass-logo {
+    font-size: 1.35rem;
+  }
+
+  .site-footer-brand p {
+    max-width: 34ch;
+    font-size: 0.8125rem;
+    line-height: 1.45;
   }
 
   .site-footer-links {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-content: start;
-    gap: 0.75rem;
+    gap: 0.85rem;
   }
 
   .site-footer-links div {
-    gap: 0.35rem;
+    gap: 0.4rem;
+  }
+
+  .site-footer-links .ui-label {
+    display: none;
   }
 
   .site-footer-links a {
     display: inline-flex;
-    align-items: center;
-    min-height: 2.75rem;
+    align-items: flex-start;
+    min-height: 0;
+    padding: 0.15rem 0;
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    text-wrap: balance;
   }
 
   .site-footer-line {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-top: 0.15rem;
+    font-size: 0.75rem;
   }
 }
 

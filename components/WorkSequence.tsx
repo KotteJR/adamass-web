@@ -66,7 +66,8 @@ export default function WorkSequence() {
               className={index === activeIndex ? "is-active" : undefined}
               style={
                 {
-                  gridColumn: `${move.start} / span ${move.span}`,
+                  "--work-start": move.start,
+                  "--work-span": move.span,
                   "--work-level": move.level,
                 } as CSSProperties
               }
