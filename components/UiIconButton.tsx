@@ -1,3 +1,5 @@
+"use client";
+
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { ArrowRight, CaretDown, X } from "@phosphor-icons/react";
 

@@ -98,6 +98,12 @@ export default function PrivacyPage() {
         If we change how this site collects data, we will update this page and
         the date above.
       </p>
+
+      <h2>Questions</h2>
+      <p>
+        Answers about the practice, services, and how to start sit on the{" "}
+        <a href="/faq">FAQ</a>.
+      </p>
     </LegalArticle>
     </>
   );

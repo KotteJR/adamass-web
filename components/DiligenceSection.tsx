@@ -7,10 +7,9 @@ export default function DiligenceSection() {
         <div className="section-intro">
           <h2 id="diligence-title">Selected work.</h2>
           <p>
-            Two public engagements. A closed-corpus, on-prem model for
-            European M&A that reads the data room and drafts a first-pass
-            note a partner still signs. And a paediatric diagnosis stack
-            taken off MATLAB onto a Python inference service.
+            One public engagement. A specialist regulatory model developed
+            from an expert-labelled workflow, evaluated on held-out work, and
+            deployed inside the client&apos;s AWS account.
           </p>
         </div>
 

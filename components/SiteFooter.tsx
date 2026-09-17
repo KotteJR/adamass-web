@@ -1,3 +1,4 @@
+import Link from "next/link";
 import AdamassLogo from "./AdamassLogo";
 import UiLabel from "./UiLabel";
 import {
@@ -26,7 +27,9 @@ export default function SiteFooter() {
             <UiLabel>On this page</UiLabel>
             <a href="/#practice">Practice</a>
             <a href="/#work">Work</a>
+            <a href="/#marketplace">AWS Marketplace</a>
             <a href="/#contact">Contact</a>
+            <Link href="/faq">FAQ</Link>
           </div>
           <div>
             <UiLabel>People</UiLabel>
@@ -45,8 +48,8 @@ export default function SiteFooter() {
           </div>
           <div>
             <UiLabel>Legal</UiLabel>
-            <a href="/privacy">Privacy policy</a>
-            <a href="/terms">Terms of use</a>
+            <Link href="/privacy">Privacy policy</Link>
+            <Link href="/terms">Terms of use</Link>
           </div>
         </div>
       </div>

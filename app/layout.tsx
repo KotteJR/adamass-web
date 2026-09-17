@@ -8,6 +8,7 @@ import {
   defaultDescription,
   defaultTitle,
   keywords,
+  SITE_GEO,
   SITE_LANGUAGE,
   SITE_LOCALE,
   SITE_LOCALITY,
@@ -111,8 +112,8 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "SE-M",
     "geo.placename": SITE_LOCALITY,
-    "geo.position": "55.60587;13.00073",
-    ICBM: "55.60587, 13.00073",
+    "geo.position": `${SITE_GEO.latitude};${SITE_GEO.longitude}`,
+    ICBM: `${SITE_GEO.latitude}, ${SITE_GEO.longitude}`,
   },
 };
 
@@ -121,6 +122,16 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang={SITE_LANGUAGE} className={`${sans.variable} ${mono.variable}`}>
+      <head>
+        {/* Runs before first paint: a restored offset would drop the visitor
+            into the middle of a scroll-scrubbed film. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if('scrollRestoration' in history){history.scrollRestoration='manual'}if(!location.hash){window.scrollTo(0,0)}",
+          }}
+        />
+      </head>
       <body>
         <SkipLink />
         <JsonLd data={organizationGraph()} />

@@ -25,7 +25,7 @@ export type FilmChapter = {
 export const capabilityChapters = [
   {
     title: "Senior delivery. Fixed accountability.",
-    body: "A boutique IT consultancy for embedded software delivery, modernisation, technical diligence, and strategic advisory.",
+    body: "A boutique IT consultancy for embedded software delivery, modernisation, GenAI development, technical diligence, and strategic advisory.",
     facts: [
       {
         icon: "pin",

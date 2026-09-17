@@ -95,6 +95,12 @@ export default function TermsPage() {
         We may update these terms when the site or the practice changes. The
         date at the top is the version that applies.
       </p>
+
+      <h2>Questions</h2>
+      <p>
+        Answers about the practice, services, and how to start sit on the{" "}
+        <a href="/faq">FAQ</a>.
+      </p>
     </LegalArticle>
     </>
   );

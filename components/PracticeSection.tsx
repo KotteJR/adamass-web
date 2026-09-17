@@ -19,12 +19,12 @@ export default function PracticeSection() {
           <div className="practice-copy">
             <p className="ui-body ui-body--secondary">
               Adamass AB is a boutique IT consultancy in Malmö, Sweden,
-              founded in 2019. The practice takes named ownership of
-              generative AI, machine learning engineering, legacy
-              modernisation, and technical due diligence for investors and
-              founders. Most work is team augmentation with written scope and
-              milestones — engagements have run from a few months to about
-              three years.
+              founded in 2019. Senior people take named ownership of
+              embedded software delivery, modernisation, technical due
+              diligence, and generative AI for founders, investors, and
+              engineering leaders. Most work is embedded delivery with
+              written scope and milestones — engagements have run from a few
+              months to about three years.
             </p>
             <p className="ui-body ui-body--secondary">
               Most problems arrive between strategy and engineering, prototype
@@ -38,9 +38,9 @@ export default function PracticeSection() {
             <article>
               <span>1</span>
               <p className="ui-body ui-body--secondary">
-                We augment our team into yours, using the same repositories,
-                tools, and ceremonies. The aim is a family-style way of working
-                built on trust, shared contexts, and pace.
+                We join your team, using the same repositories, tools, and
+                ceremonies. The aim is a family-style way of working built on
+                trust, shared contexts, and pace.
               </p>
             </article>
             <article>

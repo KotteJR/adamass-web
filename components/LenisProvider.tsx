@@ -30,8 +30,18 @@ export default function LenisProvider({
     const phone = window.matchMedia("(max-width: 767px)").matches;
     const hash = window.location.hash.replace("#", "");
 
+    // The films are scrubbed by scroll, so a restored offset drops the visitor
+    // into the middle of an animation. Start every load from the top instead.
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+
     if (phone) {
       ScrollTrigger.refresh();
+      void document.fonts?.ready.then(() => ScrollTrigger.refresh());
       if (hash) {
         requestAnimationFrame(() => scrollToId(hash));
       }
@@ -69,6 +79,10 @@ export default function LenisProvider({
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
     ScrollTrigger.refresh();
+
+    // Web fonts change the height of every chapter card, so the triggers have
+    // to be measured again once they land.
+    void document.fonts?.ready.then(() => ScrollTrigger.refresh());
 
     if (hash) {
       requestAnimationFrame(() => scrollToId(hash));

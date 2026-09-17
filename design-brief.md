@@ -59,10 +59,11 @@ Journey two:
 3. Handover: transfer source, configuration, notes, and ownership
 
 World grammar:
-- Fine high-resolution pixel art of Macedonian places with compute built in
-- Blue is the machine; terracotta, stone, olive and bone white are what was already there
-- Film I: Ohrid lakeside, through the quiet hand gap, across the lake, up server terraces, down into the forest
-- Single start frame only. No flash, no numbers, no text inside the film
+- Living oil painting of Macedonian places — visible brush, luminous atmosphere, real clouds
+- Blue is the machine note; limestone, terracotta, olive, plaster, and bone are what was already there
+- Film I: Lake Ohrid, Church of St. John at Kaneo. Hands start apart in the upper sky, meet, and a signal-blue spark ignites at the contact; a thread runs from that spark along the cliff
+- Film II: Skopje — Debar Maalo street grain, Karpoš slabs, Vodno. Ordinary day roofs become a late-afternoon city wearing a blue glass compute crown; clouds and trees travel
+- Start frame ≠ end frame. No flash, no numbers, no text inside the film. No Greek temple, no mosque, no minaret
 - HTML copy lives in a compact white rounded shelf with a two-line title limit
 
 Mobile framing:

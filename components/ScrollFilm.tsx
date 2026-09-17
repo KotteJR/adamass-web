@@ -4,10 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { FilmChapter } from "@/lib/film";
+import AdamassLogo from "./AdamassLogo";
 import FilmChapterDeck, { type FilmChapterDeckHandle } from "./FilmChapterDeck";
-import FilmIntroDissolve, {
-  type FilmIntroDissolveHandle,
-} from "./FilmIntroDissolve";
 import FilmIntroLabels from "./FilmIntroLabels";
 import FilmIntroScroll from "./FilmIntroScroll";
 
@@ -28,21 +26,16 @@ type ScrollFilmProps = {
   blendTop?: boolean;
 };
 
-function IntroTagline({
-  lines,
-  live = false,
-}: {
-  lines: readonly string[];
-  live?: boolean;
-}) {
+function IntroTagline({ lines }: { lines: readonly string[] }) {
   return (
-    <p
-      className={
-        live ? "film-intro-tagline" : "film-intro-tagline film-intro-tagline--slot"
-      }
-    >
-      {lines.map((line) => (
-        <span className="film-intro-tagline-line" key={line}>
+    <p className="film-intro-tagline">
+      {lines.map((line, index) => (
+        <span
+          className="film-intro-tagline-line"
+          data-intro-dissolve
+          data-intro-order={1 + index}
+          key={line}
+        >
           {line}
         </span>
       ))}
@@ -51,8 +44,10 @@ function IntroTagline({
 }
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
-const INTRO_END = 0.13;
-const LINE_INTRO_END = 0.16;
+const INTRO_END = 0.26;
+const LINE_INTRO_END = 0.36;
+const PLATE_OUT_START = 0.22;
+const PLATE_OUT_SPAN = 0.78;
 const CARD_REVEAL = 0.1;
 const WASH_START = 0.8;
 const WASH_PLATE = 0.08;
@@ -62,6 +57,11 @@ const WRITE_SPAN = 0.12;
 const smoothstep = (value: number) => {
   const t = clamp(value);
   return t * t * (3 - 2 * t);
+};
+
+const smootherstep = (value: number) => {
+  const t = clamp(value);
+  return t * t * t * (t * (t * 6 - 15) + 10);
 };
 
 export default function ScrollFilm({
@@ -83,7 +83,8 @@ export default function ScrollFilm({
   const videoRef = useRef<HTMLVideoElement>(null);
   const chapterStackRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<FilmChapterDeckHandle>(null);
-  const dissolveRef = useRef<FilmIntroDissolveHandle>(null);
+  const platePaintRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const washRef = useRef<HTMLDivElement>(null);
   const blendRef = useRef<HTMLDivElement>(null);
   const [motionEnabled, setMotionEnabled] = useState(false);
@@ -141,9 +142,10 @@ export default function ScrollFilm({
     const introLayers = Array.from(
       root.querySelectorAll<HTMLElement>("[data-intro-layer]"),
     );
-    const introChrome = Array.from(
-      root.querySelectorAll<HTMLElement>("[data-intro-chrome]"),
+    const dissolveEls = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-intro-dissolve]"),
     );
+    const heroIn = root.querySelector<HTMLElement>(".film-intro-hero-in");
     let dock = chapterStackRef.current?.querySelector<HTMLElement>(".film-dock");
     let introClosed = false;
     let lastChapter = -1;
@@ -166,6 +168,10 @@ export default function ScrollFilm({
         layer.style.display = "none";
         layer.style.opacity = "";
       });
+      // A refresh can leave the plate opaque behind the hidden layer, which
+      // would flash white if the intro is ever reopened.
+      if (heroRef.current) heroRef.current.style.opacity = "0";
+      if (platePaintRef.current) platePaintRef.current.style.opacity = "0";
       setPlate("false");
     };
 
@@ -206,11 +212,31 @@ export default function ScrollFilm({
           setPlate("true");
 
           if (dissolveOnly) {
-            const videoIn = smoothstep((introProgress - 0.08) / 0.8);
-            const copyOut = smoothstep((introProgress - 0.08) / 0.28);
-            dissolveRef.current?.setProgress(videoIn);
-            introChrome.forEach((line) => {
-              line.style.opacity = (1 - copyOut).toFixed(3);
+            if (heroIn && introProgress > 0.012) {
+              heroIn.style.animation = "none";
+            }
+
+            const plateOut = smootherstep(
+              (introProgress - PLATE_OUT_START) / PLATE_OUT_SPAN,
+            );
+
+            if (heroRef.current) {
+              heroRef.current.style.opacity = "1";
+            }
+            if (platePaintRef.current) {
+              platePaintRef.current.style.opacity = (1 - plateOut).toFixed(3);
+            }
+
+            dissolveEls.forEach((el) => {
+              const order = Number(el.dataset.introOrder || 0);
+              const start = 0.2 + order * 0.04;
+              const out = smootherstep((introProgress - start) / 0.7);
+              el.style.opacity = (1 - out).toFixed(3);
+              el.style.transform = `translate3d(0, ${(out * -18).toFixed(2)}px, 0) scale(${(1 - out * 0.035).toFixed(3)})`;
+              el.style.filter =
+                out > 0.02 && out < 0.97
+                  ? `blur(${(out * 7).toFixed(2)}px)`
+                  : "none";
             });
           }
         } else {
@@ -268,13 +294,22 @@ export default function ScrollFilm({
       }
     };
 
+    // Intro and wash eat the pin. Map the clip onto the visible chapter
+    // window so the last beat (the spark) lands on the last card, not
+    // under the white plate.
+    const videoProgress = (p: number) => {
+      const videoStart = hasIntro ? introEnd : 0;
+      const videoEnd = hasWash ? WASH_START : 1;
+      return clamp((p - videoStart) / Math.max(videoEnd - videoStart, 0.001));
+    };
+
     const playheadTween = gsap.to(playhead, {
       p: 1,
       paused: true,
       ease: "none",
       onUpdate: () => {
         update(playhead.p);
-        seek(playhead.p);
+        seek(videoProgress(playhead.p));
       },
     });
 
@@ -283,7 +318,7 @@ export default function ScrollFilm({
       start: "top top",
       end: "bottom bottom",
       animation: playheadTween,
-      scrub: 0.55,
+      scrub: 1.05,
       invalidateOnRefresh: true,
       onRefresh: (self) => update(self.progress),
     });
@@ -292,7 +327,7 @@ export default function ScrollFilm({
       if (!video || !Number.isFinite(video.duration)) return;
       video.pause();
       duration = Math.max(video.duration - 0.05, 0);
-      seek(trigger.progress);
+      seek(videoProgress(trigger.progress));
     };
 
     if (video) {
@@ -304,18 +339,24 @@ export default function ScrollFilm({
       }
       video.addEventListener(
         "loadeddata",
-        () => seek(trigger.progress),
+        () => seek(videoProgress(trigger.progress)),
         { once: true },
       );
     }
 
     update(trigger.progress);
+    root.dataset.filmReady = "on";
 
     return () => {
       video?.removeEventListener("loadedmetadata", bindVideo);
       trigger.kill();
       playheadTween.kill();
       video?.pause();
+      dissolveEls.forEach((el) => {
+        el.style.opacity = "";
+        el.style.transform = "";
+        el.style.filter = "";
+      });
     };
   }, [
     chapters.length,
@@ -375,6 +416,7 @@ export default function ScrollFilm({
       className={journeyClass}
       aria-label={ariaLabel}
       data-motion={motionEnabled ? "on" : "off"}
+      data-film-ready="off"
       data-wash-plate={hasIntro ? "true" : undefined}
     >
       <div ref={stageRef} className="film-stage">
@@ -408,11 +450,20 @@ export default function ScrollFilm({
         </div>
 
         {dissolveOnly && introLines ? (
-          <>
-            <div className="film-intro-plate" data-intro-layer aria-hidden>
-              <FilmIntroDissolve ref={dissolveRef} />
-              <div className="film-intro-hero">
-                <IntroTagline lines={introLines} live />
+          <div className="film-intro" data-intro-layer>
+            <div
+              ref={platePaintRef}
+              className="film-intro-plate"
+              aria-hidden
+            />
+            <div ref={heroRef} className="film-intro-hero">
+              <div className="film-intro-hero-in">
+                {intro ? (
+                  <span data-intro-dissolve data-intro-order="0">
+                    <AdamassLogo className="film-intro-logo" decorative />
+                  </span>
+                ) : null}
+                <IntroTagline lines={introLines} />
                 {intro ? (
                   <div className="film-intro-labels-wrap">
                     <FilmIntroLabels />
@@ -420,21 +471,8 @@ export default function ScrollFilm({
                 ) : null}
               </div>
             </div>
-            <div
-              className={`film-intro film-intro--dissolve${introLines.length <= 2 ? " film-intro--couple" : ""}`}
-              data-intro-layer
-            >
-              <div className="film-intro-hero">
-                <IntroTagline lines={introLines} />
-                {intro ? (
-                  <div className="film-intro-labels-wrap" data-intro-chrome>
-                    <FilmIntroLabels />
-                  </div>
-                ) : null}
-              </div>
-              {intro ? <FilmIntroScroll /> : null}
-            </div>
-          </>
+            {intro ? <FilmIntroScroll /> : null}
+          </div>
         ) : null}
 
         <div ref={chapterStackRef} className="film-chapter-stack">
