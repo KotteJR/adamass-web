@@ -6,8 +6,11 @@ import type { MarketplaceGlyph as GlyphKind } from "@/lib/marketplace";
 
 type Pixel = "." | "m" | "s";
 
+const pixels = (rows: string[]) =>
+  rows.map((row) => row.split("") as Pixel[]);
+
 const marks: Record<GlyphKind, Pixel[][]> = {
-  foundation: [
+  foundation: pixels([
     "mmmmmmmmmmmmmmmm",
     ".mmmm.mmmm.mmmm.",
     ".mmmm.mmmm.mmmm.",
@@ -15,8 +18,8 @@ const marks: Record<GlyphKind, Pixel[][]> = {
     "mmmmmmmmmmmmmmmm",
     "ssssssssssssssss",
     "..ssssssssssss..",
-  ].map((row) => [...row] as Pixel[]),
-  architect: [
+  ]),
+  architect: pixels([
     "......mmmm......",
     "....mmmmmmmm....",
     "..mmmmmmmmmmmm..",
@@ -25,8 +28,8 @@ const marks: Record<GlyphKind, Pixel[][]> = {
     ".mm.mm.mm.mm.mm.",
     ".mm.mm.mm.mm.mm.",
     "ssssssssssssssss",
-  ].map((row) => [...row] as Pixel[]),
-  perimeter: [
+  ]),
+  perimeter: pixels([
     ".mmmmmm.........",
     "mm....mm........",
     "mm....mm........",
@@ -35,7 +38,7 @@ const marks: Record<GlyphKind, Pixel[][]> = {
     "...mmmmmmmmmmmmm",
     "...mm..ss.ss.ss.",
     "...mm..ss.ss.ss.",
-  ].map((row) => [...row] as Pixel[]),
+  ]),
 };
 
 function Cell({ tone }: { tone: Exclude<Pixel, "."> }) {
