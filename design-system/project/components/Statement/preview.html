@@ -1,0 +1,25 @@
+<!-- @dsCard group="Sections" height=420 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Statement — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .pv{padding:56px 40px}
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(A.Statement, {
+    lead: 'One lead,', tail: 'start to handover.',
+    columns: [
+      { text: 'Most projects go wrong in the gap between the people who sell the work and the people who do it. We do not have that gap. The senior who scopes your project writes the code, sits in your standups and answers when something breaks.', emphasis: 'You always know who owns it.' },
+      { text: 'We run our own products on the same stack we use for clients, so we only recommend what we would put in production ourselves. Source, configuration and notes move to you as we go.', emphasis: 'When we leave, the keys stay with you.' }
+    ],
+    actions: [{ label: 'Start a project', href: '#start' }, { label: 'How we work', href: '#process' }]
+  }));
+</script>
+</body>
+</html>

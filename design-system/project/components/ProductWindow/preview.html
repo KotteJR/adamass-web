@@ -1,0 +1,22 @@
+<!-- @dsCard group="Showcase" height=640 width=1100 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ProductWindow — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  var tabs = [
+    { name: 'Murmur', status: 'In development', mark: '/_blob/e41513343084ccb22b673e0ca1da9a66', src: '/_blob/d8fb61e828101e8ffbebca47b54fcfd5', phone: '/_blob/322b8d307573343af3bc8e84c8e69010' },
+    { name: 'Morrow', status: 'In development', mark: '/_blob/94feefb4bea89552f989a6a8e632c526', src: '/_blob/1f3cb4a473ab96083d957383a48fb8fa', srcDark: '/_blob/ae5125a03d3878d38230eab4e35b37fd', phone: '/_blob/1a9e3d9f3bf2fa8a396546322d941bcf', phoneDark: '/_blob/a54d9f20d59ab837b8157a972fdce9be' }
+  ];
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { style: { padding: '8px 40px 40px 8px' } }, h(A.ProductWindow, { tabs: tabs })));
+</script>
+</body>
+</html>

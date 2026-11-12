@@ -1,0 +1,219 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-11T13:20:00Z"
+ },
+ "title": "Adamass",
+ "namespace": "Adamass",
+ "libraries": [
+  {
+   "name": "react",
+   "version": "18"
+  },
+  {
+   "name": "react-dom",
+   "version": "18"
+  }
+ ],
+ "sections": {},
+ "groups": [
+  "Logos",
+  "Imagery",
+  "Products",
+  "Infographics"
+ ],
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "m",
+   "order": [
+    "adamass-lockup-primary.svg",
+    "adamass-lockup-reversed.svg",
+    "adamass-lockup-deep.svg",
+    "adamass-lockup-knockout.svg",
+    "adamass-icon-knockout.svg",
+    "adamass-icon-reversed.svg"
+   ],
+   "files": {
+    "adamass-lockup-primary.svg": {
+     "name": "adamass-lockup-primary.svg",
+     "blob": "47c4480e3783628e32669634f36bd14d",
+     "size": 4444,
+     "type": "image/svg+xml"
+    },
+    "adamass-lockup-reversed.svg": {
+     "name": "adamass-lockup-reversed.svg",
+     "blob": "b7faa9679bd6ba665c0368e567a14759",
+     "size": 4444,
+     "type": "image/svg+xml"
+    },
+    "adamass-lockup-deep.svg": {
+     "name": "adamass-lockup-deep.svg",
+     "blob": "ab2654aef8bd018882854d052ab553e8",
+     "size": 4444,
+     "type": "image/svg+xml"
+    },
+    "adamass-lockup-knockout.svg": {
+     "name": "adamass-lockup-knockout.svg",
+     "blob": "864d7ba6b9f08bfcbb8d62eee498ece6",
+     "size": 4444,
+     "type": "image/svg+xml"
+    },
+    "adamass-icon-knockout.svg": {
+     "name": "adamass-icon-knockout.svg",
+     "blob": "a52ef2c9bfb1595c709a8511e13773ce",
+     "size": 1021,
+     "type": "image/svg+xml"
+    },
+    "adamass-icon-reversed.svg": {
+     "name": "adamass-icon-reversed.svg",
+     "blob": "2c85ab8e08214d3f5ebd4633c661d75d",
+     "size": 1021,
+     "type": "image/svg+xml"
+    }
+   }
+  },
+  "Imagery": {
+   "name": "Imagery",
+   "tile": "l",
+   "order": [
+    "hero-light.webp",
+    "hero-dark.webp"
+   ],
+   "files": {
+    "hero-light.webp": {
+     "name": "hero-light.webp",
+     "blob": "5ba3fc26cf2ff3e776a74ceeee9df237",
+     "size": 62782,
+     "type": "image/webp"
+    },
+    "hero-dark.webp": {
+     "name": "hero-dark.webp",
+     "blob": "1af723a58cf1570a3fa07ed3152a9927",
+     "size": 159350,
+     "type": "image/webp"
+    }
+   }
+  },
+  "Products": {
+   "name": "Products",
+   "tile": "m",
+   "order": [
+    "murmur-landing.webp",
+    "murmur-phone.webp",
+    "murmur-mark.svg",
+    "morrow-today.webp",
+    "morrow-today-dark.webp",
+    "morrow-phone.webp",
+    "morrow-phone-dark.webp",
+    "morrow-mark.svg"
+   ],
+   "files": {
+    "murmur-landing.webp": {
+     "name": "murmur-landing.webp",
+     "blob": "d8fb61e828101e8ffbebca47b54fcfd5",
+     "size": 97428,
+     "type": "image/webp"
+    },
+    "murmur-phone.webp": {
+     "name": "murmur-phone.webp",
+     "blob": "322b8d307573343af3bc8e84c8e69010",
+     "size": 51616,
+     "type": "image/webp"
+    },
+    "murmur-mark.svg": {
+     "name": "murmur-mark.svg",
+     "blob": "e41513343084ccb22b673e0ca1da9a66",
+     "size": 252,
+     "type": "image/svg+xml"
+    },
+    "morrow-today.webp": {
+     "name": "morrow-today.webp",
+     "blob": "1f3cb4a473ab96083d957383a48fb8fa",
+     "size": 49036,
+     "type": "image/webp"
+    },
+    "morrow-today-dark.webp": {
+     "name": "morrow-today-dark.webp",
+     "blob": "ae5125a03d3878d38230eab4e35b37fd",
+     "size": 49394,
+     "type": "image/webp"
+    },
+    "morrow-phone.webp": {
+     "name": "morrow-phone.webp",
+     "blob": "1a9e3d9f3bf2fa8a396546322d941bcf",
+     "size": 70174,
+     "type": "image/webp"
+    },
+    "morrow-phone-dark.webp": {
+     "name": "morrow-phone-dark.webp",
+     "blob": "a54d9f20d59ab837b8157a972fdce9be",
+     "size": 70642,
+     "type": "image/webp"
+    },
+    "morrow-mark.svg": {
+     "name": "morrow-mark.svg",
+     "blob": "94feefb4bea89552f989a6a8e632c526",
+     "size": 1905,
+     "type": "image/svg+xml"
+    }
+   }
+  },
+  "Infographics": {
+   "name": "Infographics",
+   "tile": "m",
+   "order": [
+    "product-bench.svg",
+    "applied-ai-schematic.svg",
+    "modernisation-terrain.svg",
+    "diligence-layers.svg",
+    "aws-globe.svg"
+   ],
+   "files": {
+    "product-bench.svg": {
+     "name": "product-bench.svg",
+     "blob": "c4a4fbc7b99dd9b5c49e80a1b16b7ab2",
+     "size": 7966,
+     "type": "image/svg+xml"
+    },
+    "applied-ai-schematic.svg": {
+     "name": "applied-ai-schematic.svg",
+     "blob": "586764f1769df30d99eeef85a43f236a",
+     "size": 4507,
+     "type": "image/svg+xml"
+    },
+    "modernisation-terrain.svg": {
+     "name": "modernisation-terrain.svg",
+     "blob": "c2256965c82215472198b5cd5cdc47b5",
+     "size": 19793,
+     "type": "image/svg+xml"
+    },
+    "diligence-layers.svg": {
+     "name": "diligence-layers.svg",
+     "blob": "89276cad0374eb7fe9d348501c1e530d",
+     "size": 10112,
+     "type": "image/svg+xml"
+    },
+    "aws-globe.svg": {
+     "name": "aws-globe.svg",
+     "blob": "9f081591dd0a824b44a2fc60273aacad",
+     "size": 29857,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Aleksandar Kotevski",
+  "at": "2026-11-11T13:20:00Z",
+  "via": "Claude Code",
+  "note": "First version for approval: tokens, logo, infographics, components, site plan"
+ }
+}

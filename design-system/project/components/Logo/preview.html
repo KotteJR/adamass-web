@@ -1,0 +1,27 @@
+<!-- @dsCard group="Brand" height=240 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Logo — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .tile{padding:18px 22px;border-radius:14px;background:#ffffff;box-shadow:0 0 0 1px var(--line)} .tile-dark{background:#050b16} .tile-blue{background:#0066ff}
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h('div', { className: 'pv-row', style: { gap: 40 } }, h(A.Logo, { size: 34 }), h(A.Logo, { size: 18 }), h(A.Logo, { variant: 'mark', size: 56 }), h(A.Logo, { variant: 'mark', size: 28 })),
+    h('div', { className: 'pv-row', style: { gap: 16 } },
+      h('div', { className: 'tile' }, h('img', { src: '/_blob/47c4480e3783628e32669634f36bd14d', alt: 'Lockup, primary file', height: 22 })),
+      h('div', { className: 'tile tile-dark' }, h('img', { src: '/_blob/b7faa9679bd6ba665c0368e567a14759', alt: 'Lockup, reversed file', height: 22 })),
+      h('div', { className: 'tile tile-blue' }, h('img', { src: '/_blob/864d7ba6b9f08bfcbb8d62eee498ece6', alt: 'Lockup, knockout file', height: 22 })),
+      h('img', { src: '/_blob/a52ef2c9bfb1595c709a8511e13773ce', alt: 'Icon, knockout file', width: 56, height: 56 }),
+      h('img', { src: '/_blob/2c85ab8e08214d3f5ebd4633c661d75d', alt: 'Icon, reversed file', width: 56, height: 56 }))
+  ));
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+/* Five ways in: text steps scroll on the left while one figure panel stays.
+   One DOM order for every width: each <article> holds its figure, then its
+   text.
+   - Below 1024 px: stacked, figure above text.
+   - From 1024 px: the articles dissolve (display: contents) into one grid:
+     texts take a row each, and all five figures share one sticky cell on the
+     right, crossfading as their text crosses the middle of the viewport. */
+
+.steps {
+  --panel-h: 760px;
+  --step-h: 520px;
+  --pad: calc((var(--panel-h) - var(--step-h)) / 2);
+  display: grid;
+  gap: 64px;
+}
+
+.step {
+  display: grid;
+  gap: 24px;
+}
+
+.panel {
+  position: relative;
+  height: clamp(300px, 86vw, 440px);
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.backdrop {
+  display: none;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+@media (min-width: 1024px) {
+  .steps {
+    --panel-h: min(760px, calc(100svh - 96px));
+    /* Same split as the Statement above (--split-aside, --split-gap). */
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--split-aside));
+    grid-template-rows: var(--pad) repeat(5, var(--step-h)) var(--pad);
+    column-gap: var(--split-gap);
+    row-gap: 0;
+    timeline-scope: --s0, --s1, --s2, --s3, --s4;
+  }
+
+  .step {
+    display: contents;
+  }
+
+  .backdrop,
+  .panel {
+    display: block;
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: start;
+    position: sticky;
+    top: calc((100svh - var(--panel-h)) / 2);
+    height: var(--panel-h);
+    border-radius: 12px;
+  }
+
+  .backdrop {
+    background: var(--paper);
+  }
+
+  .panel {
+    z-index: 1;
+    background: transparent;
+  }
+
+  .text {
+    grid-column: 1;
+    height: var(--step-h);
+    justify-content: center;
+    padding-right: 24px;
+  }
+
+  .text[data-step="0"] {
+    grid-row: 2;
+    view-timeline-name: --s0;
+  }
+  .text[data-step="1"] {
+    grid-row: 3;
+    view-timeline-name: --s1;
+  }
+  .text[data-step="2"] {
+    grid-row: 4;
+    view-timeline-name: --s2;
+  }
+  .text[data-step="3"] {
+    grid-row: 5;
+    view-timeline-name: --s3;
+  }
+  .text[data-step="4"] {
+    grid-row: 6;
+    view-timeline-name: --s4;
+  }
+
+  .steps [data-step="0"] {
+    --timeline: --s0;
+  }
+  .steps [data-step="1"] {
+    --timeline: --s1;
+  }
+  .steps [data-step="2"] {
+    --timeline: --s2;
+  }
+  .steps [data-step="3"] {
+    --timeline: --s3;
+  }
+  .steps [data-step="4"] {
+    --timeline: --s4;
+  }
+
+  /* Fallback: StepObserver writes the active index on .steps. */
+  .text {
+    opacity: 0.06;
+    transition: opacity 0.45s ease;
+  }
+  .panel {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .steps[data-active="0"] [data-step="0"],
+  .steps[data-active="1"] [data-step="1"],
+  .steps[data-active="2"] [data-step="2"],
+  .steps[data-active="3"] [data-step="3"],
+  .steps[data-active="4"] [data-step="4"] {
+    opacity: 1;
+  }
+
+  /* Hidden figures rest even while their panel is on screen. */
+  .steps[data-active="0"] .panel:not([data-step="0"]) *,
+  .steps[data-active="1"] .panel:not([data-step="1"]) *,
+  .steps[data-active="2"] .panel:not([data-step="2"]) *,
+  .steps[data-active="3"] .panel:not([data-step="3"]) *,
+  .steps[data-active="4"] .panel:not([data-step="4"]) * {
+    animation-play-state: paused !important;
+  }
+
+  /* Scroll-driven: each step is lit while it crosses the middle of the viewport. */
+  @supports (animation-timeline: view()) {
+    .text,
+    .panel {
+      transition: none;
+      animation-timeline: var(--timeline);
+      animation-range: cover 50svh cover calc(50svh + var(--step-h));
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+    .text {
+      animation-name: text-through;
+    }
+    .panel {
+      animation-name: panel-through;
+    }
+    /* The first step is already lit on arrival; the last stays lit on leaving. */
+    .text[data-step="0"] {
+      animation-name: text-first;
+    }
+    .text[data-step="4"] {
+      animation-name: text-last;
+    }
+    .panel[data-step="0"] {
+      animation-name: panel-first;
+    }
+    .panel[data-step="4"] {
+      animation-name: panel-last;
+    }
+  }
+}
+
+@keyframes text-through {
+  0% {
+    opacity: 0.06;
+  }
+  22%,
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.06;
+  }
+}
+@keyframes text-first {
+  0%,
+  78% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.06;
+  }
+}
+@keyframes text-last {
+  0% {
+    opacity: 0.06;
+  }
+  22%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes panel-through {
+  0% {
+    opacity: 0;
+  }
+  14%,
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes panel-first {
+  0%,
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes panel-last {
+  0% {
+    opacity: 0;
+  }
+  14%,
+  100% {
+    opacity: 1;
+  }
+}

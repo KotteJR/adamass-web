@@ -1,0 +1,39 @@
+.flow {
+  transition:
+    left 0.5s var(--ease-out-soft),
+    width 0.5s var(--ease-out-soft);
+}
+
+/* The note's text cross-fades, gently, only when the moment it shows changes:
+   pressing or letting go of the rail never restarts it. */
+.swap {
+  animation: swap 0.3s var(--ease-out-soft) both;
+}
+
+@keyframes swap {
+  from {
+    opacity: 0.25;
+    transform: translateY(4px);
+  }
+}
+
+/* The knob answers the rail: it grows under the pointer, and shows a ring
+   when the slider has keyboard focus. */
+.timeline:has(.area:hover) .knob {
+  scale: 1.15;
+}
+
+.timeline:has([role="slider"]:focus-visible) .knob {
+  box-shadow:
+    0 0 0 3px #0d1726,
+    0 0 0 6px rgb(156 192 230 / 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swap {
+    animation: none;
+  }
+  .flow {
+    transition: none;
+  }
+}

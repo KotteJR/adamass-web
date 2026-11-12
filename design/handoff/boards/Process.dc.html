@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How we work</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400..500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#111214}
+.paint{animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.06) translateX(-1.4%)}to{transform:scale(1.06) translateX(1.4%)}}
+.sky{position:absolute;inset:0;transition:background 2s ease}
+.sky.day{background:linear-gradient(180deg,rgba(14,28,48,.28),rgba(14,28,48,.10) 55%,rgba(14,28,48,.22))}
+.sky.dawn{background:linear-gradient(0deg,rgba(236,176,120,.55),rgba(236,176,120,.08) 55%,rgba(14,28,48,.25))}
+.sky.dusk{background:linear-gradient(0deg,rgba(226,150,98,.6),rgba(150,110,140,.18) 55%,rgba(14,28,48,.45))}
+.sky.night{background:linear-gradient(180deg,rgba(6,12,24,.72),rgba(10,20,38,.55))}
+.mk .sk-g path{stroke:rgba(255,255,255,.28);stroke-width:1;vector-effect:non-scaling-stroke}
+.mk .sk-c path,.mk .sk-c ellipse{stroke:rgba(255,255,255,.4);stroke-width:1;stroke-dasharray:4 5;vector-effect:non-scaling-stroke}
+.mk .sk-l path,.mk .sk-a path{stroke:#ffffff;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s cubic-bezier(.45,0,.2,1) .2s forwards}
+.mk .sk-a path{animation-delay:1s}
+.mk .sk-hl{stroke:rgba(255,255,255,.6);stroke-width:1.2}
+.mk .sk-h{opacity:.55}
+.mk .sk-n circle{fill:rgba(255,255,255,.12);stroke:#ffffff;stroke-width:1.1;vector-effect:non-scaling-stroke;opacity:0;animation:fade .6s ease 2.2s forwards}
+.mk .sk-d path{stroke:rgba(255,255,255,.75);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s ease 1.8s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.ghost{background:rgba(255,255,255,.16);color:#ffffff!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ghost:hover{background:rgba(255,255,255,.26)}
+.foot a{color:#4a4f57;text-decoration:none}.foot a:hover{color:#111214}
+@media (prefers-reduced-motion:reduce){.paint{animation:none}.mk *{animation:none!important;stroke-dashoffset:0!important;opacity:1!important}}
+
+.sky{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 35%);mask-image:linear-gradient(180deg,transparent 0%,#000 35%)}
+
+.pills{display:flex;gap:6px}
+.pl{all:unset;box-sizing:border-box;cursor:pointer;height:36px;padding:0 14px;display:inline-flex;align-items:center;border-radius:6px;background:rgba(255,255,255,.07);font-size:14px;color:rgba(255,255,255,.7);white-space:nowrap;transition:background-color .15s,color .15s}
+.pl:hover{background:rgba(255,255,255,.13);color:#fff}
+.pl.on{background:#fff;color:#111214}
+.pl:focus-visible{outline:2px solid #9cc0e6;outline-offset:2px}
+.bx{position:relative;height:112px;cursor:grab}
+.bxs{position:absolute;inset:0;pointer-events:none}
+.bxs>span{position:absolute;top:0;bottom:0;box-sizing:border-box;border-radius:8px;border:1px solid rgba(255,255,255,.12);transition:left .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1)}
+.bxs.lit>span{border-color:rgba(255,255,255,.3);box-shadow:inset 0 1px 0 rgba(255,255,255,.1);transition:--fill .5s cubic-bezier(.2,.7,.2,1),left .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1)}
+@property --fill {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -152px;
+}
+
+@property --wave {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* The glass: frosted white with a still highlight. Once filled it stays
+   still; only its edge lives. It is solid up to the edge, then flows out by
+   --flow (64 px at rest, further when moving fast) and ends in a soft wave
+   (a tile, --flow wide and 120 px tall, that repeats down the box; the solid
+   part runs 2 px into it, so the two never leave a hairline between them).
+   A box the edge has passed is filled to the end. */
+.glass {
+  background:
+    radial-gradient(55% 140% at 30% 0%, rgb(255 255 255 / 0.1), transparent 70%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.09), rgb(255 255 255 / 0.03));
+  -webkit-mask:
+    linear-gradient(#000, #000) 0 0 / max(0px, var(--fill) + 2px) 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='120' viewBox='0 0 64 120'%3E%3Cfilter id='s' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Cpath d='M-30 -40 L20.0 -40 L17.6 -36 L15.9 -32 L15.2 -28 L15.5 -24 L16.9 -20 L19.1 -16 L22.1 -12 L25.4 -8 L28.6 -4 L31.6 0 L33.9 4 L35.4 8 L36.1 12 L36.1 16 L35.6 20 L34.7 24 L33.8 28 L33.1 32 L32.6 36 L32.4 40 L32.5 44 L32.7 48 L32.7 52 L32.4 56 L31.6 60 L30.1 64 L28.1 68 L25.5 72 L22.7 76 L20.0 80 L17.6 84 L15.9 88 L15.2 92 L15.5 96 L16.9 100 L19.1 104 L22.1 108 L25.4 112 L28.6 116 L31.6 120 L33.9 124 L35.4 128 L36.1 132 L36.1 136 L35.6 140 L34.7 144 L33.8 148 L33.1 152 L32.6 156 L32.4 160 L-30 160 Z' fill='%23000' filter='url(%23s)'/%3E%3C/svg%3E") var(--fill) var(--wave) / var(--flow, 64px) 120px repeat-y;
+  mask:
+    linear-gradient(#000, #000) 0 0 / max(0px, var(--fill) + 2px) 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='120' viewBox='0 0 64 120'%3E%3Cfilter id='s' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3Cpath d='M-30 -40 L20.0 -40 L17.6 -36 L15.9 -32 L15.2 -28 L15.5 -24 L16.9 -20 L19.1 -16 L22.1 -12 L25.4 -8 L28.6 -4 L31.6 0 L33.9 4 L35.4 8 L36.1 12 L36.1 16 L35.6 20 L34.7 24 L33.8 28 L33.1 32 L32.6 36 L32.4 40 L32.5 44 L32.7 48 L32.7 52 L32.4 56 L31.6 60 L30.1 64 L28.1 68 L25.5 72 L22.7 76 L20.0 80 L17.6 84 L15.9 88 L15.2 92 L15.5 96 L16.9 100 L19.1 104 L22.1 108 L25.4 112 L28.6 116 L31.6 120 L33.9 124 L35.4 128 L36.1 132 L36.1 136 L35.6 140 L34.7 144 L33.8 148 L33.1 152 L32.6 156 L32.4 160 L-30 160 Z' fill='%23000' filter='url(%23s)'/%3E%3C/svg%3E") var(--fill) var(--wave) / var(--flow, 64px) 120px repeat-y;
+}
+
+/* The box the playhead is in: its edge ripples, like liquid against glass. */
+.live {
+  animation: wave 4.8s linear infinite;
+}
+
+@keyframes wave {
+  to {
+    --wave: 120px;
+  }
+}
+
+.nm{position:absolute;inset:0;pointer-events:none}
+.nm>div{position:absolute;top:0;bottom:0;box-sizing:border-box;padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0;transition:left .5s cubic-bezier(.2,.7,.2,1),width .5s cubic-bezier(.2,.7,.2,1)}
+.nm .ti{display:block;font-size:18px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;color:rgba(255,255,255,.4)}
+.nm .done .ti{color:rgba(255,255,255,.75)}.nm .on .ti{color:#fff}
+.nm .rg{font-family:'Geist Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;color:rgba(255,255,255,.4)}
+.tks{position:absolute;left:0;right:0;bottom:0;height:6px;pointer-events:none}
+.tks i{position:absolute;top:0;bottom:0;width:1px;transform:translateX(-50%);background:rgba(255,255,255,.25)}.tks i.on{background:rgba(255,255,255,.7)}
+.wd{position:absolute;bottom:14px;z-index:4;font-size:12px;font-weight:500;letter-spacing:-.005em;white-space:nowrap;color:#fff;pointer-events:none;transition:left .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1)}
+.knob{position:absolute;top:111.5px;width:14px;height:14px;border-radius:99px;background:#fff;box-shadow:0 0 0 3px #0d1726;transform:translate(-50%,-50%);z-index:3;transition:left .5s cubic-bezier(.2,.7,.2,1)}
+.pline{position:absolute;top:0;bottom:0;width:1px;background:rgba(156,192,230,.6);transition:left .5s cubic-bezier(.2,.7,.2,1)}
+.note{position:absolute;top:32px;box-sizing:border-box;width:100%;max-width:460px;transition:left .5s cubic-bezier(.2,.7,.2,1),transform .5s cubic-bezier(.2,.7,.2,1)}
+.note.nr{padding-left:20px}.note.nl{transform:translateX(-100%);padding-right:20px}
+.ar{all:unset;box-sizing:border-box;cursor:pointer;width:44px;height:44px;border-radius:99px;border:1px solid rgba(255,255,255,.2);display:inline-flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8)}.ar:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.ar:focus-visible{outline:2px solid #9cc0e6;outline-offset:2px}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; background-color: #ffffff; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #111214">
+  <div style="position: relative; isolation: isolate; overflow: hidden; background-color: #6f8fb3">
+    <img class="paint" src="/_blob/b3ab9061ae8037d732ac20d50184b097" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1">
+    <section id="process" style="position: relative; color: #ffffff">
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,20,33,0.92) 0%, rgba(11,20,33,0.86) calc(100% - 320px), rgba(11,20,33,0) 100%)"></div>
+  <div style="position: relative; padding: 112px 32px 268px; display: flex; flex-direction: column; gap: 80px">
+    <div style="max-width: 720px; display: flex; flex-direction: column; gap: 20px"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.6)">How we work</span>
+      <h2 style="margin: 0; font-size: 56px; line-height: 1.04; font-weight: 500; letter-spacing: -0.045em">Same four steps,<br><span style="color: rgba(255,255,255,0.45)">a week or two years.</span></h2>
+      <p style="margin: 0; max-width: 560px; font-size: 18px; line-height: 1.55; color: rgba(255,255,255,0.75)">A three-week review and two years inside your team run the same way. Pick a way in and drag along the line to see what happens when.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 40px">
+      <div role="tablist" aria-label="Ways in" class="pills"><button type="button" role="tab" class="pl {{w0}}" onClick="{{pw0}}">Diligence and advisory</button><button type="button" role="tab" class="pl {{w1}}" onClick="{{pw1}}">Architect as a Service</button><button type="button" role="tab" class="pl {{w2}}" onClick="{{pw2}}">GenAI development</button><button type="button" role="tab" class="pl {{w3}}" onClick="{{pw3}}">SOC 2 readiness</button><button type="button" role="tab" class="pl {{w4}}" onClick="{{pw4}}">Embedded delivery</button></div>
+      <div style="position: relative">
+        <div role="slider" aria-label="Where in the engagement" aria-valuetext="{{mwhen}}: {{mtext}}" class="bx">
+          <span class="bxs"><span style="left: {{bl0}}; width: {{bw0}}"></span><span style="left: {{bl1}}; width: {{bw1}}"></span><span style="left: {{bl2}}; width: {{bw2}}"></span><span style="left: {{bl3}}; width: {{bw3}}"></span></span>
+          <span class="bxs lit"><span class="glass {{lv0}}" style="left: {{bl0}}; width: {{bw0}}; --fill: {{fl0}}"></span><span class="glass {{lv1}}" style="left: {{bl1}}; width: {{bw1}}; --fill: {{fl1}}"></span><span class="glass {{lv2}}" style="left: {{bl2}}; width: {{bw2}}; --fill: {{fl2}}"></span><span class="glass {{lv3}}" style="left: {{bl3}}; width: {{bw3}}; --fill: {{fl3}}"></span></span>
+          <div class="nm"><div class="{{c0}}" style="left: {{bl0}}; width: {{bw0}}"><span class="ti">Frame</span><span class="rg">{{r0}}</span></div><div class="{{c1}}" style="left: {{bl1}}; width: {{bw1}}"><span class="ti">Join</span><span class="rg">{{r1}}</span></div><div class="{{c2}}" style="left: {{bl2}}; width: {{bw2}}"><span class="ti">Deliver</span><span class="rg">{{r2}}</span></div><div class="{{c3}}" style="left: {{bl3}}; width: {{bw3}}"><span class="ti">Handover</span><span class="rg">{{r3}}</span></div></div>
+          <span class="tks"><sc-for list="{{tk}}" as="t" hint-placeholder-count="7"><i class="{{t.cls}}" style="left: {{t.x}}%"></i></sc-for></span>
+          <span class="wd" style="left: min({{hx}}%, 100% - 1px); transform: translateX(-{{hx}}%)">{{mlabel}}</span>
+          <span class="knob" style="left: calc(min({{hx}}%, 100% - 1px) + 0.5px)"></span>
+        </div>
+        <div style="position: relative; height: 320px">
+          <span class="pline" style="left: min({{hx}}%, 100% - 1px)"></span>
+          <div class="note {{nh}}" style="left: min({{hx}}%, 100% - 1px)">
+            <div aria-live="polite">
+              <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #9cc0e6">{{mwhen}} · {{mphase}}</span>
+              <p style="margin: 12px 0 0; font-size: 24px; line-height: 1.3; font-weight: 500; letter-spacing: -0.02em">{{mtext}}</p>
+              <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: rgba(255,255,255,0.6)">{{pbody}}</p>
+            </div>
+            <div style="margin-top: 24px; display: flex; align-items: center; gap: 8px"><button type="button" class="ar" aria-label="Earlier" onClick="{{prev}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button><button type="button" class="ar" aria-label="Later" onClick="{{next}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button><span style="margin-left: 6px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.4)">{{mi}} / {{mn}}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    <div style="position: relative; width: 1440px; height: 780px; overflow: hidden">
+    <div class="sky {{phase}}"></div>
+    <div style="position: absolute; left: 0; right: 0; top: 120px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; color: #ffffff">
+      <div class="mk" aria-hidden="true"><svg viewBox="110 180 980 790" width="300" height="242" fill="none" aria-label="The Adamass mark, sketched with its construction lines" role="img"><defs><pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V11" class="sk-hl"></path></pattern></defs><g class="sk-g"><path d="M120 291.9H1080"></path><path d="M120 856.2H1080"></path><path d="M150 351.1H1050"></path><path d="M150 796.9H1050"></path><path d="M170 450H1030"></path><path d="M170 760H1030"></path><path d="M600 205V945"></path></g><g class="sk-c"><ellipse cx="591.2" cy="604.7" rx="73.1" ry="109.3"></ellipse><ellipse cx="571.8" cy="604.7" rx="125.6" ry="162"></ellipse><path d="M600 160A440 440 0 0 1 1030 520"></path></g><g class="sk-h"><path d="M363.6 291.9L202.8 291.9L202.8 856.2L363.6 856.2L363.6 796.9L264.9 796.9L264.9 351.1L363.6 351.1Z" fill="url(#hatch)"></path><path d="M836.4 291.9L997.2 291.9L997.2 856.2L836.4 856.2L836.4 796.9L935.1 796.9L935.1 351.1L836.4 351.1Z" fill="url(#hatch)"></path></g><g class="sk-l"><path pathLength="1" d="M379.6 291.9L186.8 291.9"></path><path pathLength="1" d="M202.8 275.9L202.8 872.2"></path><path pathLength="1" d="M186.8 856.2L379.6 856.2"></path><path pathLength="1" d="M363.6 866.9L363.6 786.2"></path><path pathLength="1" d="M379.6 796.9L248.9 796.9"></path><path pathLength="1" d="M264.9 812.9L264.9 335.1"></path><path pathLength="1" d="M248.9 351.1L379.6 351.1"></path><path pathLength="1" d="M363.6 361.8L363.6 281.2"></path><path pathLength="1" d="M820.4 291.9L1013.2 291.9"></path><path pathLength="1" d="M997.2 275.9L997.2 872.2"></path><path pathLength="1" d="M1013.2 856.2L820.4 856.2"></path><path pathLength="1" d="M836.4 866.9L836.4 786.2"></path><path pathLength="1" d="M820.4 796.9L951.1 796.9"></path><path pathLength="1" d="M935.1 812.9L935.1 335.1"></path><path pathLength="1" d="M951.1 351.1L820.4 351.1"></path><path pathLength="1" d="M836.4 361.8L836.4 281.2"></path></g><g class="sk-a"><path pathLength="1" d="M283 -13Q202 -13 148.0 26.5Q94 66 67.0 137.0Q40 208 40 301Q40 395 67.5 465.5Q95 536 149.0 575.0Q203 614 283 614Q349 614 389.5 587.5Q430 561 448 522H472V600H595V0H472V78H448Q430 41 389.5 14.0Q349 -13 283 -13ZM313 89Q381 89 421.5 146.5Q462 204 462 300Q462 397 421.5 454.5Q381 512 313 512Q249 512 214.0 457.5Q179 403 179 300Q179 197 214.0 143.0Q249 89 313 89Z" transform="translate(425.625 760) scale(0.51666667 -0.51666667)"></path></g><g class="sk-n"><circle cx="363.6" cy="321.5" r="7"></circle><circle cx="836.4" cy="321.5" r="7"></circle><circle cx="363.6" cy="826.6" r="7"></circle><circle cx="836.4" cy="826.6" r="7"></circle><circle cx="446.3" cy="604.6" r="7"></circle><circle cx="591.2" cy="604.7" r="7"></circle></g><g class="sk-d"><path pathLength="1" d="M202.8 236H997.2M202.8 222V250M997.2 222V250M150 291.9V856.2M136 291.9H164M136 856.2H164"></path></g></svg></div>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.02em">Adamass</span>
+      <p style="margin: -10px 0 0; max-width: 460px; font-size: 16px; line-height: 1.5; color: rgba(255,255,255,0.86)">Come with the work that feels heavy. We will make it light.</p>
+      <div style="display: flex; gap: 8px; margin-top: 4px">
+        <a href="#call" style="height: 42px; padding: 0 18px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #ffffff; color: #111214; font-size: 14.5px; font-weight: 500; text-decoration: none">Send a short brief</a>
+        <a href="#top" class="ghost" style="height: 42px; padding: 0 18px; display: inline-flex; align-items: center; border-radius: 8px; font-size: 14.5px; font-weight: 500; text-decoration: none">Back to top ↑</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 36px; margin-top: 26px"><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">IKEA</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Nasdaq</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Tele2</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Thomson Reuters</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">The Guardian</span></div>
+    </div>
+    <span style="position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.88)">{{greet}} from Malmö · {{time}}</span>
+  </div>
+  </div>
+  <div class="foot" style="position: relative; height: 120px; padding: 0 32px; background-color: #ffffff; display: grid; grid-template-columns: 1.2fr 1fr 1fr; align-items: center; gap: 24px; font-size: 13.5px; color: #6b7079">
+    <div style="display: flex; align-items: center; gap: 18px"><img src="/_blob/f12db6b319a6e0459ade068198886e4c" alt="Adamass AB" style="height: 16px"><span>Software and AI engineering, since 2019.</span></div>
+    <span>Fridhemsborg, Fridhemsvägen 2, 217 74 Malmö · Org. nr 559151-2388</span>
+    <div style="display: flex; justify-content: flex-end; gap: 22px"><a href="#work">Work</a><a href="#services">Services</a><a href="https://www.linkedin.com/company/adamass-ab">LinkedIn</a><a href="https://aws.amazon.com/marketplace/seller-profile?id=seller-rikosy4e7tpne">AWS Marketplace</a><a href="#privacy">Privacy</a></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2122}}'>
+// The timeline: the same sums as the site (engagement-math.ts). Plus the end screen's Malmö clock.
+const WAYS = [{"id": "diligence", "label": "Diligence and advisory", "short": "3–5 wk", "length": "3–5 weeks", "shown": "4 weeks shown", "unit": "week", "phases": [0.5, 0.5, 2.5, 0.5], "start": 1.5, "moments": [{"week": 0, "when": "Day 1", "text": "We agree the questions with you, or with your investors.", "label": "Questions"}, {"week": 0.6, "when": "Week 1", "text": "Read access to code, cloud and documents, and interviews with your team are booked.", "label": "Access"}, {"week": 1.5, "when": "Week 2", "text": "Architecture, data and delivery are reviewed, with the costs and risks priced.", "label": "Review"}, {"week": 2.6, "when": "Week 3", "text": "Findings are checked with your engineers, so nothing in the report is a surprise.", "label": "Check"}, {"week": 3.6, "when": "Week 4", "text": "A written report: the red flags, what they cost to fix and a 90-day plan, then a read-out.", "label": "Report"}]}, {"id": "architect", "label": "Architect as a Service", "short": "40 h", "length": "40 hours, over up to 2 months", "shown": "One 40-hour block shown", "unit": "week", "phases": [1, 0.5, 5.5, 1], "start": 2.5, "moments": [{"week": 0, "when": "Day 1", "text": "We agree what the first 40 hours should answer.", "label": "Questions"}, {"week": 1.1, "when": "Week 2", "text": "Read-only access to your AWS accounts and diagrams.", "label": "Access"}, {"week": 2.5, "when": "Week 3", "text": "An architecture review: what holds, what will not, and what it costs to change.", "label": "Review"}, {"week": 4.5, "when": "Week 5", "text": "Decision records for the open choices, ready for your team to sign off.", "label": "Decisions"}, {"week": 7.2, "when": "Week 8", "text": "A roadmap you can act on. Draw down the next block only if you need it.", "label": "Roadmap"}]}, {"id": "genai", "label": "GenAI development", "short": "8–14 wk", "length": "8–14 weeks", "shown": "12 weeks shown", "unit": "week", "phases": [2, 1, 8, 1], "start": 5, "moments": [{"week": 0, "when": "Day 1", "text": "We pick the use case together and agree what a good answer looks like.", "label": "Use case"}, {"week": 1.5, "when": "Week 2", "text": "A test set of real questions from your team, to score every version against.", "label": "Test set"}, {"week": 2.2, "when": "Week 3", "text": "Access to your AWS account and data. The first prototype runs on your own documents.", "label": "Prototype"}, {"week": 5, "when": "Week 6", "text": "The first version answers in staging, scored against the test set.", "label": "Staging"}, {"week": 8, "when": "Week 9", "text": "Connected to your systems, with guardrails on and the running cost measured.", "label": "Connected"}, {"week": 10.4, "when": "Week 11", "text": "Live for the first users, with a trace behind every answer.", "label": "Live"}, {"week": 11.3, "when": "Week 12", "text": "Code, evaluations and runbooks handed to your team.", "label": "Handed off"}]}, {"id": "soc2", "label": "SOC 2 readiness", "short": "6–12 mo", "length": "6–12 months to a Type II report", "shown": "One year shown", "unit": "month", "phases": [4, 2, 18, 28], "start": 19, "moments": [{"week": 0, "when": "Week 1", "text": "We agree what is in scope and which criteria apply. Security always does.", "label": "Scope"}, {"week": 2.5, "when": "Week 3", "text": "A gap list in priority order, and a first draft of your system description.", "label": "Gap list"}, {"week": 4.4, "when": "Week 5", "text": "We start in your AWS accounts and tools, next to the people who will own the controls.", "label": "In your tools"}, {"week": 8, "when": "Month 2", "text": "Policies written, controls on your landing zone, and evidence collected automatically.", "label": "Controls"}, {"week": 14, "when": "Month 4", "text": "A mock audit, tested the way an auditor would. We close what is left and shortlist auditors.", "label": "Mock audit"}, {"week": 19, "when": "Month 5", "text": "Type I: an independent auditor checks the design of your controls on one date.", "label": "Type I"}, {"week": 24, "when": "Month 6", "text": "The Type II window opens. Your team runs the controls, and we check in every month.", "label": "Window opens"}, {"week": 48.5, "when": "Month 12", "text": "The window closes. The auditor tests it and issues your Type II report.", "label": "Type II"}]}, {"id": "embedded", "label": "Embedded delivery", "short": "3 mo–2 yr", "length": "3 months to 2 years", "shown": "One year shown", "unit": "month", "phases": [2, 2, 44, 4], "start": 8, "moments": [{"week": 0, "when": "Week 1", "text": "We agree the goals, the shape of the team and how we work with yours.", "label": "Goals"}, {"week": 2.2, "when": "Week 3", "text": "Our people join your stand-ups, your repositories and your on-call rota.", "label": "Joined"}, {"week": 8, "when": "Month 2", "text": "The first releases from the joint team reach your users.", "label": "First release"}, {"week": 24, "when": "Month 6", "text": "A review together: grow the team, shrink it, or keep it as it is.", "label": "Review"}, {"week": 48.5, "when": "Month 12", "text": "What we know has moved to your own people, and we step out.", "label": "Step out"}]}];
+const PHASES = [["Frame", "We agree the goal, what is in the way and how we will both know it worked, and write it down."], ["Join", "Our people get access and start inside your team, your tools and your routines."], ["Deliver", "The work lands in small pieces you can see and use. When the evidence changes, so does the plan."], ["Handover", "Code, setup and know-how move to your team, so it all runs without us."]];
+const WPM = 52 / 12;
+const total = (w) => w.phases.reduce((a, b) => a + b, 0);
+const bounds = (w) => { let at = 0; return w.phases.map((d) => { const b = [at, at + d]; at += d; return b; }); };
+const phaseAt = (w, wk) => { const i = bounds(w).findIndex((b) => wk < b[1] - 1e-6); return i < 0 ? 3 : i; };
+const momentAt = (w, wk) => { let k = 0; w.moments.forEach((m, i) => { if (m.week <= wk + 1e-6) k = i; }); return k; };
+const pointLabel = (w, wk) => {
+  const on = w.moments.find((m) => Math.abs(m.week - wk) < 1e-6);
+  if (on) return on.when;
+  if (w.unit === 'month' && wk >= WPM) return 'Month ' + (Math.floor(wk / WPM + 1e-6) + 1);
+  return 'Week ' + (Math.floor(wk + 1e-6) + 1);
+};
+const rangeLabel = (w, b) => {
+  const months = w.unit === 'month' && (b[1] - b[0] >= WPM || b[0] >= WPM);
+  const u = months ? WPM : 1, name = months ? 'Month' : 'Week';
+  const from = Math.floor(b[0] / u + 1e-6) + 1, to = Math.max(from, Math.ceil(b[1] / u - 1e-6));
+  return from === to ? name + ' ' + from : name + 's ' + from + '–' + to;
+};
+const MIN = 132 / 1376;
+const layoutOf = (w) => {
+  const t = total(w), real = w.phases.map((d) => d / t);
+  let floored = real.map(() => false), shares = real;
+  for (let pass = 0; pass < 4; pass++) {
+    const fixed = floored.filter(Boolean).length * MIN;
+    const free = real.reduce((a, s, i) => (floored[i] ? a : a + s), 0);
+    shares = real.map((s, i) => (floored[i] ? MIN : (s / free) * (1 - fixed)));
+    const next = shares.map((s, i) => floored[i] || s < MIN);
+    if (next.every((f, i) => f === floored[i])) break;
+    floored = next;
+  }
+  let at = 0; return shares.map((s) => { const r = [at, s]; at += s; return r; });
+};
+const placeOf = (w, wk, lay) => { const i = phaseAt(w, wk), b = bounds(w)[i], l = lay[i]; return l[0] + (Math.min(b[1], Math.max(b[0], wk)) - b[0]) / (b[1] - b[0]) * l[1]; };
+const ticksOf = (w) => {
+  const t = total(w);
+  if (w.unit === 'month') { const m = Math.round(t / WPM); return Array.from({ length: Math.floor(m / 3) + 1 }, (_, i) => ({ week: i * 3 * WPM, label: String(i * 3) })); }
+  const step = t <= 5 ? 1 : 2;
+  return Array.from({ length: Math.floor(t / step) + 1 }, (_, i) => ({ week: i * step, label: String(i * step) }));
+};
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { time: '', hour: 12, way: 2, week: WAYS[2].start };
+  }
+  tick() {
+    const now = new Date();
+    let time = '';
+    try { time = now.toLocaleTimeString('sv-SE', { timeZone: 'Europe/Stockholm', hour: '2-digit', minute: '2-digit' }); }
+    catch (e) { time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'); }
+    this.setState({ time, hour: parseInt(time.slice(0, 2), 10) });
+  }
+  componentDidMount() { this.tick(); this.timer = setInterval(() => this.tick(), 20000); }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    const h = this.state.hour;
+    const phase = (h >= 21 || h < 5) ? 'night' : (h < 8 ? 'dawn' : (h >= 17 ? 'dusk' : 'day'));
+    const greet = phase === 'night' ? 'Good night' : (phase === 'dawn' ? 'Good morning' : (phase === 'dusk' ? 'Good evening' : 'Hello'));
+    const v = { time: this.state.time || '12:00', phase, greet };
+    const { way, week } = this.state;
+    const w = WAYS[way], t = total(w), b = bounds(w), cur = phaseAt(w, week), mi = momentAt(w, week), m = w.moments[mi];
+    const lay = layoutOf(w);
+    const pct = (x) => (placeOf(w, x, lay) * 100).toFixed(3) + '%';
+    WAYS.forEach((x, i) => { v['w' + i] = i === way ? 'on' : ''; v['pw' + i] = () => this.setState({ way: i, week: WAYS[i].start }); });
+    v.len = w.length; v.shown = w.shown;
+    b.forEach((r, i) => {
+      const lead = i ? 3 : 0, tail = i < 3 ? 3 : 0;  // half the 6 px gap where boxes meet
+      v['bl' + i] = 'calc(' + (lay[i][0] * 100).toFixed(3) + '% + ' + lead + 'px)';
+      v['bw' + i] = 'calc(' + (lay[i][1] * 100).toFixed(3) + '% - ' + (lead + tail) + 'px)';
+      // How far the glass reaches into this box, in px of the 1376 px row: to the playhead, never past the end.
+      const left = lay[i][0] * 1376 + lead, wide = lay[i][1] * 1376 - lead - tail, x = placeOf(w, week, lay) * 1376;
+      v['fl' + i] = Math.min(wide, Math.max(-152, x - left)).toFixed(1) + 'px';
+      v['lv' + i] = i === cur ? 'live' : '';
+      v['tk' + i] = (100 / Math.max(1, Math.round(w.phases[i] / (w.unit === 'month' ? WPM : 1)))).toFixed(3) + '% 100%';
+      v['c' + i] = i < cur ? 'done' : (i === cur ? 'on' : '');
+      v['r' + i] = rangeLabel(w, r);
+      const first = w.moments.find((x) => x.week >= r[0] - 1e-6) || w.moments[0];
+      v['j' + i] = () => this.setState({ week: first.week });
+    });
+    // Small checkpoints where each moment happens, lit once passed, and the current moment's name over the knob.
+    v.tk = w.moments.map((m, k) => ({ x: (placeOf(w, m.week, lay) * 100).toFixed(3), cls: k <= mi ? 'on' : '' }));
+    v.mlabel = m.label;
+    for (let k = 0; k < 7; k++) {
+      const x = w.moments[k];
+      v['dl' + k] = x ? pct(x.week) : '0%'; v['dd' + k] = x ? 'block' : 'none'; v['dc' + k] = x && x.week <= week + 1e-6 ? 'on' : '';
+    }
+    v.hx = (placeOf(w, week, lay) * 100).toFixed(3);
+    v.nh = placeOf(w, week, lay) * 1376 + 460 <= 1376 ? 'nr' : 'nl'; v.hl = pointLabel(w, week);
+    v.mwhen = m.when; v.mtext = m.text; v.mphase = PHASES[cur][0]; v.pbody = PHASES[cur][1];
+    v.mi = String(mi + 1); v.mn = String(w.moments.length);
+    v.prev = () => this.setState({ week: w.moments[Math.max(0, mi - 1)].week });
+    v.next = () => this.setState({ week: w.moments[Math.min(w.moments.length - 1, mi + 1)].week });
+    return v;
+  }
+}
+</script>
+</body>
+</html>

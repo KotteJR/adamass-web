@@ -1,0 +1,159 @@
+/* Murmur: its sky through the day. From design/handoff/generators/round2/stages.py:
+   four phases of 5 s (a 20 s day), clouds drifting, two white waves, an equaliser. */
+
+.root {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  color: #fff;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  animation: kphOn 20s linear infinite;
+}
+
+@keyframes kphOn {
+  0% { opacity: 1; }
+  22% { opacity: 1; }
+  29% { opacity: 0; }
+  96% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* One line per phase, stacked; each shows during its own phase. */
+.t {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  animation: kphTxt 20s ease infinite;
+}
+
+.r > .t {
+  left: auto;
+  right: 0;
+}
+
+@keyframes kphTxt {
+  0% { opacity: 1; transform: none; }
+  21% { opacity: 1; transform: none; }
+  25% { opacity: 0; transform: translateY(-8px); }
+  96% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: none; }
+}
+
+.cl {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.c1 {
+  width: 78%;
+  left: -22%;
+  top: -8%;
+  opacity: 0.75;
+  animation: kclA 46s ease-in-out infinite alternate;
+}
+
+.c2 {
+  width: 36%;
+  right: -6%;
+  top: 22%;
+  opacity: 0.7;
+  animation: kclB 38s ease-in-out infinite alternate;
+}
+
+.c3 {
+  width: 90%;
+  right: -34%;
+  bottom: -16%;
+  opacity: 0.55;
+  transform: scaleX(-1);
+  animation: kclC 54s ease-in-out infinite alternate;
+}
+
+@keyframes kclA {
+  from { transform: translateX(0) scale(1); }
+  to { transform: translateX(14%) scale(1.06); }
+}
+
+@keyframes kclB {
+  from { transform: translateX(0); }
+  to { transform: translateX(-30%) translateY(6%); }
+}
+
+@keyframes kclC {
+  from { transform: scaleX(-1) translateX(0); }
+  to { transform: scaleX(-1) translateX(12%); }
+}
+
+.wave {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -45px;
+  max-width: none;
+  animation: kwv 9s linear infinite;
+}
+
+.wave2 {
+  animation-duration: 13s;
+}
+
+@keyframes kwv {
+  from { transform: translateX(0); }
+  to { transform: translateX(-800px); }
+}
+
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+
+.eq i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: #b35c12;
+  transform-origin: bottom;
+  animation: keq 0.9s ease-in-out infinite alternate;
+}
+
+.eq i:nth-child(2) {
+  animation-delay: -0.4s;
+}
+
+.eq i:nth-child(3) {
+  animation-delay: -0.7s;
+}
+
+@keyframes keq {
+  from { transform: scaleY(0.3); }
+  to { transform: scaleY(1); }
+}
+
+/* Rests offscreen (PlayWhenVisible sets data-playing) and before hydration. */
+@media (scripting: enabled) {
+  .root:not([data-playing]) * {
+    animation-play-state: paused !important;
+  }
+}
+
+/* Reduced motion: Morning, held still. */
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .t ~ .t,
+  .sky ~ .sky {
+    display: none;
+  }
+}

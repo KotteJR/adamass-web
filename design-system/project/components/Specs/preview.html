@@ -1,0 +1,18 @@
+<!-- @dsCard group="Data" height=200 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Specs — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { style: { maxWidth: 520 } }, h(A.Specs, { rows: [{ k: 'Unit', v: '40 hours, up to two months' }, { k: 'Scope', v: 'Governance, AI, cost, automation' }, { k: 'Output', v: 'Decision records and a roadmap' }] })));
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- @dsCard group="Type" height=70 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Tag — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv-row', style: { gap: 6 } }, ['Next.js', 'FastAPI', 'ECS Fargate', 'Bedrock', 'eu-north-1'].map(function (t) { return h(A.Tag, { key: t }, t); })));
+</script>
+</body>
+</html>

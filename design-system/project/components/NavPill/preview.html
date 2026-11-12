@@ -1,0 +1,25 @@
+<!-- @dsCard group="Navigation" height=110 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>NavPill — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .pv{background:var(--bg-2)}
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  function Demo() {
+    return h('div', { style: { display: 'flex', justifyContent: 'center' } }, h(A.NavPill, {
+      links: [{ label: 'Work', active: true }, { label: 'Services' }, { label: 'AWS' }, { label: 'Process' }],
+      cta: { label: 'Start a project' },
+      onToggleTheme: function () { var r = document.documentElement; r.setAttribute('data-theme', r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+    }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

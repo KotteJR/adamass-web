@@ -1,0 +1,21 @@
+<!-- @dsCard group="Showcase" height=520 width=1280 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ProjectCard — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'grid' },
+    h(A.ProjectCard, { name: 'Morrow', year: '2026', oneLiner: 'Eleven fresh puzzles every morning.', src: '/_blob/1f3cb4a473ab96083d957383a48fb8fa', srcDark: '/_blob/ae5125a03d3878d38230eab4e35b37fd', tags: ['Next.js 16', 'three.js', 'FastAPI'] }),
+    h(A.ProjectCard, { name: 'Murmur', year: '2026', oneLiner: 'Sound for sleep, focus and meditation.', src: '/_blob/d8fb61e828101e8ffbebca47b54fcfd5', tags: ['Next.js', 'ECS Fargate', 'SQS'] }),
+    h(A.ProjectCard, { name: 'Cogniveil', kind: 'client', oneLiner: 'An assistant for legal work.', art: 'contour', tags: ['Amazon Bedrock', 'FastAPI'] })));
+</script>
+</body>
+</html>

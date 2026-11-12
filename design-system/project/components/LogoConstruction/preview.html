@@ -1,0 +1,69 @@
+<!-- @dsCard group="Brand" height=760 width=1200 page -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Logo construction — the mark</title>
+<style>
+  body { background: var(--bg); }
+  .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .board { display: block; width: 100%; height: auto; border-radius: 16px; background: #fafafa; box-shadow: 0 0 0 1px var(--line); }
+  .p { stroke: #2f3237; stroke-width: 2.4; fill: none; vector-effect: non-scaling-stroke; }
+  .s { stroke: #5c6067; stroke-width: 1.7; stroke-dasharray: 7 6; fill: none; vector-effect: non-scaling-stroke; }
+  .x { stroke: #8f939a; stroke-width: 1.3; fill: none; vector-effect: non-scaling-stroke; }
+  .logo { fill: rgba(0,0,0,0.10); stroke: #1f2125; stroke-width: 2.6; vector-effect: non-scaling-stroke; }
+  .tile { fill: rgba(0,0,0,0.035); stroke: #1f2125; stroke-width: 2.6; vector-effect: non-scaling-stroke; }
+  .n { fill: #fafafa; stroke: #2f3237; stroke-width: 1.6; vector-effect: non-scaling-stroke; }
+  .notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 32px; }
+  .notes div { display: flex; flex-direction: column; gap: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<svg class="board" viewBox="-1880 -795 4960 2790" role="img" aria-label="Construction grid of the Adamass mark">
+  <!-- 01 Auxiliary -->
+  <g class="x">
+    <path d="M-260 600H1460" />
+    <path d="M-160 574H1360" />
+    <path d="M202.8 -170V1370M997.2 -170V1370" />
+    <path d="M363.6 200V950M836.4 200V950" />
+    <path d="M100 351.1H1100M100 796.9H1100" />
+    <circle cx="253" cy="253" r="253" />
+    <circle cx="947" cy="947" r="253" />
+  </g>
+  <!-- 02 Secondary -->
+  <g class="s">
+    <path d="M-260 291.9H1460M-260 856.2H1460" />
+    <path d="M360 442.8H860M360 766.7H860" />
+    <path d="M669.5 380V830M733 380V830" />
+    <path d="M589.7 330V880" />
+    <ellipse cx="571.8" cy="604.7" rx="125.6" ry="162" />
+  </g>
+  <!-- 03 Primary -->
+  <g class="p">
+    <path d="M600 -230V1430" />
+    <path d="M-300 760H1500M-300 450H1500" />
+    <ellipse cx="591.2" cy="604.7" rx="73.1" ry="109.3" />
+  </g>
+  <!-- 04 Logo copy -->
+  <rect class="tile" x="0" y="0" width="1200" height="1200" rx="253" />
+  <path class="logo" d="M363.6 291.9H202.8V856.2H363.6V796.9H264.9V351.1H363.6Z" />
+  <path class="logo" d="M836.4 291.9H997.2V856.2H836.4V796.9H935.1V351.1H836.4Z" />
+  <path class="logo" d="M283 -13Q202 -13 148.0 26.5Q94 66 67.0 137.0Q40 208 40 301Q40 395 67.5 465.5Q95 536 149.0 575.0Q203 614 283 614Q349 614 389.5 587.5Q430 561 448 522H472V600H595V0H472V78H448Q430 41 389.5 14.0Q349 -13 283 -13ZM313 89Q381 89 421.5 146.5Q462 204 462 300Q462 397 421.5 454.5Q381 512 313 512Q249 512 214.0 457.5Q179 403 179 300Q179 197 214.0 143.0Q249 89 313 89Z" transform="translate(425.625 760) scale(0.51666667 -0.51666667)" />
+  <!-- 05 Anchors -->
+  <g>
+    <circle class="n" cx="363.6" cy="321.5" r="15" /><circle class="n" cx="836.4" cy="321.5" r="15" />
+    <circle class="n" cx="363.6" cy="826.6" r="15" /><circle class="n" cx="836.4" cy="826.6" r="15" />
+    <circle class="n" cx="446.3" cy="604.6" r="15" /><circle class="n" cx="571.8" cy="442.8" r="15" /><circle class="n" cx="571.8" cy="766.7" r="15" />
+    <rect class="n" x="187.8" y="276.9" width="30" height="30" /><rect class="n" x="982.2" y="276.9" width="30" height="30" />
+    <rect class="n" x="187.8" y="841.2" width="30" height="30" /><rect class="n" x="982.2" y="841.2" width="30" height="30" />
+    <path class="p" d="M576.2 604.7H606.2M591.2 589.7V619.7" />
+    <circle class="n" cx="600" cy="600" r="22" /><path class="p" d="M585 600H615M600 585V615" />
+  </g>
+</svg>
+<div class="notes">
+  <div><span class="am-label label">[ Measured ]</span><p class="small">Tile 1200 with corner radius 253 (21% of the side). Brackets are mirror-exact about the vertical axis: outer edges at 202.8 and 997.2, arm ends at 363.6 and 836.4. Bar 62 wide; arms 59 tall, because the source clips the stroke.</p></div>
+  <div><span class="am-label label">[ Relationships ]</span><p class="small">The brackets span the full type body, from 291.9 to 856.2. The a sits on the baseline at 760 with its x-height at 450, overshooting to 442.8 and 766.7. Its counter is an ellipse of 146 by 219, centred at 591.2, 604.7.</p></div>
+  <div><span class="am-label label">[ Approximate, kept ]</span><p class="small">The bracket group sits 26 units above the tile centre. The a is centred 10 units left of the axis, which balances its heavy stem. Both look intentional, so the grid records them and does not correct them. The outer bowl is close to an ellipse, but not exact.</p></div>
+</div>
+</div>
+</body>
+</html>

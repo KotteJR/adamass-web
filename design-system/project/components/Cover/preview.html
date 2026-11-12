@@ -1,0 +1,57 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Adamass</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; }
+  .blue { fill: var(--blue); }
+  .ink { fill: var(--ink); }
+  .plate { fill: var(--bg-3); }
+  .soft { fill: var(--blue-soft); }
+  .blk { rx: var(--radius-lg); }
+  .plus { stroke: var(--ink-4); stroke-width: 1; fill: none; }
+  .plus-cut { stroke: var(--on-blue); stroke-width: 1; fill: none; }
+  .words { position: absolute; left: 32px; bottom: 32px; max-width: 440px; }
+  .name { margin: 0; font-size: 104px; line-height: .92; font-weight: 500; letter-spacing: -0.048em; color: var(--ink); }
+  .tag { margin: 12px 0 0 4px; font-size: 14px; line-height: 20px; color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      blue 168x248 bled off the top (the signal, largest) · ink 176x136 bled off the right · bg-3 plate 128x176 bled off the bottom · blue-soft 96x96 for relief. About 40% of 960x288
+  arrangement one tall blue slab with satellites; gutters space-4, bottoms bleed so it reads as a cut from a larger grid
+  pattern     registration crosses, from "Construction stays visible": crosses at a space-6 (32px) pitch on the ground and the plate in ink-4, three cut into the slab in on-blue
+  scales      sides in space-2 multiples; gutters space-4; pitch space-6; corners radius-lg
+-->
+<rect class="plate blk" x="16" y="128" width="128" height="176" rx="20"/>
+<rect class="blue blk" x="160" y="-24" width="168" height="248" rx="20"/>
+<rect class="soft blk" x="344" y="16" width="96" height="96" rx="20"/>
+<rect class="ink blk" x="344" y="128" width="176" height="136" rx="20"/>
+<g class="plus">
+  <path d="M26 32h12M32 26v12M58 32h12M64 26v12M90 32h12M96 26v12M122 32h12M128 26v12"/>
+  <path d="M26 64h12M32 58v12M58 64h12M64 58v12M90 64h12M96 58v12M122 64h12M128 58v12"/>
+  <path d="M26 96h12M32 90v12M58 96h12M64 90v12M90 96h12M96 90v12M122 96h12M128 90v12"/>
+  <path d="M42 160h12M48 154v12M74 160h12M80 154v12M106 160h12M112 154v12"/>
+  <path d="M42 192h12M48 186v12M74 192h12M80 186v12M106 192h12M112 186v12"/>
+</g>
+<g class="plus-cut">
+  <path d="M186 192h12M192 186v12M218 192h12M224 186v12M250 192h12M256 186v12"/>
+</g>
+</svg>
+</div>
+<div class="words">
+  <h1 class="name">Adamass</h1>
+  <p class="tag">Senior engineering for products, AI and cloud. Malmö, since 2019.</p>
+</div>
+</div>
+</body>
+</html>

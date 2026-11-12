@@ -1,0 +1,72 @@
+/* The product modal's motion, from design/handoff/generators/round2/build.py:
+   the panel rises and scales in, the stage's clip opens, the right side's items
+   stagger in, and a new tab's panel slides up. */
+
+.panel[data-state="open"] {
+  animation: kpanelIn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.panel[data-state="closed"] {
+  animation: kpanelOut 0.2s ease both;
+}
+
+@keyframes kpanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+}
+
+@keyframes kpanelOut {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+
+.stage {
+  animation: kstageIn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes kstageIn {
+  from {
+    clip-path: inset(6% 10% 6% 6% round 12px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 0);
+  }
+}
+
+/* Each right-side item carries --i: 0 for the label row, up to 4 for the buttons. */
+.item {
+  animation: kitemIn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 55ms + 160ms);
+}
+
+.tab {
+  animation: kitemIn 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes kitemIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* The scrolling panel fades out at the bottom, from 1024 px where it scrolls on its own. */
+@media (min-width: 1024px) {
+  .scroll {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel[data-state],
+  .stage,
+  .item,
+  .tab {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero A</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400..500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#111214}
+.paint{animation:drift 26s ease-in-out infinite alternate;transform-origin:50% 50%}
+@keyframes drift{from{transform:scale(1.06) translateX(-1.2%)}to{transform:scale(1.06) translateX(1.2%)}}
+.chip{animation:float 6s ease-in-out infinite alternate}
+@keyframes float{from{transform:translate(-50%,-50%)}to{transform:translate(-50%,calc(-50% - 6px))}}
+@media (prefers-reduced-motion:reduce){.paint,.chip{animation:none}}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background-color: #ffffff; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #111214">
+  <img src="/_blob/f12db6b319a6e0459ade068198886e4c" alt="Adamass AB" style="position: absolute; left: 32px; top: 30px; height: 17px">
+  <nav aria-label="Main" style="position: absolute; right: 32px; top: 20px; height: 36px; display: flex; align-items: center; gap: 4px; font-size: 13px">
+    <a href="#work" style="height: 36px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 6px; text-decoration: none; background-color: #f3f2ee; color: #111214; font-weight: 500">Work</a>
+    <a href="#services" style="height: 36px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 6px; text-decoration: none; color: #6b7079">Services</a>
+    <a href="#aws" style="height: 36px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 6px; text-decoration: none; color: #6b7079">AWS</a>
+    <a href="#studio" style="height: 36px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 6px; text-decoration: none; color: #6b7079">Studio</a>
+    <a href="#contact" style="margin-left: 8px; height: 36px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 6px; text-decoration: none; padding: 0 14px; background-color: #111214; color: #ffffff; font-weight: 500">Contact</a>
+  </nav>
+
+  <div style="position: absolute; left: 32px; right: 32px; top: 105px; display: flex; align-items: flex-end; justify-content: space-between">
+    <h1 style="margin: 0; font-size: 54px; line-height: 1.1; font-weight: 450; letter-spacing: -0.04em"><span style="color: #8a8f98">Come with the work that feels heavy.</span><br>We will make it light.</h1>
+    <div style="display: flex; gap: 6px; padding-bottom: 6px">
+      <a href="#call" style="height: 44px; padding: 0 20px; display: inline-flex; align-items: center; border-radius: 4px; background-color: #111214; color: #ffffff; font-size: 14.5px; font-weight: 500; text-decoration: none">Send a short brief</a>
+      <a href="#call" aria-label="Send a short brief" style="width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; background-color: #f3f2ee; color: #111214; text-decoration: none"><svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 11L11 5M6 5h5v5" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: -27px; right: 16px; top: 268px; height: 500px; overflow: hidden; background-color: #6f8fb3; width: 1501px">
+    <img class="paint" src="/_blob/595d15bf5d77a8d1c4dd736d484073c3" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+  </div>
+
+  <div style="position: absolute; left: 32px; right: 32px; top: 809px; display: flex; align-items: center; justify-content: space-between">
+    <p style="margin: 0; max-width: 420px; font-size: 14.5px; line-height: 1.5; color: #8a8f98">A software and AI company in Malmö since 2019. Data scientists, engineers and architects who join your team or deliver the whole project.</p>
+    <div style="display: flex; align-items: center; gap: 44px"><span style="font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: #2b2f36">IKEA</span><span style="font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: #2b2f36">Nasdaq</span><span style="font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: #2b2f36">Tele2</span><span style="font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: #2b2f36">Thomson Reuters</span><span style="font-size: 19px; font-weight: 600; letter-spacing: -0.02em; color: #2b2f36">The Guardian</span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

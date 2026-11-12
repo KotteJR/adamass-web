@@ -1,0 +1,19 @@
+<!-- @dsCard group="Interactive" height=880 width=1200 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>AwsExplorer — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  var offers = [{"id": "landing-zone", "title": "Landing Zone Foundation", "short": "A governed multi-account base", "body": "Account hierarchy, preventive guardrails, central identity and centralised logging, built with AWS's own governance tooling. For new builds, and for teams already in production without account separation.", "marketplace": "https://aws.amazon.com/marketplace/pp/prodview-4h7t3cdxtjpr4", "nodes": ["org", "identity", "security", "log", "audit", "workloads", "prod", "staging", "dev"], "specs": [{"k": "Structure", "v": "Accounts, guardrails, identity"}, {"k": "Baseline", "v": "Logging, threat detection, posture"}, {"k": "Handover", "v": "Docs and a remediation backlog"}]}, {"id": "architect", "title": "Architect as a Service", "short": "Senior judgement in 40-hour blocks", "body": "Blocks of 40 hours, drawn down over up to two months. Every block ends in something written: decision records, review reports and a roadmap you can act on.", "marketplace": "https://aws.amazon.com/marketplace/pp/prodview-mijw2zrzgpxjy", "nodes": ["org", "workloads", "prod", "vpc", "app", "data", "bedrock", "budgets"], "specs": [{"k": "Unit", "v": "40 hours, up to two months"}, {"k": "Scope", "v": "Governance, AI, cost, automation"}, {"k": "Output", "v": "Decision records and a roadmap"}]}, {"id": "perimeter", "title": "Sovereign AI Perimeter", "short": "A private assistant in your account", "body": "An AI assistant inside your own AWS account on managed foundation models, reachable only over VPN or another controlled channel. No new vendor holds your data.", "marketplace": "https://aws.amazon.com/marketplace/pp/prodview-ywcyptb7h5rgo", "nodes": ["vpn", "vpc", "bedrock", "audit", "budgets", "prod"], "specs": [{"k": "Location", "v": "Your account, your region"}, {"k": "Access", "v": "Private channel, no public endpoint"}, {"k": "Control", "v": "Models, spend limits, audit logs"}]}, {"id": "migration", "title": "Migration and modernisation", "short": "Move workloads without a rewrite", "body": "We move applications and data onto AWS in phases, starting with what costs the most to keep. Staging first, production when the numbers agree.", "nodes": ["staging", "prod", "vpc", "app", "data"], "specs": [{"k": "Approach", "v": "Phased, reversible steps"}, {"k": "First step", "v": "An assessment you keep"}, {"k": "Targets", "v": "Containers, serverless, managed data"}]}, {"id": "genai", "title": "GenAI on Bedrock", "short": "Models wired into real products", "body": "Retrieval over your documents, agents that call your own APIs, and the evaluation to know when it works. Built on Bedrock so data stays in your account.", "nodes": ["bedrock", "data", "app", "vpc", "prod"], "specs": [{"k": "Patterns", "v": "RAG, agents, fine-tuning"}, {"k": "Data", "v": "Stays in your account"}, {"k": "Proof", "v": "Evaluations before launch"}]}];
+  ReactDOM.createRoot(document.getElementById('root')).render(h(A.AwsExplorer, { offers: offers }));
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The end of the page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400..500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#111214}
+.paint{animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.06) translateX(-1.4%)}to{transform:scale(1.06) translateX(1.4%)}}
+.sky{position:absolute;inset:0;transition:background 2s ease}
+.sky.day{background:linear-gradient(180deg,rgba(14,28,48,.28),rgba(14,28,48,.10) 55%,rgba(14,28,48,.22))}
+.sky.dawn{background:linear-gradient(0deg,rgba(236,176,120,.55),rgba(236,176,120,.08) 55%,rgba(14,28,48,.25))}
+.sky.dusk{background:linear-gradient(0deg,rgba(226,150,98,.6),rgba(150,110,140,.18) 55%,rgba(14,28,48,.45))}
+.sky.night{background:linear-gradient(180deg,rgba(6,12,24,.72),rgba(10,20,38,.55))}
+.mk .sk-g path{stroke:rgba(255,255,255,.28);stroke-width:1;vector-effect:non-scaling-stroke}
+.mk .sk-c path,.mk .sk-c ellipse{stroke:rgba(255,255,255,.4);stroke-width:1;stroke-dasharray:4 5;vector-effect:non-scaling-stroke}
+.mk .sk-l path,.mk .sk-a path{stroke:#ffffff;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.6s cubic-bezier(.45,0,.2,1) .2s forwards}
+.mk .sk-a path{animation-delay:1s}
+.mk .sk-hl{stroke:rgba(255,255,255,.6);stroke-width:1.2}
+.mk .sk-h{opacity:.55}
+.mk .sk-n circle{fill:rgba(255,255,255,.12);stroke:#ffffff;stroke-width:1.1;vector-effect:non-scaling-stroke;opacity:0;animation:fade .6s ease 2.2s forwards}
+.mk .sk-d path{stroke:rgba(255,255,255,.75);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s ease 1.8s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.ghost{background:rgba(255,255,255,.16);color:#ffffff!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.ghost:hover{background:rgba(255,255,255,.26)}
+.foot a{color:#4a4f57;text-decoration:none}.foot a:hover{color:#111214}
+@media (prefers-reduced-motion:reduce){.paint{animation:none}.mk *{animation:none!important;stroke-dashoffset:0!important;opacity:1!important}}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 900px; overflow: hidden; background-color: #ffffff; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #111214">
+  <div style="position: absolute; left: 0; top: 0; width: 1440px; height: 780px; overflow: hidden; background-color: #6f8fb3">
+    <img class="paint" src="/_blob/595d15bf5d77a8d1c4dd736d484073c3" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+    <div class="sky {{phase}}"></div>
+    <div style="position: absolute; left: 0; right: 0; top: 120px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; color: #ffffff">
+      <div class="mk" aria-hidden="true"><svg viewBox="110 180 980 790" width="300" height="242" fill="none" aria-label="The Adamass mark, sketched with its construction lines" role="img"><defs><pattern id="hatch" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V11" class="sk-hl"></path></pattern></defs><g class="sk-g"><path d="M120 291.9H1080"></path><path d="M120 856.2H1080"></path><path d="M150 351.1H1050"></path><path d="M150 796.9H1050"></path><path d="M170 450H1030"></path><path d="M170 760H1030"></path><path d="M600 205V945"></path></g><g class="sk-c"><ellipse cx="591.2" cy="604.7" rx="73.1" ry="109.3"></ellipse><ellipse cx="571.8" cy="604.7" rx="125.6" ry="162"></ellipse><path d="M600 160A440 440 0 0 1 1030 520"></path></g><g class="sk-h"><path d="M363.6 291.9L202.8 291.9L202.8 856.2L363.6 856.2L363.6 796.9L264.9 796.9L264.9 351.1L363.6 351.1Z" fill="url(#hatch)"></path><path d="M836.4 291.9L997.2 291.9L997.2 856.2L836.4 856.2L836.4 796.9L935.1 796.9L935.1 351.1L836.4 351.1Z" fill="url(#hatch)"></path></g><g class="sk-l"><path pathLength="1" d="M379.6 291.9L186.8 291.9"></path><path pathLength="1" d="M202.8 275.9L202.8 872.2"></path><path pathLength="1" d="M186.8 856.2L379.6 856.2"></path><path pathLength="1" d="M363.6 866.9L363.6 786.2"></path><path pathLength="1" d="M379.6 796.9L248.9 796.9"></path><path pathLength="1" d="M264.9 812.9L264.9 335.1"></path><path pathLength="1" d="M248.9 351.1L379.6 351.1"></path><path pathLength="1" d="M363.6 361.8L363.6 281.2"></path><path pathLength="1" d="M820.4 291.9L1013.2 291.9"></path><path pathLength="1" d="M997.2 275.9L997.2 872.2"></path><path pathLength="1" d="M1013.2 856.2L820.4 856.2"></path><path pathLength="1" d="M836.4 866.9L836.4 786.2"></path><path pathLength="1" d="M820.4 796.9L951.1 796.9"></path><path pathLength="1" d="M935.1 812.9L935.1 335.1"></path><path pathLength="1" d="M951.1 351.1L820.4 351.1"></path><path pathLength="1" d="M836.4 361.8L836.4 281.2"></path></g><g class="sk-a"><path pathLength="1" d="M283 -13Q202 -13 148.0 26.5Q94 66 67.0 137.0Q40 208 40 301Q40 395 67.5 465.5Q95 536 149.0 575.0Q203 614 283 614Q349 614 389.5 587.5Q430 561 448 522H472V600H595V0H472V78H448Q430 41 389.5 14.0Q349 -13 283 -13ZM313 89Q381 89 421.5 146.5Q462 204 462 300Q462 397 421.5 454.5Q381 512 313 512Q249 512 214.0 457.5Q179 403 179 300Q179 197 214.0 143.0Q249 89 313 89Z" transform="translate(425.625 760) scale(0.51666667 -0.51666667)"></path></g><g class="sk-n"><circle cx="363.6" cy="321.5" r="7"></circle><circle cx="836.4" cy="321.5" r="7"></circle><circle cx="363.6" cy="826.6" r="7"></circle><circle cx="836.4" cy="826.6" r="7"></circle><circle cx="446.3" cy="604.6" r="7"></circle><circle cx="591.2" cy="604.7" r="7"></circle></g><g class="sk-d"><path pathLength="1" d="M202.8 236H997.2M202.8 222V250M997.2 222V250M150 291.9V856.2M136 291.9H164M136 856.2H164"></path></g></svg></div>
+      <span style="font-size: 22px; font-weight: 500; letter-spacing: -0.02em">Adamass</span>
+      <p style="margin: -10px 0 0; max-width: 460px; font-size: 16px; line-height: 1.5; color: rgba(255,255,255,0.86)">Come with the work that feels heavy. We will make it light.</p>
+      <div style="display: flex; gap: 8px; margin-top: 4px">
+        <a href="#call" style="height: 42px; padding: 0 18px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #ffffff; color: #111214; font-size: 14.5px; font-weight: 500; text-decoration: none">Send a short brief</a>
+        <a href="#top" class="ghost" style="height: 42px; padding: 0 18px; display: inline-flex; align-items: center; border-radius: 8px; font-size: 14.5px; font-weight: 500; text-decoration: none">Back to top ↑</a>
+      </div>
+      <div style="display: flex; align-items: center; gap: 36px; margin-top: 26px"><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">IKEA</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Nasdaq</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Tele2</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">Thomson Reuters</span><span style="font-size: 16px; font-weight: 600; letter-spacing: -0.02em; color: rgba(255,255,255,0.86)">The Guardian</span></div>
+    </div>
+    <span style="position: absolute; left: 0; right: 0; bottom: 28px; text-align: center; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.88)">{{greet}} from Malmö · {{time}}</span>
+  </div>
+  <div class="foot" style="position: absolute; left: 32px; right: 32px; top: 780px; bottom: 0; display: grid; grid-template-columns: 1.2fr 1fr 1fr; align-items: center; gap: 24px; font-size: 13.5px; color: #6b7079">
+    <div style="display: flex; align-items: center; gap: 18px"><img src="/_blob/f12db6b319a6e0459ade068198886e4c" alt="Adamass AB" style="height: 16px"><span>Software and AI engineering, since 2019.</span></div>
+    <span>Fridhemsborg, Fridhemsvägen 2, 217 74 Malmö · Org. nr 559151-2388</span>
+    <div style="display: flex; justify-content: flex-end; gap: 22px"><a href="#work">Work</a><a href="#services">Services</a><a href="https://www.linkedin.com/company/adamass-ab">LinkedIn</a><a href="https://aws.amazon.com/marketplace/seller-profile?id=seller-rikosy4e7tpne">AWS Marketplace</a><a href="#privacy">Privacy</a></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+// The sky follows the time in Malmö: warm at dawn and dusk, dark at night, clear in the day.
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { time: '', hour: 12 };
+  }
+  tick() {
+    const now = new Date();
+    let time = '';
+    try { time = now.toLocaleTimeString('sv-SE', { timeZone: 'Europe/Stockholm', hour: '2-digit', minute: '2-digit' }); }
+    catch (e) { time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'); }
+    this.setState({ time, hour: parseInt(time.slice(0, 2), 10) });
+  }
+  componentDidMount() {
+    this.tick();
+    this.timer = setInterval(() => this.tick(), 20000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  renderVals() {
+    const h = this.state.hour;
+    const phase = (h >= 21 || h < 5) ? 'night' : (h < 8 ? 'dawn' : (h >= 17 ? 'dusk' : 'day'));
+    const greet = phase === 'night' ? 'Good night' : (phase === 'dawn' ? 'Good morning' : (phase === 'dusk' ? 'Good evening' : 'Hello'));
+    return { time: this.state.time || '12:00', phase, greet };
+  }
+}
+</script>
+</body>
+</html>

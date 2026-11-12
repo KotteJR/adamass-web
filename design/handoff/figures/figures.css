@@ -1,0 +1,50 @@
+/* embedded-delivery */
+
+.iso-f1 .f1-p{animation:f1p 6s linear infinite}
+.iso-f1 .f1-p:nth-child(2){animation-delay:-2s}.iso-f1 .f1-p:nth-child(3){animation-delay:-4s}
+@keyframes f1p{0%{transform:translate(0,0);opacity:0}4%{opacity:1}94%{opacity:1}100%{transform:translate(296.4px,171.1px);opacity:0}}
+.iso-f1 .f1-done{animation:f1d 6s linear infinite;opacity:0}
+.iso-f1 .f1-p:nth-child(2) .f1-done{animation-delay:-2s}.iso-f1 .f1-p:nth-child(3) .f1-done{animation-delay:-4s}
+@keyframes f1d{0%,64%{opacity:0}67%,100%{opacity:1}}
+.iso-f1 .f1-stamp{animation:f1s 2s ease-in-out infinite;animation-delay:-.08s}
+@keyframes f1s{0%,78%{transform:translate(0,0)}88%{transform:translate(0,4.6px)}96%,100%{transform:translate(0,0)}}
+
+/* modernisation */
+
+.iso-f2 .f2-flow{animation:f2f 3s linear infinite}
+.iso-f2 .f2-flow:nth-child(1){animation-delay:-0.0s}.iso-f2 .f2-flow:nth-child(2){animation-delay:-0.5s}.iso-f2 .f2-flow:nth-child(3){animation-delay:-1.0s}.iso-f2 .f2-flow:nth-child(4){animation-delay:-1.5s}.iso-f2 .f2-flow:nth-child(5){animation-delay:-2.0s}.iso-f2 .f2-flow:nth-child(6){animation-delay:-2.5s}
+@keyframes f2f{0%{transform:translate(0,0);opacity:0}6%,94%{opacity:1}100%{transform:translate(251.1px,145.0px);opacity:0}}
+.iso-f2 .f2-led{animation:f2l 1.2s ease-in-out infinite}
+@keyframes f2l{50%{opacity:.35}}
+.iso-f2 .f2-s0 .f2-old{animation:f2o0 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2o0{0%,8%{opacity:1;transform:translate(0,0)}16%,95%{opacity:0;transform:translate(0.0px,-20.3px)}100%{opacity:1;transform:translate(0,0)}}.iso-f2 .f2-s0 .f2-new{animation:f2n0 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2n0{0%,8%{opacity:0;transform:translate(0.0px,-20.3px)}16%,95%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0)}}
+.iso-f2 .f2-s1 .f2-old{animation:f2o1 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2o1{0%,30%{opacity:1;transform:translate(0,0)}38%,95%{opacity:0;transform:translate(0.0px,-20.3px)}100%{opacity:1;transform:translate(0,0)}}.iso-f2 .f2-s1 .f2-new{animation:f2n1 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2n1{0%,30%{opacity:0;transform:translate(0.0px,-20.3px)}38%,95%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0)}}
+.iso-f2 .f2-s2 .f2-old{animation:f2o2 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2o2{0%,52%{opacity:1;transform:translate(0,0)}60%,95%{opacity:0;transform:translate(0.0px,-20.3px)}100%{opacity:1;transform:translate(0,0)}}.iso-f2 .f2-s2 .f2-new{animation:f2n2 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2n2{0%,52%{opacity:0;transform:translate(0.0px,-20.3px)}60%,95%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0)}}
+.iso-f2 .f2-s3 .f2-old{animation:f2o3 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2o3{0%,74%{opacity:1;transform:translate(0,0)}82%,95%{opacity:0;transform:translate(0.0px,-20.3px)}100%{opacity:1;transform:translate(0,0)}}.iso-f2 .f2-s3 .f2-new{animation:f2n3 9s cubic-bezier(.45,0,.2,1) infinite}@keyframes f2n3{0%,74%{opacity:0;transform:translate(0.0px,-20.3px)}82%,95%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0)}}
+
+/* diligence */
+
+.iso-f3 .f3-a{animation:f3a 9s cubic-bezier(.45,0,.2,1) infinite}
+@keyframes f3a{0%{transform:translate(0,0);opacity:0}4%{opacity:1}28%,56%{transform:translate(140.6px,81.2px);opacity:1}80%{transform:translate(281.3px,162.4px);opacity:1}86%,100%{transform:translate(281.3px,162.4px);opacity:0}}
+.iso-f3 .f3-xray{animation:f3x 9s ease infinite}
+@keyframes f3x{0%,26%{opacity:0}31%,54%{opacity:1}59%,100%{opacity:0}}
+.iso-f3 .f3-closed{animation:f3c 9s ease infinite}
+@keyframes f3c{0%,26%{opacity:1}31%,54%{opacity:0}59%,100%{opacity:1}}
+.iso-f3 .f3-scan{animation:f3s 9s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes f3s{0%,28%{transform:translate(0,0);opacity:0}30%{opacity:1}42%{transform:translate(0,72.5px)}54%{transform:translate(0,0);opacity:1}56%,100%{opacity:0}}
+.iso-f3 .f3-field{animation:f3g 9s ease infinite}
+@keyframes f3g{0%,26%{opacity:.35}31%,54%{opacity:1}59%,100%{opacity:.35}}
+.iso-f3 .f3-rep{animation:f3r 9s cubic-bezier(.2,.7,.2,1) infinite}
+@keyframes f3r{0%,60%{opacity:0;transform:translate(0,-10px)}68%,94%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0)}}
+.iso-f3 .f3-led{animation:f3l 9s ease infinite}
+@keyframes f3l{0%,28%{opacity:.3}31%,55%{opacity:1}58%,100%{opacity:.3}}
+
+/* genai */
+
+.iso-f4 .f4-chip{animation:f4c 7s cubic-bezier(.45,0,.2,1) infinite}
+@keyframes f4c{0%,10%{transform:translate(0.0px,-49.3px)}36%,88%{transform:translate(0,0)}100%{transform:translate(0.0px,-49.3px)}}
+.iso-f4 .f4-pulses{animation:f4p 7s linear infinite}
+@keyframes f4p{0%,36%{opacity:0}40%,86%{opacity:1}92%,100%{opacity:0}}
+.iso-f4 .f4-pulse{animation:f4d 1.4s linear infinite}
+.iso-f4 .f4-pulse:nth-child(2){animation-delay:-.45s}.iso-f4 .f4-pulse:nth-child(3){animation-delay:-.9s}
+@keyframes f4d{from{stroke-dashoffset:112}to{stroke-dashoffset:0}}
+

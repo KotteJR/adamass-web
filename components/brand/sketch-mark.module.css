@@ -1,0 +1,77 @@
+/* The [a] mark drawing itself with its construction lines (Closing board).
+   Runs once, when RevealOnce marks the wrapper as revealed. */
+
+.mark :global(.sk-g) path {
+  stroke: rgb(255 255 255 / 0.28);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.mark :global(.sk-c) path,
+.mark :global(.sk-c) ellipse {
+  stroke: rgb(255 255 255 / 0.4);
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+  vector-effect: non-scaling-stroke;
+}
+.mark :global(.sk-l) path,
+.mark :global(.sk-a) path {
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.6s cubic-bezier(0.45, 0, 0.2, 1) 0.2s forwards;
+}
+.mark :global(.sk-a) path {
+  animation-delay: 1s;
+}
+.mark :global(.sk-hl) {
+  stroke: rgb(255 255 255 / 0.6);
+  stroke-width: 1.2;
+}
+.mark :global(.sk-h) {
+  opacity: 0.55;
+}
+.mark :global(.sk-n) circle {
+  fill: rgb(255 255 255 / 0.12);
+  stroke: #ffffff;
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  animation: fade 0.6s ease 2.2s forwards;
+}
+.mark :global(.sk-d) path {
+  stroke: rgb(255 255 255 / 0.75);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s ease 1.8s forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Wait for the visitor to get here. */
+@media (scripting: enabled) {
+  :not([data-revealed]) > .mark * {
+    animation-play-state: paused !important;
+  }
+}
+
+/* Reduced motion: no drawing, the finished mark. */
+@media (prefers-reduced-motion: reduce) {
+  .mark * {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}

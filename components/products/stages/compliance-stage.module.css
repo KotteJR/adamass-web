@@ -1,0 +1,71 @@
+/* Generated from design/handoff/generators/round2/stages.py (Compliance SLM). Timings and colours are the board's. */
+
+.root {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+}
+
+.paint {
+  animation: kdrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes kdrift {
+  from { transform: scale(1.06) translateX(-1.2%); }
+  to { transform: scale(1.06) translateX(1.2%); }
+}
+
+.hl {
+  background-image: linear-gradient(#fff, #fff);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1.5px;
+  padding-bottom: 2px;
+  animation-duration: 12s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.fd {
+  opacity: 0;
+  animation-duration: 12s;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+  animation-iteration-count: infinite;
+}
+
+@keyframes khl0 {0.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}6.667%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}15.833%{background-size:100% 1.5px;color:#fff}90.833%{background-size:100% 1.5px;color:#fff}96.667%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}100.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}}
+@keyframes khl1 {0.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}25.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}34.167%{background-size:100% 1.5px;color:#fff}90.833%{background-size:100% 1.5px;color:#fff}96.667%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}100.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}}
+@keyframes khl2 {0.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}43.333%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}50.833%{background-size:100% 1.5px;color:#fff}90.833%{background-size:100% 1.5px;color:#fff}96.667%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}100.000%{background-size:0% 1.5px;color:rgba(255,255,255,.74)}}
+@keyframes kfd0 {0.000%{opacity:0;transform:translateY(10px)}15.000%{opacity:0;transform:translateY(10px)}20.000%{opacity:1;transform:none}90.833%{opacity:1;transform:none}95.833%{opacity:0;transform:translateY(-4px)}100.000%{opacity:0;transform:translateY(10px)}}
+@keyframes kfd1 {0.000%{opacity:0;transform:translateY(10px)}33.333%{opacity:0;transform:translateY(10px)}38.333%{opacity:1;transform:none}90.833%{opacity:1;transform:none}95.833%{opacity:0;transform:translateY(-4px)}100.000%{opacity:0;transform:translateY(10px)}}
+@keyframes kfd2 {0.000%{opacity:0;transform:translateY(10px)}50.000%{opacity:0;transform:translateY(10px)}55.000%{opacity:1;transform:none}90.833%{opacity:1;transform:none}95.833%{opacity:0;transform:translateY(-4px)}100.000%{opacity:0;transform:translateY(10px)}}
+@keyframes kfd3 {0.000%{opacity:0;transform:translateY(10px)}60.000%{opacity:0;transform:translateY(10px)}65.000%{opacity:1;transform:none}90.833%{opacity:1;transform:none}95.833%{opacity:0;transform:translateY(-4px)}100.000%{opacity:0;transform:translateY(10px)}}
+.hl0 { animation-name: khl0; }
+.hl1 { animation-name: khl1; }
+.hl2 { animation-name: khl2; }
+.fd0 { animation-name: kfd0; }
+.fd1 { animation-name: kfd1; }
+.fd2 { animation-name: kfd2; }
+.fd3 { animation-name: kfd3; }
+
+/* Rests offscreen (PlayWhenVisible sets data-playing) and before hydration. */
+@media (scripting: enabled) {
+  .root:not([data-playing]) * {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .fd {
+    opacity: 1;
+  }
+  .hl {
+    color: #fff;
+    background-size: 100% 1.5px;
+  }
+}

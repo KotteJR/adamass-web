@@ -1,141 +1,88 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import JsonLd from "@/components/JsonLd";
-import LenisProvider from "@/components/LenisProvider";
-import SkipLink from "@/components/SkipLink";
-import { organizationGraph } from "@/lib/schema";
-import {
-  defaultDescription,
-  defaultTitle,
-  keywords,
-  SITE_GEO,
-  SITE_LANGUAGE,
-  SITE_LOCALE,
-  SITE_LOCALITY,
-  SITE_NAME,
-  SITE_SHORT_NAME,
-  SITE_URL,
-} from "@/lib/site";
+import type { ReactNode } from "react";
+import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { ContactModal } from "@/components/contact/ContactModal";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { SkipLink } from "@/components/site/SkipLink";
+import { ThemeProvider } from "@/components/site/ThemeProvider";
+import { anchors, site } from "@/content/site";
+import { organizationJsonLd, serializeJsonLd } from "@/lib/json-ld";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
-const sans = localFont({
-  src: [
-    {
-      path: "./fonts/familjen-grotesk-latin-wght-normal.woff2",
-      weight: "400 700",
-      style: "normal",
-    },
-    {
-      path: "./fonts/familjen-grotesk-latin-wght-italic.woff2",
-      weight: "400 700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-sans",
-  display: "swap",
+const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Product wordmarks only (Murmur, morrow): not worth a preload.
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: "400",
+  preload: false,
 });
-
-const mono = localFont({
-  src: [
-    {
-      path: "./fonts/martian-mono-latin-wght-normal.woff2",
-      weight: "100 800",
-      style: "normal",
-    },
-  ],
-  variable: "--font-mono",
-  display: "swap",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
+  subsets: ["latin"],
+  preload: false,
 });
-
-export const viewport: Viewport = {
-  themeColor: "#050b16",
-  colorScheme: "light",
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: {
-    default: defaultTitle,
-    template: `%s | ${SITE_NAME}`,
-  },
-  description: defaultDescription,
-  applicationName: SITE_SHORT_NAME,
-  authors: [{ name: SITE_NAME, url: SITE_URL }],
-  creator: SITE_NAME,
-  publisher: SITE_NAME,
-  category: "technology",
-  keywords: [...keywords],
-  alternates: {
-    canonical: SITE_URL,
-    languages: {
-      en: SITE_URL,
-      "x-default": SITE_URL,
-    },
-  },
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: `%s · ${site.shortName}` },
+  description: site.description,
+  applicationName: site.shortName,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    locale: SITE_LOCALE,
-    url: SITE_URL,
-    siteName: SITE_NAME,
-    title: defaultTitle,
-    description: defaultDescription,
+    url: "/",
+    siteName: site.shortName,
+    title: site.title,
+    description: site.description,
+    locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: defaultTitle,
-    description: defaultDescription,
+    title: site.title,
+    description: site.description,
   },
-  appleWebApp: {
-    capable: true,
-    title: SITE_SHORT_NAME,
-    statusBarStyle: "default",
-  },
-  formatDetection: {
-    telephone: true,
-    email: true,
-    address: true,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-  other: {
-    "geo.region": "SE-M",
-    "geo.placename": SITE_LOCALITY,
-    "geo.position": `${SITE_GEO.latitude};${SITE_GEO.longitude}`,
-    ICBM: `${SITE_GEO.latitude}, ${SITE_GEO.longitude}`,
-  },
+  formatDetection: { telephone: false, email: false, address: false },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  colorScheme: "light",
+  // Lets the page use the whole screen on notched phones; the gutters and
+  // fixed bars pad themselves with env(safe-area-inset-*).
+  viewportFit: "cover",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang={SITE_LANGUAGE} className={`${sans.variable} ${mono.variable}`}>
-      <head>
-        {/* Runs before first paint: a restored offset would drop the visitor
-            into the middle of a scroll-scrubbed film. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "if('scrollRestoration' in history){history.scrollRestoration='manual'}if(!location.hash){window.scrollTo(0,0)}",
-          }}
-        />
-      </head>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(geist.variable, geistMono.variable, instrumentSerif.variable, bricolage.variable)}
+    >
       <body>
-        <SkipLink />
-        <JsonLd data={organizationGraph()} />
-        <LenisProvider>{children}</LenisProvider>
+        {/* Light is the designed mode. Dark tokens are prepared in globals.css; drop
+            forcedTheme (and add a toggle) once a dark design exists. */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          forcedTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <SkipLink href={`#${anchors.main}`} />
+          <SiteHeader />
+          <main id={anchors.main} tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <SiteFooter />
+          <ContactModal />
+        </ThemeProvider>
+        {/* Site-wide, and outside <main>: modal dialogs leave the parents of scripts un-hidden. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd()) }} />
       </body>
     </html>
   );

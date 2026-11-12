@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hero</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400..500&amp;family=Instrument+Serif&amp;family=Bricolage+Grotesque:opsz,wght@12..96,500..700&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#111214}
+.paint{animation:drift 26s ease-in-out infinite alternate}
+@keyframes drift{from{transform:scale(1.06) translateX(-1.2%)}to{transform:scale(1.06) translateX(1.2%)}}
+.nav a{color:rgba(255,255,255,.82);text-decoration:none;font-size:14px}.nav a:hover{color:#fff}
+.view{position:absolute;inset:0;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+.view.on{opacity:1;transform:none}
+.wv{display:flex;align-items:center;gap:3px}
+.wv i{display:block;flex:1;border-radius:2px;background-color:currentColor}
+.caret{opacity:0}.caret.on{animation:caret .9s steps(1) infinite;opacity:1}
+@keyframes caret{50%{opacity:0}}
+.btn{transition:transform .15s ease,background-color .2s}
+.btn.press{transform:scale(.94);background-color:#2f5b8c!important}
+.tw{transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.tl{transition:left .9s cubic-bezier(.2,.7,.2,1)}
+.ph{transition:left .2s linear,opacity .3s}
+.toast{opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.toast.on{opacity:1;transform:none}
+.pz{transition:background-color .3s}
+.pz .mk{width:16px;height:16px;border-radius:16px;box-sizing:border-box;box-shadow:inset 0 0 0 1.5px #d5d8de;transition:all .3s}
+.pz.done .mk{box-shadow:none;background:#4b63e6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' fill='none' stroke='white' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.pz.now{background:#f1f3fd}
+.pz.now .mk{box-shadow:inset 0 0 0 4px #4b63e6}
+.cell{background:#fff;transition:background-color .3s}
+.cell.typing{background:#e6ebfb}
+.cell.solved{background:#dff0e6}
+.pane{opacity:0;transition:opacity .45s ease}.pane.on{opacity:1}
+.opt{transition:box-shadow .3s}.opt.pick{box-shadow:inset 0 0 0 2px #7b5cd6}
+.streak{transition:transform .3s cubic-bezier(.3,1.6,.5,1)}.streak.pop{transform:scale(1.12)}
+.hl{border-radius:3px;transition:background-color .4s,color .4s;padding:1px 0}
+.hl.on{background:#dfe8f4;color:#111214}
+.doc{opacity:0;transform:translateY(6px);transition:opacity .5s,transform .5s}.doc.on{opacity:1;transform:none}
+.risk{opacity:0;transform:translateX(10px);transition:opacity .45s,transform .45s}.risk.on{opacity:1;transform:none}
+.match{opacity:0;transition:opacity .4s}.match.on{opacity:1}
+.feat{transition:opacity .3s}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 860px; overflow: hidden; background-color: #ffffff; font-family: Geist, ui-sans-serif, system-ui, sans-serif; color: #111214">
+  <div style="position: absolute; left: 720px; top: 0; width: 720px; height: 860px; overflow: hidden; border-bottom-left-radius: 16px; background-color: #2c537f">
+    <img class="paint" src="/_blob/921cbc2092a867ecbf4227ce66768775" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
+    <div role="img" aria-label="{{aria}}" style="position: absolute; left: 109px; top: 150px; width: 620px; height: 560px; border-radius: 10px; overflow: hidden; background-color: #ffffff; box-shadow: 0 40px 80px -36px rgba(10,24,44,0.65)">
+      <div style="height: 42px; padding: 0 16px; display: flex; align-items: center; gap: 7px; background-color: #f7f7f5">
+        <span style="width: 9px; height: 9px; border-radius: 9px; background-color: #dcdad5"></span><span style="width: 9px; height: 9px; border-radius: 9px; background-color: #dcdad5"></span><span style="width: 9px; height: 9px; border-radius: 9px; background-color: #dcdad5"></span>
+        <span style="margin-left: 14px; font-size: 13px; font-weight: 500">{{app}}</span>
+        <span class="feat" style="margin-left: auto; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8f98">{{feat}}</span>
+      </div>
+      <div style="position: relative; height: 518px">
+        <div class="view {{v0}}">
+<div style="height: 100%; box-sizing: border-box; padding: 26px 28px; display: flex; flex-direction: column; gap: 18px">
+  <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 30px; line-height: 1">Afternoon.</span><span style="font-size: 12px; color: #6b7079">{{mstatus}}</span></div>
+  <div style="height: 52px; padding: 0 6px 0 16px; display: flex; align-items: center; gap: 10px; border-radius: 10px; background-color: #f4f3ef">
+    <span style="flex: 1; font-size: 16px; white-space: nowrap; overflow: hidden">{{prompt}}<span class="caret {{caret}}" style="display: inline-block; vertical-align: -3px; width: 1.5px; height: 19px; margin-left: 1px; background-color: #111214"></span></span>
+    <span class="btn {{mbtn}}" style="height: 40px; padding: 0 16px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #111214; color: #fff; font-size: 13.5px; font-weight: 500">Make it</span>
+  </div>
+  <div style="position: relative; height: 186px; margin: 6px 0; padding: 0 4px; border-radius: 10px; color: #e3e5e9">
+    <div class="wv" style="height: 186px"><i style="height: 22%"></i><i style="height: 49%"></i><i style="height: 53%"></i><i style="height: 47%"></i><i style="height: 52%"></i><i style="height: 87%"></i><i style="height: 87%"></i><i style="height: 87%"></i><i style="height: 74%"></i><i style="height: 59%"></i><i style="height: 74%"></i><i style="height: 52%"></i><i style="height: 33%"></i><i style="height: 10%"></i><i style="height: 10%"></i><i style="height: 32%"></i><i style="height: 31%"></i><i style="height: 28%"></i><i style="height: 27%"></i><i style="height: 65%"></i><i style="height: 94%"></i><i style="height: 87%"></i><i style="height: 83%"></i><i style="height: 51%"></i><i style="height: 68%"></i><i style="height: 64%"></i><i style="height: 44%"></i><i style="height: 31%"></i><i style="height: 10%"></i><i style="height: 11%"></i><i style="height: 49%"></i><i style="height: 45%"></i><i style="height: 20%"></i><i style="height: 46%"></i><i style="height: 68%"></i><i style="height: 96%"></i><i style="height: 79%"></i><i style="height: 77%"></i><i style="height: 68%"></i><i style="height: 87%"></i><i style="height: 83%"></i><i style="height: 40%"></i><i style="height: 11%"></i><i style="height: 10%"></i><i style="height: 21%"></i><i style="height: 26%"></i><i style="height: 20%"></i><i style="height: 22%"></i><i style="height: 31%"></i><i style="height: 82%"></i><i style="height: 85%"></i><i style="height: 70%"></i><i style="height: 71%"></i><i style="height: 73%"></i><i style="height: 79%"></i><i style="height: 67%"></i><i style="height: 38%"></i><i style="height: 10%"></i><i style="height: 33%"></i><i style="height: 24%"></i><i style="height: 35%"></i><i style="height: 23%"></i><i style="height: 11%"></i><i style="height: 62%"></i></div>
+    <div class="wv" style="position: absolute; inset: 0 4px; height: 186px; color: #2f5b8c; clip-path: inset(0 {{wcut}}% 0 0); transition: clip-path .25s linear"><i style="height: 22%"></i><i style="height: 49%"></i><i style="height: 53%"></i><i style="height: 47%"></i><i style="height: 52%"></i><i style="height: 87%"></i><i style="height: 87%"></i><i style="height: 87%"></i><i style="height: 74%"></i><i style="height: 59%"></i><i style="height: 74%"></i><i style="height: 52%"></i><i style="height: 33%"></i><i style="height: 10%"></i><i style="height: 10%"></i><i style="height: 32%"></i><i style="height: 31%"></i><i style="height: 28%"></i><i style="height: 27%"></i><i style="height: 65%"></i><i style="height: 94%"></i><i style="height: 87%"></i><i style="height: 83%"></i><i style="height: 51%"></i><i style="height: 68%"></i><i style="height: 64%"></i><i style="height: 44%"></i><i style="height: 31%"></i><i style="height: 10%"></i><i style="height: 11%"></i><i style="height: 49%"></i><i style="height: 45%"></i><i style="height: 20%"></i><i style="height: 46%"></i><i style="height: 68%"></i><i style="height: 96%"></i><i style="height: 79%"></i><i style="height: 77%"></i><i style="height: 68%"></i><i style="height: 87%"></i><i style="height: 83%"></i><i style="height: 40%"></i><i style="height: 11%"></i><i style="height: 10%"></i><i style="height: 21%"></i><i style="height: 26%"></i><i style="height: 20%"></i><i style="height: 22%"></i><i style="height: 31%"></i><i style="height: 82%"></i><i style="height: 85%"></i><i style="height: 70%"></i><i style="height: 71%"></i><i style="height: 73%"></i><i style="height: 79%"></i><i style="height: 67%"></i><i style="height: 38%"></i><i style="height: 10%"></i><i style="height: 33%"></i><i style="height: 24%"></i><i style="height: 35%"></i><i style="height: 23%"></i><i style="height: 11%"></i><i style="height: 62%"></i></div>
+    <span class="ph" style="position: absolute; top: 0; bottom: 0; left: {{phead}}%; width: 2px; border-radius: 2px; background-color: #111214; opacity: {{phop}}"></span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px"><div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-size: 12.5px"><span>Rain</span><span style="color: #6b7079">{{lr}}%</span></div><div style="position: relative; height: 4px; border-radius: 2px; background-color: #e7e6e2"><div class="tw" style="height: 4px; border-radius: 2px; width: {{lr}}%; background-color: #111214"></div><span class="tl" style="position: absolute; top: -6px; left: calc({{lr}}% - 8px); width: 16px; height: 16px; border-radius: 16px; background-color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25)"></span></div></div><div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-size: 12.5px"><span>Piano</span><span style="color: #6b7079">{{lp}}%</span></div><div style="position: relative; height: 4px; border-radius: 2px; background-color: #e7e6e2"><div class="tw" style="height: 4px; border-radius: 2px; width: {{lp}}%; background-color: #111214"></div><span class="tl" style="position: absolute; top: -6px; left: calc({{lp}}% - 8px); width: 16px; height: 16px; border-radius: 16px; background-color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25)"></span></div></div><div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; font-size: 12.5px"><span>Vinyl</span><span style="color: #6b7079">{{lv}}%</span></div><div style="position: relative; height: 4px; border-radius: 2px; background-color: #e7e6e2"><div class="tw" style="height: 4px; border-radius: 2px; width: {{lv}}%; background-color: #111214"></div><span class="tl" style="position: absolute; top: -6px; left: calc({{lv}}% - 8px); width: 16px; height: 16px; border-radius: 16px; background-color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.25)"></span></div></div></div>
+  <div style="margin-top: auto; display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 10px; background-color: #121a27; color: #fff">
+    <span style="width: 34px; height: 34px; border-radius: 34px; background-color: #fff; display: inline-flex; align-items: center; justify-content: center; color: #121a27; font-size: 12px">{{picon}}</span>
+    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'Instrument Serif', Georgia, serif; font-size: 19px; line-height: 1">Rain, low and slow</span><span style="font-size: 11.5px; color: rgba(255,255,255,0.6)">Rain · Piano · Vinyl · 2:00 loop</span></span>
+    <span style="margin-left: auto; font-size: 12px; color: rgba(255,255,255,0.7)">{{ptime}}</span>
+  </div>
+  <span class="toast {{toast}}" style="position: absolute; right: 24px; bottom: 92px; height: 34px; padding: 0 14px; display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; background-color: #ffffff; box-shadow: 0 12px 30px -12px rgba(16,32,56,0.45); font-size: 12.5px">✓ Saved to Tonight</span>
+</div></div>
+        <div class="view {{v1}}">
+<div style="height: 100%; box-sizing: border-box; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #6b7079">Tuesday · Set 217</span><span style="font-family: 'Bricolage Grotesque', Geist, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.035em; line-height: 1">Today’s eleven</span></span>
+    <span class="streak {{spop}}" style="height: 30px; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px; background-color: #f4f3ef; font-size: 12.5px"><b style="font-weight: 600">{{streak}}</b> day streak</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 12px"><div style="flex: 1; height: 6px; border-radius: 3px; background-color: #eef0f3; overflow: hidden"><div class="tw" style="height: 6px; width: {{solvedw}}%; background-color: #4b63e6"></div></div><span style="font-size: 12.5px"><b style="font-weight: 600">{{solved}} of 11</b></span></div>
+  <div style="flex: 1; display: grid; grid-template-columns: 170px 1fr; gap: 18px; min-height: 0">
+    <div style="display: flex; flex-direction: column; gap: 4px"><div class="pz {{pl0}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>Lattice</span><span class="mk"></span></div><div class="pz {{pl1}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>Quint</span><span class="mk"></span></div><div class="pz {{pl2}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>Sheaf</span><span class="mk"></span></div><div class="pz {{pl3}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>Odds</span><span class="mk"></span></div><div class="pz {{pl4}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>Number place</span><span class="mk"></span></div><div class="pz {{pl5}}" style="height: 38px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px; font-size: 13.5px"><span>+6 more</span><span class="mk"></span></div></div>
+    <div style="position: relative; border-radius: 10px; background-color: #f7f7f5">
+      <div class="pane {{cw}}" style="position: absolute; inset: 0; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><b style="font-weight: 600">Lattice</b><span style="color: #6b7079">{{clock}}</span></div>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 38px; gap: 2px; padding: 2px; width: 196px; border-radius: 4px; background-color: #1b1e24"><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #1b1e24"></span><span style="background-color: #fff"></span><span class="cell {{rowcls}}" style="display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600">{{c0}}</span><span class="cell {{rowcls}}" style="display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600">{{c1}}</span><span class="cell {{rowcls}}" style="display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600">{{c2}}</span><span class="cell {{rowcls}}" style="display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600">{{c3}}</span><span class="cell {{rowcls}}" style="display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600">{{c4}}</span><span style="background-color: #fff"></span><span style="background-color: #1b1e24"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #1b1e24"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #1b1e24"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span><span style="background-color: #fff"></span></div>
+        <span style="font-size: 13.5px"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; color: #8a8f98">5 ACROSS</span>&nbsp; Not now</span>
+      </div>
+      <div class="pane {{ow}}" style="position: absolute; inset: 0; padding: 18px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; justify-content: space-between; font-size: 13px"><b style="font-weight: 600">Odds</b><span style="color: #6b7079">Pick the likeliest</span></div>
+        <span style="font-family: 'Bricolage Grotesque', Geist, sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.03em; line-height: 1.15">A spice, picked at random from a kitchen</span>
+        <div style="display: flex; flex-direction: column; gap: 7px"><div style="display: grid; grid-template-columns: 1fr 44px; gap: 8px; align-items: center; font-size: 13px"><div class="opt {{ok0}}" style="position: relative; height: 34px; border-radius: 8px; background-color: #f4f3ef; overflow: hidden"><div class="tw" style="position: absolute; top: 0; bottom: 0; left: 0; width: {{o0}}%; background-color: #e3dafb"></div><span style="position: relative; line-height: 34px; padding-left: 12px">Salt</span></div><span style="text-align: right; color: #6b7079">22%</span></div><div style="display: grid; grid-template-columns: 1fr 44px; gap: 8px; align-items: center; font-size: 13px"><div class="opt {{ok1}}" style="position: relative; height: 34px; border-radius: 8px; background-color: #f4f3ef; overflow: hidden"><div class="tw" style="position: absolute; top: 0; bottom: 0; left: 0; width: {{o1}}%; background-color: #e3dafb"></div><span style="position: relative; line-height: 34px; padding-left: 12px">Pepper</span></div><span style="text-align: right; color: #6b7079">18%</span></div><div style="display: grid; grid-template-columns: 1fr 44px; gap: 8px; align-items: center; font-size: 13px"><div class="opt {{ok2}}" style="position: relative; height: 34px; border-radius: 8px; background-color: #f4f3ef; overflow: hidden"><div class="tw" style="position: absolute; top: 0; bottom: 0; left: 0; width: {{o2}}%; background-color: #e3dafb"></div><span style="position: relative; line-height: 34px; padding-left: 12px">Cinnamon</span></div><span style="text-align: right; color: #6b7079">4%</span></div><div style="display: grid; grid-template-columns: 1fr 44px; gap: 8px; align-items: center; font-size: 13px"><div class="opt {{ok3}}" style="position: relative; height: 34px; border-radius: 8px; background-color: #f4f3ef; overflow: hidden"><div class="tw" style="position: absolute; top: 0; bottom: 0; left: 0; width: {{o3}}%; background-color: #e3dafb"></div><span style="position: relative; line-height: 34px; padding-left: 12px">Kashmiri chili flakes</span></div><span style="text-align: right; color: #6b7079">0.1%</span></div></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+        <div class="view {{v2}}">
+<div style="height: 100%; box-sizing: border-box; padding: 24px 26px; display: flex; flex-direction: column; gap: 16px">
+  <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 20px; font-weight: 500; letter-spacing: -0.02em">Regulatory auditor</span><span style="height: 26px; padding: 0 10px; display: inline-flex; align-items: center; border-radius: 6px; background-color: #e9eef5; color: #2f5b8c; font-size: 12px">Private to your AWS account</span></div>
+  <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; min-height: 0">
+    <div style="padding: 16px; border-radius: 10px; background-color: #f7f7f5; display: flex; flex-direction: column; gap: 10px">
+      <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98">Article 9 · sample</span>
+      <p class="doc {{doc}}" style="margin: 0; font-size: 13.5px; line-height: 1.65; color: #3b3f46">Providers shall <span class="hl {{h1}}">establish and document a risk management process</span> for the system, and shall <span class="hl {{h2}}">keep records of its operation for as long as it is in use</span>. A <span class="hl {{h3}}">named person shall oversee</span> each release before it reaches users.</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px"><span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8f98">Risks that bind</span><div class="risk {{r1}}" style="padding: 12px 14px; border-radius: 8px; background-color: #f7f7f5; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 500">No documented risk process</span><span style="font-size: 12px; color: #2f5b8c">→ Risk register, reviewed each quarter</span></div><div class="risk {{r2}}" style="padding: 12px 14px; border-radius: 8px; background-color: #f7f7f5; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 500">Records not kept for the system’s life</span><span style="font-size: 12px; color: #2f5b8c">→ Retention policy on audit logs</span></div><div class="risk {{r3}}" style="padding: 12px 14px; border-radius: 8px; background-color: #f7f7f5; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 500">No named oversight</span><span style="font-size: 12px; color: #2f5b8c">→ A named reviewer signs each release</span></div></div>
+  </div>
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <span class="match {{mt}}" style="height: 30px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; background-color: #f4f3ef; font-size: 12.5px"><b style="font-weight: 600">94 in 100</b> match the reviewer</span>
+    <span class="btn {{abtn}}" style="height: 40px; padding: 0 16px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #111214; color: #fff; font-size: 13.5px; font-weight: 500">{{alabel}}</span>
+  </div>
+</div></div>
+      </div>
+    </div>
+  </div>
+
+  <img src="/_blob/f12db6b319a6e0459ade068198886e4c" alt="Adamass AB" style="position: absolute; left: 56px; top: 39px; height: 18px">
+  <nav class="nav" aria-label="Main" style="position: absolute; left: 768px; right: 48px; top: 28px; height: 40px; display: flex; align-items: center; gap: 26px">
+    <a href="#work">Work</a><a href="#services">Services</a><a href="#aws">AWS</a><a href="#studio">Studio</a>
+    <a href="#call" style="margin-left: auto; height: 36px; padding: 0 14px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #ffffff; color: #111214; font-weight: 500">Book a call</a>
+  </nav>
+
+  <div style="position: absolute; left: 56px; top: 190px; width: 600px; display: flex; flex-direction: column; gap: 28px">
+    <h1 style="margin: 0; font-size: 64px; line-height: 1.02; font-weight: 500; letter-spacing: -0.05em">Come with the work that feels heavy.<br><span style="color: #a3a8b0">We will make it light.</span></h1>
+    <p style="margin: 0; max-width: 480px; font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; color: #4a4f57">A software and AI company in Malmö. Data scientists, engineers and architects who join your team or deliver the whole project. These are platforms we built.</p>
+    <div style="display: flex; gap: 8px">
+      <a href="#call" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #111214; color: #ffffff; font-size: 15px; font-weight: 500; text-decoration: none">Send a short brief →</a>
+      <a href="#work" style="height: 46px; padding: 0 20px; display: inline-flex; align-items: center; border-radius: 8px; background-color: #f3f2ee; color: #111214; font-size: 15px; font-weight: 500; text-decoration: none">See the work</a>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 56px; bottom: 48px; width: 600px; display: flex; flex-direction: column; gap: 14px">
+    <span style="font-family: 'Geist Mono', ui-monospace, monospace; font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #a3a8b0">Teams we have shipped with</span>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px 28px"><span style="font-size: 16px; font-weight: 500; letter-spacing: -0.02em; color: #9aa0a8">IKEA</span><span style="font-size: 16px; font-weight: 500; letter-spacing: -0.02em; color: #9aa0a8">Nasdaq</span><span style="font-size: 16px; font-weight: 500; letter-spacing: -0.02em; color: #9aa0a8">Tele2</span><span style="font-size: 16px; font-weight: 500; letter-spacing: -0.02em; color: #9aa0a8">Thomson Reuters</span><span style="font-size: 16px; font-weight: 500; letter-spacing: -0.02em; color: #9aa0a8">The Guardian</span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":860}}'>
+// A small timeline: each platform plays for 10 s; renderVals derives every frame from (p, t).
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { p: 0, t: 0 };
+  }
+  span(t, a, b) { return Math.max(0, Math.min(1, (t - a) / (b - a))); }
+  fmt(s) { return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0'); }
+  componentDidMount() {
+    const D = 10000, TICK = 100;
+    const still = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still) { this.setState({ t: 8800 }); return; }
+    this.timer = setInterval(() => {
+      let t = this.state.t + TICK, p = this.state.p;
+      if (t >= D) { t = 0; p = (p + 1) % 3; }
+      this.setState({ t, p });
+    }, TICK);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+  murmur(t) {
+    const full = 'Rain on a tin roof, low and slow';
+    const typed = Math.round(this.span(t, 300, 2500) * full.length);
+    const gen = this.span(t, 2900, 4700);
+    const play = this.span(t, 6800, 9800);
+    return {
+      prompt: full.slice(0, typed),
+      caret: t < 2700 ? 'on' : '',
+      mbtn: t > 2600 && t < 2950 ? 'press' : '',
+      mstatus: t < 2900 ? 'Describe it' : (t < 4700 ? 'Our model is writing…' : 'Ready · seamless loop'),
+      wcut: String(Math.round((1 - gen) * 100)),
+      lr: t > 4900 ? 70 : 35, lp: t > 5300 ? 45 : 60, lv: t > 5700 ? 20 : 45,
+      phead: String((play * 62).toFixed(1)), phop: t > 6800 ? 1 : 0,
+      picon: t > 6800 ? '❚❚' : '▶',
+      ptime: this.fmt(play * 74) + ' / 2:00',
+      toast: t > 8200 ? 'on' : '',
+      feat: t < 2900 ? 'Describe' : (t < 4800 ? 'Generate' : (t < 6800 ? 'Shape' : 'Play and keep')),
+      caption: 'Murmur · our post-trained music model',
+      app: 'Murmur'
+    };
+  }
+  morrow(t) {
+    const word = 'LATER';
+    const n = Math.round(this.span(t, 1600, 3600) * 5);
+    const c = {};
+    for (let i = 0; i < 5; i++) c['c' + i] = i < n ? word[i] : '';
+    const solvedCross = t > 3900;
+    const oddsOn = t > 5000;
+    const pk = t > 7200;
+    const pl = (i) => {
+      if (i === 0) return solvedCross ? 'done' : (t > 1200 ? 'now' : '');
+      if (i === 1) return 'done';
+      if (i === 3) return pk ? 'done' : (oddsOn ? 'now' : '');
+      return '';
+    };
+    const solved = 1 + (solvedCross ? 1 : 0) + (pk ? 1 : 0);
+    return Object.assign(c, {
+      rowcls: solvedCross ? 'solved' : (t > 1200 ? 'typing' : ''),
+      cw: oddsOn ? '' : 'on', ow: oddsOn ? 'on' : '',
+      o0: t > 5500 ? 66 : 0, o1: t > 5700 ? 54 : 0, o2: t > 5900 ? 14 : 0, o3: t > 6100 ? 2 : 0,
+      ok0: pk ? 'pick' : '', ok1: '', ok2: '', ok3: '',
+      pl0: pl(0), pl1: pl(1), pl2: pl(2), pl3: pl(3), pl4: '', pl5: '',
+      solved: String(solved), solvedw: String(Math.round(solved / 11 * 100)),
+      clock: this.fmt(212 + t / 1000),
+      streak: t > 8200 ? '6' : '5', spop: t > 8200 && t < 8700 ? 'pop' : '',
+      feat: t < 1200 ? "Today's set" : (t < 5000 ? 'Solve' : (t < 8200 ? 'Odds' : 'Streak')),
+      caption: 'Morrow · puzzles from our in-house model',
+      app: 'Morrow'
+    });
+  }
+  auditor(t) {
+    return {
+      doc: t > 300 ? 'on' : '',
+      h1: t > 1600 ? 'on' : '', h2: t > 2300 ? 'on' : '', h3: t > 3000 ? 'on' : '',
+      r1: t > 3700 ? 'on' : '', r2: t > 4400 ? 'on' : '', r3: t > 5100 ? 'on' : '',
+      mt: t > 6200 ? 'on' : '',
+      abtn: t > 7600 && t < 7950 ? 'press' : '',
+      alabel: t > 7900 ? 'Sent to the reviewer ✓' : 'Send to reviewer',
+      feat: t < 1600 ? 'Read' : (t < 3700 ? 'Find what binds' : (t < 6200 ? 'Map to controls' : 'Reviewer signs')),
+      caption: 'Selected work · a regulatory model',
+      app: 'Regulatory auditor'
+    };
+  }
+  renderVals() {
+    const { p, t } = this.state;
+    const base = {
+      v0: p === 0 ? 'on' : '', v1: p === 1 ? 'on' : '', v2: p === 2 ? 'on' : '',
+      aria: 'A product window that plays through the main features of Murmur, Morrow and a regulatory auditor'
+    };
+    const all = Object.assign({}, this.murmur(p === 0 ? t : 0), this.morrow(p === 1 ? t : 0), this.auditor(p === 2 ? t : 0));
+    const cur = p === 0 ? this.murmur(t) : (p === 1 ? this.morrow(t) : this.auditor(t));
+    return Object.assign(all, cur, base);
+  }
+}
+</script>
+</body>
+</html>

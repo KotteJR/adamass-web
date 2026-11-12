@@ -1,0 +1,20 @@
+<!-- @dsCard group="Type" height=330 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Headline — preview</title>
+<style>
+  .pv { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .pv-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  
+</style>
+</head>
+<body>
+<div id="root" class="pv"></div>
+<script>
+  var A = window.Adamass, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(A.Headline, { lead: 'One lead,', tail: 'start to handover.' }),
+    h(A.Headline, { lead: 'Senior engineering for', tail: 'products that ship.', tone: 'blue', size: 'display', as: 'h1' })));
+</script>
+</body>
+</html>
