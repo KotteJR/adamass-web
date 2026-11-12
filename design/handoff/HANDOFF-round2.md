@@ -135,14 +135,14 @@ Mark these in `content/work.ts` with a `// TODO founders: confirm` comment:
   - Key presses and the arrows glide the edge on the knob's own curve (0.5 s, ease-out-soft), so they move together.
   - The surface is redrawn every frame outside React. Reduced motion keeps it flat and still.
 - **Moments:** small checkpoints on the line (the boxes' bottom edge) where each moment happens, lit once passed. Just above the knob sits the current moment's short name (`label` in `content/process.ts`); it leans along with the knob, so it never runs off either end. That is all: no lists, no bars. The boxes are 112 px tall.
-- **Phones:** smaller way-in buttons; a slim rail of the four steps carries the checkpoints, the knob and the word; under it one box names the step the knob is in, with its own liquid fill (`StepRail.tsx`). Dragging across the rail or the box moves along the whole engagement.
+- **Phones (under 640 px; tablets keep the boxes):** nothing to drag. Under the way-in buttons, the way in reads as a list (`StepList.tsx`): the four steps on one thin line, each with a small white mark, its name and its weeks, and under it what happens in it and when (the moment's `when` in blue mono, then its text). The intro there says "Pick a way in to see what happens when." (`introPhone`). The drag rail and its single box are gone (`StepRail.tsx` deleted): on a phone the slider took the page's vertical swipes.
 - **Knob:** a white round knob on the boxes' bottom edge, on a Radix Slider (`PlayheadSlider.tsx`) that covers the boxes.
   - You can drag anywhere and it stays where you let go. Pressing jumps there.
   - Arrow keys move a week (a month on the long ways in), Page Up and Page Down jump between moments, and Home and End go to the ends.
 - **Line:** one element (in `MomentNote.tsx`) runs from the knob down past the note, at the same `--x` as the knob. The note has no border, so gliding or changing sides never breaks the line.
-- **Note:** it hangs beside the line: right, left near the end, or full width on phones. Its room is as tall as the longest moment, so nothing below moves. The text cross-fades only when the moment changes; pressing the boxes no longer restarts it.
-- **Files:** `components/sections/process/` holds `ProcessTimeline`, `EngagementTimeline`, `StepBoxes`, `PlayheadSlider`, `MomentNote`, `GlassFill`, `StepRail`, `engagement-math.ts` and `process.module.css`. `components/ui/timeline.tsx` and `RulerSlider.tsx` are gone.
-- **Board:** `boards/Process.dc.html` (`build_process13.py`). It has the checkpoints, the word over the knob and the still glass; the liquid surface and its g-force are on the site only.
+- **Note:** it hangs beside the line: right, left near the end, or full width where the row is narrow. Its room is as tall as the longest moment, so nothing below moves. The text cross-fades only when the moment changes; pressing the boxes no longer restarts it.
+- **Files:** `components/sections/process/` holds `ProcessTimeline`, `EngagementTimeline`, `StepBoxes`, `PlayheadSlider`, `MomentNote`, `GlassFill`, `StepList` (phones), `engagement-math.ts` and `process.module.css`. `components/ui/timeline.tsx` and `RulerSlider.tsx` are gone.
+- **Board:** `boards/Process.dc.html` (`build_process13.py`). It has the checkpoints, the word over the knob and the still glass; the liquid surface and its g-force are on the site only. Phones: `boards/ProcessPhone.dc.html` (`build_process_phone.py`), 390 px wide, beside it.
 - **Office address:** Fridhemsborg, Fridhemsvägen 2, 217 74 Malmö (`content/site.ts`). Bolagsverket may still list Nordmannagatan 35 B as the registered address.
 
 ## 8b. Header, contact modal, fewer numbers (12 Nov)
@@ -153,6 +153,7 @@ Mark these in `content/work.ts` with a `// TODO founders: confirm` comment:
   - It ignores small or bouncy scrolls and stays away while an in-page link scrolls. It comes back when a link in it is focused.
   - `#top` is now an empty anchor before the bar.
 - **Contact modal (`ContactDialog.tsx`):** a plain white card. No painting frame; the page behind is dimmed a little and blurred well out of focus. The More board's brief card matches.
+  - **Phones (13 Nov):** a full-screen sheet that slides up solid and back down (no fade, which showed the page's text through the form). The sticky bar with the close button is solid white: Safari drew the frosted one see-through, with the form showing under "Get in touch". No blur behind it, since the sheet covers the page. Focus starts on the dialog itself, so the close button shows no ring on a tap.
 - **Fewer numbers:**
   - Removed: "No. 05" and the "Fig n" labels, corner titles, captions and readouts around the Five ways figures (the `number` and `figure` fields are gone from `content/services.ts`).
   - Also removed: the "01 ·" before each work card's kind, the AWS explorer tab numbers and the model harness step numbers.
@@ -165,6 +166,7 @@ Mark these in `content/work.ts` with a `// TODO founders: confirm` comment:
   - **SOC 2:** Gap list, Controls, Audit.
   - It shows once the plate is 520 px wide; the figure scales down to the height left above it. Phones keep the figure alone.
   - The Statement board matches.
+- **AWS drawing's steps (13 Nov):** on phones the three steps under the cabinet stack one per line instead of two and a straggler.
 
 ## 9. The drawn [a] on our cards (12 Nov)
 

@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ProcessContent } from "@/content/process";
 import { cn } from "@/lib/utils";
 import { EngagementTimeline } from "./EngagementTimeline";
+import { StepList } from "./StepList";
 
 type ProcessTimelineProps = Pick<
   ProcessContent,
@@ -14,7 +15,8 @@ type ProcessTimelineProps = Pick<
 /**
  * One engagement you can scrub through. The ways in are a row of buttons, like
  * the topic chips in the brief form; picking one redraws the rail below, and
- * moving its knob shows what happens there. Nothing moves on its own.
+ * moving its knob shows what happens there. On phones the rail is a list of the
+ * four steps instead, with no knob to drag. Nothing moves on its own.
  */
 export function ProcessTimeline(props: ProcessTimelineProps) {
   const { phases, ways, defaultWay, waysLabel, lengthLabel, scrubLabel } = props;
@@ -66,6 +68,7 @@ export function ProcessTimeline(props: ProcessTimelineProps) {
         </TabsList>
       </Tabs>
 
+      {/* From 640 px: the timeline you drag. Phones: the same way in as a list you read. */}
       <EngagementTimeline
         way={way}
         ways={ways}
@@ -75,7 +78,9 @@ export function ProcessTimeline(props: ProcessTimelineProps) {
         label={scrubLabel}
         summary={`${lengthLabel} ${way.length}. ${way.shown}.`}
         labels={{ previous: props.previous, next: props.next }}
+        className="max-sm:hidden"
       />
+      <StepList way={way} phases={phases} className="sm:hidden" />
     </div>
   );
 }

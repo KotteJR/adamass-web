@@ -144,7 +144,8 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
               onAnimationIteration={onStoryLoop}
               className={cn(
                 cabinet[`bm-${offer.mode}` as keyof typeof cabinet],
-                "flex flex-wrap gap-x-[22px] gap-y-2 px-5 pb-5 font-mono text-[0.6875rem] tracking-[0.06em] uppercase sm:px-7 lg:pb-7",
+                // Phones: one step per line, instead of two and a straggler.
+                "flex flex-wrap gap-x-[22px] gap-y-2 px-5 pb-5 font-mono text-[0.6875rem] tracking-[0.06em] uppercase max-sm:flex-col sm:px-7 lg:pb-7",
               )}
             >
               {offer.steps.map((step, k) => (

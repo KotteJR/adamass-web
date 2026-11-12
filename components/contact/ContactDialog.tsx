@@ -56,6 +56,7 @@ export function ContactDialog({
   // Remember the link that opened the dialog, to hand focus back on close.
   // Taken from the click itself: browsers move focus to <body> on a hash change.
   const opener = useRef<HTMLElement | null>(null);
+  const content = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const remember = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest(`a[href="${target}"]`) : null;
@@ -74,9 +75,17 @@ export function ContactDialog({
   return (
     <Dialog open={open} onOpenChange={(next) => (next ? undefined : close())}>
       <DialogContent
+        ref={content}
         showCloseButton={false}
-        // Behind it, the page itself: dimmed a little and blurred well out of focus.
-        overlayClassName="bg-[#0b1421]/25 supports-backdrop-filter:backdrop-blur-xl"
+        // Behind it, the page itself: dimmed a little and blurred well out of focus. Phones get a plain
+        // dim: the sheet covers the whole screen, and a full-page blur there only costs frames as it opens.
+        overlayClassName="bg-[#0b1421]/25 supports-backdrop-filter:backdrop-blur-xl max-sm:supports-backdrop-filter:backdrop-blur-none"
+        // Focus starts on the dialog itself, not its first button: the close button then shows no
+        // focus ring on a tap, and Tab still reaches it first.
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          content.current?.focus({ preventScroll: true });
+        }}
         onCloseAutoFocus={(event) => {
           if (!opener.current) return;
           event.preventDefault();
@@ -85,14 +94,17 @@ export function ContactDialog({
         }}
         className={cn(
           "block max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-white p-0 text-ink ring-1 ring-black/5 shadow-[0_40px_100px_-30px_rgba(10,24,44,0.55)] sm:max-w-[600px]",
-          // Phones: a full-screen sheet that rises from the bottom.
-          "max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:bg-white max-sm:data-open:slide-in-from-bottom-8 max-sm:data-open:zoom-in-100",
+          // Phones: a full-screen sheet that slides up from the bottom and back down, solid all the way
+          // (a fade would show the page's text through the form while it opens).
+          "max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:bg-white",
+          "max-sm:duration-300 max-sm:ease-out-soft max-sm:data-open:fade-in-100 max-sm:data-open:zoom-in-100 max-sm:data-open:slide-in-from-bottom max-sm:data-closed:fade-out-100 max-sm:data-closed:zoom-out-100 max-sm:data-closed:slide-out-to-bottom",
         )}
       >
         <div className="relative">
           <div className="relative flex min-h-dvh flex-col gap-5 bg-white px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:min-h-0 sm:px-[26px] sm:pt-6 sm:pb-[22px]">
-            {/* Phones: a sticky bar keeps the close button in reach while the form scrolls. */}
-            <div className="sticky top-0 z-10 -mx-5 flex items-center justify-between bg-white/95 px-5 pt-[max(0.5rem,env(safe-area-inset-top))] pb-1 backdrop-blur-sm sm:static sm:m-0 sm:-mt-1 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
+            {/* Phones: a sticky bar keeps the close button in reach while the form scrolls. Solid white:
+                Safari draws a frosted bar inside a scrolling sheet see-through, with the form showing under it. */}
+            <div className="sticky top-0 z-10 -mx-5 flex items-center justify-between bg-white px-5 pt-[max(0.5rem,env(safe-area-inset-top))] pb-1 sm:static sm:m-0 sm:-mt-1 sm:bg-transparent sm:p-0">
               <MonoLabel>{label}</MonoLabel>
               <DialogClose asChild>
                 <Button variant="ghost" className="-mr-2.5 size-11 shrink-0 rounded-lg p-0 text-slate hover:text-ink">

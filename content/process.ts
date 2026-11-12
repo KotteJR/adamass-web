@@ -43,6 +43,8 @@ export type ProcessContent = {
   label: string;
   title: Headline;
   intro: string;
+  /** The intro on phones, where the way in is a list to read rather than a line to drag. */
+  introPhone: string;
   waysLabel: string;
   lengthLabel: string;
   scrubLabel: string;
@@ -58,6 +60,7 @@ export const howWeWork: ProcessContent = {
   title: { lead: "Same four steps,", rest: "a week or two years." },
   intro:
     "A three-week review and two years inside your team run the same way. Pick a way in and drag along the line to see what happens when.",
+  introPhone: "A three-week review and two years inside your team run the same way. Pick a way in to see what happens when.",
   waysLabel: "Ways in",
   lengthLabel: "In all",
   scrubLabel: "Where in the engagement",

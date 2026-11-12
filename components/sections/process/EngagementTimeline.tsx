@@ -18,14 +18,11 @@ import { MomentNote } from "./MomentNote";
 import { PlayheadSlider } from "./PlayheadSlider";
 import { GlassFill } from "./GlassFill";
 import { boxPlace, StepBoxes } from "./StepBoxes";
-import { StepRail } from "./StepRail";
 import styles from "./process.module.css";
 
 /** The room a step's name needs, in px. */
 const STEP_PX = { wide: 132, narrow: 84 };
 const WEEKS_PER_MONTH = 52 / 12;
-/** The phone's single box, as a layout of one step that fills the row. */
-const WHOLE: [number, number][] = [[0, 1]];
 
 type EngagementTimelineProps = {
   way: WayIn;
@@ -38,26 +35,22 @@ type EngagementTimelineProps = {
   /** Said to screen readers with the timeline: how long it runs in all, and how much of it is shown. */
   summary: string;
   labels: { previous: string; next: string };
+  className?: string;
 };
 
 /**
- * The engagement, from 640 px: four boxes in a row, one per step, each as wide
- * as the step runs (never too narrow for its name), with its name and weeks
- * inside. As the playhead moves the boxes fill with frosted glass drawn as
+ * The engagement, from 640 px (phones read StepList instead): four boxes in a
+ * row, one per step, each as wide as the step runs (never too narrow for its
+ * name), with its name and weeks inside. As the playhead moves the boxes fill with frosted glass drawn as
  * liquid (GlassFill): filled glass stays still, and its surface sits on the
  * knob and bows in or out under the motion like liquid under g-force. The knob
  * rides the boxes' bottom edge, with small checkpoints along it where each
  * moment happens, and the current moment's name sits just above the knob. One
  * line drops from the knob past the note.
  *
- * On phones: a slim rail of the four steps with the checkpoints, the knob and
- * the word on it, and under it one box for the step the knob is in, with its
- * own liquid fill. Dragging anywhere across the rail or the box moves along the
- * whole engagement.
- *
  * Drag (the knob stays where you let go), press to jump, or use the keys.
  */
-export function EngagementTimeline({ way, ways, phases, week, onWeek, label, summary, labels }: EngagementTimelineProps) {
+export function EngagementTimeline({ way, ways, phases, week, onWeek, label, summary, labels, className }: EngagementTimelineProps) {
   const root = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
   const [width, setWidth] = useState(1200);
@@ -67,6 +60,8 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
     const element = root.current;
     if (!element) return;
     const observer = new ResizeObserver(([entry]) => {
+      // Hidden (on phones) it measures 0: keep the last width until it shows again.
+      if (entry.contentRect.width === 0) return;
       setWidth(entry.contentRect.width);
       setMeasured(true);
     });
@@ -80,9 +75,6 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
   const momentIndex = momentAt(way.moments, week);
   const moment = way.moments[momentIndex];
   const at = placeOf(way, week, layout) * 100;
-  // How far through the current step the knob is, 0 to 1: the phone's box fills by it.
-  const [stepStart, stepEnd] = bounds[current];
-  const through = Math.min(1, Math.max(0, (week - stepStart) / Math.max(1e-6, stepEnd - stepStart)));
 
   // What marks the playhead glides when set by a key or a button. While dragging nothing animates,
   // so the knob, the word and the note follow the pointer together, in the same frame.
@@ -151,14 +143,14 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
   return (
     <div
       ref={root}
-      className={cn("relative", styles.timeline)}
+      className={cn("relative", styles.timeline, className)}
       // --x: the playhead line's left edge, kept 1 px inside at the very end. The knob and the note's line both use it.
       style={{ "--at": `${at}%`, "--x": `min(${at}%, 100% - 1px)` } as CSSProperties}
     >
       <p className="sr-only">{summary}</p>
 
-      {/* From 640 px: the four boxes. */}
-      <div className={cn("relative h-28 max-sm:hidden", styles.area)}>
+      {/* The four boxes. */}
+      <div className={cn("relative h-28", styles.area)}>
         <StepBoxes layout={layout} boxClassName={cn("border-white/12", measured && styles.flow)} />
         <GlassFill
           layout={layout}
@@ -207,39 +199,6 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
             styles.knob,
           )}
         />
-        {slider}
-      </div>
-
-      {/* Phones: the four steps as a slim rail with the knob, then the current step, full width. */}
-      <div className={cn("relative pt-7 sm:hidden", styles.area)}>
-        <div className="relative">
-          <span className="pointer-events-none absolute inset-x-0 bottom-3.5 h-4 [&>span]:bottom-0">{word}</span>
-          <StepRail layout={layout} current={current} />
-          <span className="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 [&>span]:inset-y-0">{ticks}</span>
-          <span
-            aria-hidden
-            className={cn(
-              "pointer-events-none absolute top-1/2 left-(--at) z-20 size-3.5 -translate-1/2 rounded-full bg-white shadow-[0_0_0_3px_#0d1726]",
-              dragging ? "scale-115" : "transition-[left,scale,box-shadow]",
-              glide,
-              styles.knob,
-            )}
-          />
-        </div>
-        <div className="relative mt-5 h-20 rounded-lg border border-white/12">
-          {/* A fresh liquid for each step, so moving into the next one starts it empty instead of sloshing back. */}
-          <GlassFill key={`${way.id}-${current}`} layout={WHOLE} width={width} height={80} x={through * width} dragging={dragging} />
-          <div className="pointer-events-none absolute inset-0 flex flex-col justify-center px-4">
-            <span className="flex items-baseline justify-between gap-3">
-              <span key={`${way.id}-${current}`} className={cn("text-base font-medium tracking-[-0.01em] text-white", styles.swap)}>
-                {phases[current].title}
-              </span>
-              <span className="font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap text-white/45 uppercase">
-                {rangeLabel(way, bounds[current])}
-              </span>
-            </span>
-          </div>
-        </div>
         {slider}
       </div>
 

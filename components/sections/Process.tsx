@@ -7,7 +7,8 @@ import { ProcessTimeline } from "./process/ProcessTimeline";
 /**
  * How we work: the heading with its intro under it, then one engagement you
  * can scrub through: pick a way in, drag along its four steps at their real
- * lengths, and read what happens when. Nothing moves on its own. The section sits on the painting it
+ * lengths, and read what happens when. On phones the way in is a list to read
+ * instead. Nothing moves on its own. The section sits on the painting it
  * shares with the end screen (ClosingBackdrop): dark at the top, and over its
  * last 20rem the dark fades out into the end screen.
  */
@@ -30,7 +31,8 @@ export function Process() {
             <span className="block">{howWeWork.title.lead}</span>
             <span className="block text-white/45">{howWeWork.title.rest}</span>
           </h2>
-          <p className="max-w-[560px] text-lg leading-[1.55] text-white/75">{howWeWork.intro}</p>
+          <p className="max-w-[560px] text-lg leading-[1.55] text-white/75 max-sm:hidden">{howWeWork.intro}</p>
+          <p className="text-lg leading-[1.55] text-white/75 sm:hidden">{howWeWork.introPhone}</p>
         </div>
 
         <ProcessTimeline
