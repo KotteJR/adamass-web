@@ -1,7 +1,7 @@
 import { Container } from "@/components/kit/Container";
 import { SectionHeading } from "@/components/kit/SectionHeading";
 import { anchors } from "@/content/site";
-import { workProducts, workSection } from "@/content/work";
+import { getCopy } from "@/content/copy";
 import { cn } from "@/lib/utils";
 import { AskCard } from "./work/AskCard";
 import { WorkCard } from "./work/WorkCard";
@@ -14,7 +14,8 @@ import { WorkModal } from "./work/WorkModal";
  * on top and three below (a six-column grid); on phones two by two, then the
  * ask card across both columns.
  */
-export function Work() {
+export async function Work() {
+  const { workProducts, workSection } = await getCopy();
   return (
     <section id={anchors.work} aria-labelledby="work-title" className="pt-16 pb-20 lg:pt-[88px] lg:pb-[104px]">
       <Container className="flex flex-col gap-12 lg:gap-16">

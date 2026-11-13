@@ -1,9 +1,10 @@
 import { Logo } from "@/components/brand/Logo";
 import { Container } from "@/components/kit/Container";
-import { footer, footerNav, site } from "@/content/site";
+import { getCopy } from "@/content/copy";
 
 /** The thin white footer under the end screen. No rules, just space. */
-export function SiteFooter() {
+export async function SiteFooter() {
+  const { footer, footerNav, site, ui } = await getCopy();
   const { address } = site;
   return (
     <footer className="text-sm text-slate">
@@ -19,9 +20,9 @@ export function SiteFooter() {
             {address.building}, {address.street}, {address.postalCode} {address.city}
           </span>
           <span className="hidden sm:inline"> · </span>
-          <span className="block whitespace-nowrap sm:inline">Org. nr {site.orgNumber}</span>
+          <span className="block whitespace-nowrap sm:inline">{ui.orgNumber} {site.orgNumber}</span>
         </address>
-        <nav aria-label="Footer">
+        <nav aria-label={ui.footerNav}>
           <ul className="flex flex-wrap gap-x-6 lg:justify-end lg:gap-x-[22px] lg:gap-y-2">
             {footerNav.map((item) => (
               <li key={item.href}>

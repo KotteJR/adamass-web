@@ -82,7 +82,8 @@ export type WorkProduct = {
     };
     model: {
       body: string;
-      figure: { key: ModelFigureKey; steps: string[] };
+      /** label: what the figure shows, for screen readers; left out, the drawing's own English. */
+      figure: { key: ModelFigureKey; steps: string[]; label?: string };
       /** Under the figure: what the model does, row by row. */
       capabilities?: { label: string; items: Capability[] };
       stats?: Stat[];

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
-import type { Moment, Phase, WayIn } from "@/content/process";
+import type { Moment, Phase, WayIn, TimeUnits } from "@/content/process";
 import { cn } from "@/lib/utils";
 import { momentAt, phaseAt, pointLabel } from "./engagement-math";
 import styles from "./process.module.css";
@@ -19,6 +19,7 @@ type MomentNoteProps = {
   dragging: boolean;
   onWeek: (week: number) => void;
   labels: { previous: string; next: string };
+  units: TimeUnits;
 };
 
 /** The note's width when it hangs beside the line. */
@@ -52,7 +53,7 @@ function NoteText({ where, moment, phase }: { where: string; moment: Moment; pha
  * Its room is as tall as the longest moment of any way in, so nothing below
  * moves, at any width.
  */
-export function MomentNote({ way, ways, phases, week, at, trackWidth, dragging, onWeek, labels }: MomentNoteProps) {
+export function MomentNote({ way, ways, phases, week, at, trackWidth, dragging, onWeek, labels, units }: MomentNoteProps) {
   const index = momentAt(way.moments, week);
   const moment = way.moments[index];
   const phase = phases[phaseAt(way, week)];
@@ -94,7 +95,7 @@ export function MomentNote({ way, ways, phases, week, at, trackWidth, dragging, 
         )}
       >
         <div key={`${way.id}-${index}`} aria-live="polite" className={styles.swap}>
-          <NoteText where={pointLabel(way, week)} moment={moment} phase={phase} />
+          <NoteText where={pointLabel(way, week, units)} moment={moment} phase={phase} />
         </div>
         <div className="mt-6 flex items-center gap-2">
           <button type="button" className={arrowButton} onClick={() => step(-1)} disabled={index === 0} aria-label={labels.previous}>

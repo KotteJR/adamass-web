@@ -4,16 +4,24 @@
 import { site } from "./site";
 import type { Headline, LinkAction, Step } from "./types";
 
-/** What the brief is about. The form's chips and the server check share this list. */
-export const briefTopics = [
+/** What a brief can be about. The server check uses these; the form shows briefTopics. */
+export const briefTopicValues = ["embedded", "modernisation", "diligence", "genai", "aws"] as const;
+
+export type BriefTopic = (typeof briefTopicValues)[number];
+
+export type BriefTopicOption = { value: BriefTopic; label: string };
+
+/** The form's topic chips. */
+export const briefTopics: BriefTopicOption[] = [
   { value: "embedded", label: "Embedded delivery" },
   { value: "modernisation", label: "Modernisation" },
   { value: "diligence", label: "Diligence" },
   { value: "genai", label: "GenAI" },
   { value: "aws", label: "AWS" },
-] as const;
+];
 
-export type BriefTopic = (typeof briefTopics)[number]["value"];
+/** What can be wrong with a field. The server returns these; the form shows the words. */
+export type BriefError = "topic" | "name" | "nameLong" | "email" | "briefShort" | "briefLong";
 
 export type ContactContent = {
   label: string;
@@ -34,6 +42,7 @@ export type ContactContent = {
     success: { title: string; body: string };
     failed: string;
     invalid: string;
+    errors: Record<BriefError, string>;
   };
   steps: Step[];
 };
@@ -63,6 +72,14 @@ export const contact: ContactContent = {
     },
     failed: `Something went wrong on our side and the brief did not go through. Your text is still here: try again, or write to ${site.email}.`,
     invalid: "A few fields need another look.",
+    errors: {
+      topic: "Pick what the brief is about.",
+      name: "Tell us who you are.",
+      nameLong: "That name is longer than we can store.",
+      email: "We need an email address we can reply to.",
+      briefShort: "A few lines is enough, but we need a few.",
+      briefLong: "Keep it under 4,000 characters; we will ask for more.",
+    },
   },
   steps: [
     {

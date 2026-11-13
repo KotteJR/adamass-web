@@ -1,6 +1,6 @@
 import { Container } from "@/components/kit/Container";
 import { MonoLabel } from "@/components/kit/MonoLabel";
-import { howWeWork } from "@/content/process";
+import { getCopy } from "@/content/copy";
 import { anchors } from "@/content/site";
 import { ProcessTimeline } from "./process/ProcessTimeline";
 
@@ -12,7 +12,8 @@ import { ProcessTimeline } from "./process/ProcessTimeline";
  * shares with the end screen (ClosingBackdrop): dark at the top, and over its
  * last 20rem the dark fades out into the end screen.
  */
-export function Process() {
+export async function Process() {
+  const { howWeWork } = await getCopy();
   return (
     <section id={anchors.process} aria-labelledby="process-title" className="relative isolate overflow-x-clip text-white">
       <div
@@ -44,6 +45,7 @@ export function Process() {
           scrubLabel={howWeWork.scrubLabel}
           previous={howWeWork.previous}
           next={howWeWork.next}
+          units={howWeWork.units}
         />
 
       </Container>

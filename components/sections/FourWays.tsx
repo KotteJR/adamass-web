@@ -9,12 +9,13 @@ import { Container } from "@/components/kit/Container";
 import { SpecList } from "@/components/kit/SpecList";
 import { Tag } from "@/components/kit/Tag";
 import { anchors } from "@/content/site";
-import { services, servicesSection, type ServiceId } from "@/content/services";
+import { getCopy } from "@/content/copy";
+import type { ServiceId } from "@/content/services";
 import { ServiceFigurePanel } from "./four-ways/ServiceFigurePanel";
 import { StepObserver } from "./four-ways/StepObserver";
 import styles from "./four-ways/four-ways.module.css";
 
-const FIGURES: Record<ServiceId, ComponentType> = {
+const FIGURES: Record<ServiceId, ComponentType<{ label?: string }>> = {
   embedded: EmbeddedDeliveryFigure,
   modernisation: ModernisationFigure,
   diligence: DiligenceFigure,
@@ -23,7 +24,8 @@ const FIGURES: Record<ServiceId, ComponentType> = {
 };
 
 /** Five ways in: the services as a sticky scroll, one animated figure each. */
-export function FourWays() {
+export async function FourWays() {
+  const { services, servicesSection } = await getCopy();
   return (
     <section id={anchors.services} aria-labelledby="services-title" className="pt-[72px] pb-16 lg:pb-[72px]">
       <Container>
@@ -37,7 +39,7 @@ export function FourWays() {
             return (
               <article key={service.id} aria-labelledby={`service-${service.id}`} className={styles.step}>
                 <ServiceFigurePanel service={service} index={index} className={styles.panel}>
-                  <Figure />
+                  <Figure label={service.figureLabel} />
                 </ServiceFigurePanel>
                 <div data-step={index} data-step-text className={styles.text}>
                   <Tag className="self-start">{service.tag}</Tag>

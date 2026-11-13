@@ -9,7 +9,7 @@ import { StepList } from "./StepList";
 
 type ProcessTimelineProps = Pick<
   ProcessContent,
-  "phases" | "ways" | "defaultWay" | "waysLabel" | "lengthLabel" | "scrubLabel" | "previous" | "next"
+  "phases" | "ways" | "defaultWay" | "waysLabel" | "lengthLabel" | "scrubLabel" | "previous" | "next" | "units"
 >;
 
 /**
@@ -19,7 +19,7 @@ type ProcessTimelineProps = Pick<
  * four steps instead, with no knob to drag. Nothing moves on its own.
  */
 export function ProcessTimeline(props: ProcessTimelineProps) {
-  const { phases, ways, defaultWay, waysLabel, lengthLabel, scrubLabel } = props;
+  const { phases, ways, defaultWay, waysLabel, lengthLabel, scrubLabel, units } = props;
   const [wayId, setWayId] = useState(defaultWay);
   const way = ways.find((w) => w.id === wayId) ?? ways[0];
   const [week, setWeek] = useState(way.start);
@@ -78,9 +78,10 @@ export function ProcessTimeline(props: ProcessTimelineProps) {
         label={scrubLabel}
         summary={`${lengthLabel} ${way.length}. ${way.shown}.`}
         labels={{ previous: props.previous, next: props.next }}
+        units={units}
         className="max-sm:hidden"
       />
-      <StepList way={way} phases={phases} className="sm:hidden" />
+      <StepList way={way} phases={phases} units={units} className="sm:hidden" />
     </div>
   );
 }

@@ -2,12 +2,13 @@ import { AwsCabinetFigure } from "@/components/brand/figures/AwsCabinetFigure";
 import { ArrowLink } from "@/components/kit/ArrowLink";
 import { Container } from "@/components/kit/Container";
 import { SectionHeading } from "@/components/kit/SectionHeading";
-import { awsOffers, awsSection } from "@/content/services";
+import { getCopy } from "@/content/copy";
 import { anchors } from "@/content/site";
 import { AwsExplorer } from "./aws/AwsExplorer";
 
 /** AWS, from the first account up: the explorer, then how buying works. */
-export function Aws() {
+export async function Aws() {
+  const { awsOffers, awsSection } = await getCopy();
   const { tabsLabel, legend, listed, direct } = awsSection;
   return (
     <section id={anchors.aws} aria-labelledby="aws-title" className="pt-16 pb-20 lg:pt-[72px] lg:pb-28">
@@ -20,7 +21,7 @@ export function Aws() {
         <AwsExplorer
           offers={awsOffers}
           labels={{ tabsLabel, legend, listed, direct }}
-          figure={<AwsCabinetFigure />}
+          figure={<AwsCabinetFigure label={awsSection.figureLabel} />}
         />
 
         <div className="grid gap-8 pt-1 md:grid-cols-3">

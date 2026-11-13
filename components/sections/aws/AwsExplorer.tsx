@@ -173,7 +173,9 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
               {o.marketplaceUrl ? (
                 <ActionLink href={o.marketplaceUrl} size="wide" className="justify-center">
                   {labels.listed.action} <span aria-hidden>↗</span>
-                  <span className="sr-only">: {o.title} on AWS Marketplace (opens in a new tab)</span>
+                  <span className="sr-only">
+                    : {o.title} {labels.listed.newTab}
+                  </span>
                 </ActionLink>
               ) : (
                 <ActionLink href={labels.direct.action.href} size="wide" className="justify-center">

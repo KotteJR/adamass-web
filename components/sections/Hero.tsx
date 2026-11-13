@@ -2,7 +2,7 @@ import { ClientLogos } from "@/components/brand/ClientLogos";
 import { Painting } from "@/components/brand/Painting";
 import { Container } from "@/components/kit/Container";
 import { clientLogos } from "@/content/clients";
-import { hero } from "@/content/home";
+import { getCopy } from "@/content/copy";
 
 /** Logos shown at once, by viewport width (widest first). Matches the hidden slots in the row below. */
 const LOGO_SLOTS = [
@@ -13,7 +13,8 @@ const LOGO_SLOTS = [
 ] as const;
 
 /** Hero A: two-line headline, the brief button, a full-bleed painting, the studio line and clients. */
-export function Hero() {
+export async function Hero() {
+  const { hero } = await getCopy();
   return (
     <section aria-labelledby="hero-title">
       <Container

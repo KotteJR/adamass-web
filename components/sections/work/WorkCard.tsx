@@ -1,6 +1,7 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import { FitStage } from "@/components/products/stages/FitStage";
-import { workHash, workSection, type WorkProduct } from "@/content/work";
+import { getCopy } from "@/content/copy";
+import { workHash, type WorkProduct } from "@/content/work";
 import { CardFace } from "./faces/CardFace";
 import { WorkCardCaption } from "./WorkCardCaption";
 
@@ -15,7 +16,8 @@ type WorkCardProps = {
  * accent and one feature of the work, 600 x 780, scaled to the card), then the
  * caption. The live product is in the modal; the whole card opens it (#work/<product>).
  */
-export function WorkCard({ product, wide = false }: WorkCardProps) {
+export async function WorkCard({ product, wide = false }: WorkCardProps) {
+  const { workSection, ui } = await getCopy();
   return (
     <article aria-labelledby={`work-${product.slug}`} className="group relative flex w-full min-w-0 flex-col">
       <FitStage
@@ -37,7 +39,10 @@ export function WorkCard({ product, wide = false }: WorkCardProps) {
         link={
           <>
             {workSection.learnMore}
-            <span className="sr-only"> about {product.name}</span>
+            <span className="sr-only">
+              {" "}
+              {ui.about} {product.name}
+            </span>
             <ArrowUpRightIcon
               aria-hidden
               className="size-[15px] transition-transform duration-300 ease-out-soft group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

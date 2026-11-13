@@ -1,13 +1,14 @@
 import { NumberedSteps } from "@/components/kit/NumberedSteps";
 import { PersonLink } from "@/components/kit/PersonLink";
-import { briefTopics, contact } from "@/content/contact";
-import { anchors, founders } from "@/content/site";
+import { getCopy } from "@/content/copy";
+import { anchors } from "@/content/site";
 import { BriefForm } from "./BriefForm";
 import { ContactCard } from "./ContactCard";
 import { ContactDialog } from "./ContactDialog";
 
 /** The brief modal, built on the server and opened by any link to #contact. */
-export function ContactModal() {
+export async function ContactModal() {
+  const { briefTopics, contact, founders } = await getCopy();
   return (
     <ContactDialog
       hash={anchors.contact}

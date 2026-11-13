@@ -1,9 +1,12 @@
 // Company facts, people and navigation. Facts are from adamass.se.
 
+import type { LinkAction } from "./types";
+
 export const site = {
   name: "Adamass AB",
   shortName: "Adamass",
-  url: "https://adamass.se",
+  // The address that answers: adamass.se redirects here, so links, the sitemap and the canonical all use it.
+  url: "https://www.adamass.se",
   email: "hello@adamass.se",
   phone: "+46 70 917 94 98",
   // The office, in the Fridhemsborg building. TODO founders: Bolagsverket may still list Nordmannagatan 35 B.
@@ -19,11 +22,14 @@ export const site = {
   founded: "2019",
   timeZone: "Europe/Stockholm",
   linkedin: "https://www.linkedin.com/company/adamass-ab",
+  /** The public company record (allabolag.se), for search engines to tie the site to the company. */
+  companyRecord: "https://www.allabolag.se/foretag/adamass-ab/malm%C3%B6/f%C3%B6retagsutveckling/2KH1IKKI5YEHU",
   awsMarketplace: "https://aws.amazon.com/marketplace/seller-profile?id=seller-rikosy4e7tpne",
-  title: "Adamass: software and AI engineering in Malmö",
+  // What search results and assistants show. AI first: it is what people search for.
+  title: "Adamass AB: AI and software engineering in Malmö, Sweden",
   description:
-    "A software and AI company in Malmö since 2019. Data scientists, engineers and architects for embedded delivery, modernisation, diligence and GenAI development.",
-} as const;
+    "AI and software company in Malmö since 2019. We train and fine-tune models and build GenAI, RAG and agent systems on AWS, inside your team or as the whole project.",
+};
 
 export type Person = {
   name: string;
@@ -72,7 +78,7 @@ export const anchors = {
 } as const;
 
 /** The header's button, next to the links: it opens the brief. */
-export const contactNav = { label: "Contact", href: `#${anchors.contact}` } as const;
+export const contactNav: LinkAction = { label: "Contact", href: `#${anchors.contact}` };
 
 export const mainNav: readonly NavItem[] = [
   { label: "Work", href: `#${anchors.work}`, marked: true },
@@ -90,4 +96,4 @@ export const footerNav: readonly NavItem[] = [
 
 export const footer = {
   blurb: "Software and AI engineering, since 2019.",
-} as const;
+};

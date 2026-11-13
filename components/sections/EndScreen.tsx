@@ -5,14 +5,14 @@ import { ActionLink } from "@/components/kit/ActionLink";
 import { Container } from "@/components/kit/Container";
 import { RevealOnce } from "@/components/motion/RevealOnce";
 import { clientLogos } from "@/content/clients";
-import { endScreen, hero } from "@/content/home";
-import { site } from "@/content/site";
+import { getCopy } from "@/content/copy";
 
 /**
  * The light end screen: the painting under a Malmö sky, the mark drawing itself, one last way in.
  * The painting is ClosingBackdrop's, shared with How we work above, which dissolves into it.
  */
-export function EndScreen() {
+export async function EndScreen() {
+  const { endScreen, hero, site, ui } = await getCopy();
   return (
     <section
       aria-labelledby="end-title"
@@ -22,6 +22,7 @@ export function EndScreen() {
         timeZone={site.timeZone}
         place={endScreen.place}
         greetings={endScreen.greetings}
+        from={ui.greetingFrom}
         className="absolute inset-x-0 bottom-7 z-10"
       />
 

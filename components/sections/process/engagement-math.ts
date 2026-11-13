@@ -1,9 +1,11 @@
 // Small sums for the engagement timeline: where each step starts and ends, which
 // step and which moment a point falls in, and how a point reads.
 
-import type { Moment, WayIn } from "@/content/process";
+import type { Moment, TimeUnits, WayIn } from "@/content/process";
 
 const WEEKS_PER_MONTH = 52 / 12;
+
+const ENGLISH: TimeUnits = { week: "Week", weeks: "Weeks", month: "Month", months: "Months" };
 
 export const totalWeeks = (way: WayIn) => way.phases.reduce((sum, weeks) => sum + weeks, 0);
 
@@ -43,26 +45,26 @@ export function nearestMoment(moments: Moment[], week: number) {
  * "Week 6" or "Month 4" for a point on the bar: the week (or month) it falls in,
  * so week 5.0 is the start of week 6. On a moment, the moment's own label.
  */
-export function pointLabel(way: WayIn, week: number) {
+export function pointLabel(way: WayIn, week: number, units: TimeUnits = ENGLISH) {
   const on = way.moments.find((m) => Math.abs(m.week - week) < 1e-6);
   if (on) return on.when;
   const total = totalWeeks(way);
   if (way.unit === "month" && week >= WEEKS_PER_MONTH) {
     const months = Math.round(total / WEEKS_PER_MONTH);
-    return `Month ${Math.min(months, Math.floor(week / WEEKS_PER_MONTH + 1e-6) + 1)}`;
+    return `${units.month} ${Math.min(months, Math.floor(week / WEEKS_PER_MONTH + 1e-6) + 1)}`;
   }
-  return `Week ${Math.min(Math.ceil(total - 1e-6), Math.floor(week + 1e-6) + 1)}`;
+  return `${units.week} ${Math.min(Math.ceil(total - 1e-6), Math.floor(week + 1e-6) + 1)}`;
 }
 
 /** "Weeks 3–11" or "Months 1–12" for a step. */
-export function rangeLabel(way: WayIn, [start, end]: [number, number]) {
+export function rangeLabel(way: WayIn, [start, end]: [number, number], units: TimeUnits = ENGLISH) {
   // On the long ways in, the short steps of the first month read in weeks.
   const months = way.unit === "month" && (end - start >= WEEKS_PER_MONTH || start >= WEEKS_PER_MONTH);
   const unit = months ? WEEKS_PER_MONTH : 1;
-  const name = months ? "Month" : "Week";
   const from = Math.floor(start / unit + 1e-6) + 1;
   const to = Math.max(from, Math.ceil(end / unit - 1e-6));
-  return from === to ? `${name} ${from}` : `${name}s ${from}–${to}`;
+  if (from === to) return `${months ? units.month : units.week} ${from}`;
+  return `${months ? units.months : units.weeks} ${from}–${to}`;
 }
 
 /** Tick marks under the bar, in weeks, with their labels. */

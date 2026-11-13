@@ -16,6 +16,8 @@ export type Service = {
   shortTitle: string;
   summary: string;
   specs: Spec[];
+  /** What the figure shows, for screen readers; left out, the drawing's own English. */
+  figureLabel?: string;
   /** What the service involves, in three parts, shown under its figure. Each line is taken from the service's own copy. */
   entails: [Entail, Entail, Entail];
 };
@@ -119,7 +121,7 @@ export const servicesSection = {
   label: "Five ways in",
   askLabel: "Ask about this",
   askHref: `#${anchors.contact}`,
-} as const;
+};
 
 // ─── AWS ───────────────────────────────────────────────────────
 
@@ -225,10 +227,13 @@ export type AwsNote = {
 
 export type AwsSectionContent = {
   headline: Headline;
+  /** What the cabinet drawing shows, for screen readers; left out, the drawing's own English. */
+  figureLabel?: string;
   intro: string;
   tabsLabel: string;
   legend: { setUp: string; tray: string };
-  listed: { where: string; action: string };
+  /** newTab: read after a listing link, which opens AWS Marketplace in a new tab. */
+  listed: { where: string; action: string; newTab: string };
   direct: { where: string; action: LinkAction };
   notes: AwsNote[];
 };
@@ -242,7 +247,7 @@ export const awsSection: AwsSectionContent = {
     "Three of these are listed on AWS Marketplace. The drawing is your AWS organisation as a cabinet: each tray is an account, and blue is what the service puts in place.",
   tabsLabel: "AWS services",
   legend: { setUp: "Set up by this service", tray: "One tray, one account" },
-  listed: { where: "Listed on AWS Marketplace", action: "See the listing" },
+  listed: { where: "Listed on AWS Marketplace", action: "See the listing", newTab: "on AWS Marketplace (opens in a new tab)" },
   direct: {
     where: "Delivered by our team",
     action: { label: "Ask us about it", href: `#${anchors.contact}` },

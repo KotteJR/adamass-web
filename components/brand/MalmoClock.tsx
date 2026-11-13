@@ -44,6 +44,8 @@ type MalmoClockProps = {
   timeZone: string;
   place: string;
   greetings: Record<DayPhase, string>;
+  /** "Good evening from Malmö". */
+  from: string;
   className?: string;
 };
 
@@ -53,7 +55,7 @@ type MalmoClockProps = {
  * knows no time, so it renders the daytime sky and no clock; the client
  * fills both in after hydration.
  */
-export function MalmoClock({ timeZone, place, greetings, className }: MalmoClockProps) {
+export function MalmoClock({ timeZone, place, greetings, from, className }: MalmoClockProps) {
   const time = useSyncExternalStore(subscribe, () => clockTime(timeZone), () => null);
   const phase = time ? phaseOf(Number.parseInt(time.slice(0, 2), 10)) : "day";
 
@@ -77,7 +79,7 @@ export function MalmoClock({ timeZone, place, greetings, className }: MalmoClock
           className,
         )}
       >
-        {greetings[phase]} from {place}
+        {greetings[phase]} {from} {place}
         {time ? (
           <>
             {" · "}

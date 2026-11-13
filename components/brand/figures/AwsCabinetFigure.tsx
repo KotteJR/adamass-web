@@ -7,10 +7,10 @@ import styles from "./aws-cabinet.module.css";
  * motion story; the explorer's plate owns the play state, so the drawing and
  * its step names rest and run together.
  */
-export function AwsCabinetFigure({ className }: { className?: string }) {
+export function AwsCabinetFigure({ className, label }: { className?: string; label?: string }) {
   return (
     <div className={cn(styles.cabinet, className)}>
-      <AwsCabinetArt />
+      <AwsCabinetArt label={label} />
     </div>
   );
 }

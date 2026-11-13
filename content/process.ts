@@ -39,6 +39,9 @@ export type WayIn = {
   start: number;
 };
 
+/** How the timeline names its weeks and months: "Week 6", "Months 1–12". */
+export type TimeUnits = { week: string; weeks: string; month: string; months: string };
+
 export type ProcessContent = {
   label: string;
   title: Headline;
@@ -50,6 +53,7 @@ export type ProcessContent = {
   scrubLabel: string;
   previous: string;
   next: string;
+  units: TimeUnits;
   phases: [Phase, Phase, Phase, Phase];
   ways: WayIn[];
   defaultWay: string;
@@ -66,6 +70,7 @@ export const howWeWork: ProcessContent = {
   scrubLabel: "Where in the engagement",
   previous: "Earlier",
   next: "Later",
+  units: { week: "Week", weeks: "Weeks", month: "Month", months: "Months" },
   phases: [
     { title: "Frame", body: "We agree the goal, what is in the way and how we will both know it worked, and write it down." },
     { title: "Join", body: "Our people get access and start inside your team, your tools and your routines." },

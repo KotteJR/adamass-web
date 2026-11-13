@@ -1,27 +1,32 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { Container } from "@/components/kit/Container";
-import { anchors, contactNav, mainNav } from "@/content/site";
+import { getCopy, getLang } from "@/content/copy";
+import { homePath } from "@/content/languages";
+import { anchors } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { HeaderShell } from "./HeaderShell";
+import { LanguageSwitch } from "./LanguageSwitch";
 import { MobileNav } from "./MobileNav";
 
 /**
- * Logo left; on the right the four links as quiet buttons and Contact as an
- * ink one. On phones: a compact bar, the links in a sheet. It hides as you
- * scroll down and comes back when you scroll up.
+ * Logo left; on the right the four links as quiet buttons, the language switch
+ * and Contact as an ink one. On phones: a compact bar, the links and the
+ * switch in a sheet. It hides as you scroll down and comes back when you
+ * scroll up.
  */
-export function SiteHeader() {
+export async function SiteHeader() {
+  const [lang, { mainNav, contactNav, ui }] = await Promise.all([getLang(), getCopy()]);
   return (
     <>
       {/* The top of the page, for links back up. The bar itself sticks, so it cannot be the anchor. */}
       <div id={anchors.top} />
       <HeaderShell>
         <Container className="flex h-16 items-center justify-between md:h-[76px]">
-          <Link href="/" aria-label="Adamass AB, home" className="-mx-2 inline-flex h-11 items-center rounded-md px-2">
+          <Link href={homePath[lang]} aria-label={ui.home} className="-mx-2 inline-flex h-11 items-center rounded-md px-2">
             <Logo title={null} className="h-[17px] w-auto" />
           </Link>
-          <nav aria-label="Main" className="hidden md:block">
+          <nav aria-label={ui.mainNav} className="hidden md:block">
             {/* Buttons in the same language as the topic chips in the brief form, and the brief itself in ink. */}
             <ul className="flex items-center gap-1 text-[0.8125rem]">
               {mainNav.map((item) => (
@@ -38,6 +43,9 @@ export function SiteHeader() {
                 </li>
               ))}
               <li className="ml-2">
+                <LanguageSwitch current={lang} labels={ui.language} />
+              </li>
+              <li className="ml-2">
                 <a
                   href={contactNav.href}
                   className="inline-flex h-9 items-center rounded-sm bg-ink px-3.5 font-medium text-white transition-colors hover:bg-graphite"
@@ -47,7 +55,13 @@ export function SiteHeader() {
               </li>
             </ul>
           </nav>
-          <MobileNav items={mainNav} action={contactNav} className="md:hidden" />
+          <MobileNav
+            items={mainNav}
+            action={contactNav}
+            labels={{ openMenu: ui.openMenu, close: ui.closeMenu, navigation: ui.siteNavigation, nav: ui.mainNav }}
+            languageSwitch={<LanguageSwitch current={lang} labels={ui.language} size="full" />}
+            className="md:hidden"
+          />
         </Container>
       </HeaderShell>
     </>

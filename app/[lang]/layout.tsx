@@ -1,15 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SkipLink } from "@/components/site/SkipLink";
 import { ThemeProvider } from "@/components/site/ThemeProvider";
-import { anchors, site } from "@/content/site";
-import { organizationJsonLd, serializeJsonLd } from "@/lib/json-ld";
+import { copies, homePath, isLang, languages, ogLocale } from "@/content/languages";
+import { anchors } from "@/content/site";
+import { serializeJsonLd, siteJsonLd } from "@/lib/json-ld";
 import { cn } from "@/lib/utils";
-import "./globals.css";
+import "../globals.css";
 
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -26,27 +27,42 @@ const bricolage = Bricolage_Grotesque({
   preload: false,
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: { default: site.title, template: `%s · ${site.shortName}` },
-  description: site.description,
-  applicationName: site.shortName,
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    url: "/",
-    siteName: site.shortName,
-    title: site.title,
+/** English at /, Swedish at /sv. Both are built ahead of time. */
+export async function generateStaticParams() {
+  return languages.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: LayoutProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLang(lang)) return {};
+  const { site } = copies[lang];
+  return {
+    metadataBase: new URL(site.url),
+    title: { default: site.title, template: `%s · ${site.shortName}` },
     description: site.description,
-    locale: "en_GB",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: site.title,
-    description: site.description,
-  },
-  formatDetection: { telephone: false, email: false, address: false },
-};
+    applicationName: site.shortName,
+    // Each language names the other, so search engines send Swedish searches to /sv.
+    alternates: {
+      canonical: homePath[lang],
+      languages: { en: homePath.en, sv: homePath.sv, "x-default": homePath.en },
+    },
+    openGraph: {
+      type: "website",
+      url: homePath[lang],
+      siteName: site.shortName,
+      title: site.title,
+      description: site.description,
+      locale: ogLocale[lang],
+      alternateLocale: languages.filter((other) => other !== lang).map((other) => ogLocale[other]),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.title,
+      description: site.description,
+    },
+    formatDetection: { telephone: false, email: false, address: false },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -56,10 +72,14 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children, params }: LayoutProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!isLang(lang)) notFound();
+  const { ui } = copies[lang];
+
   return (
     <html
-      lang="en"
+      lang={lang}
       suppressHydrationWarning
       className={cn(geist.variable, geistMono.variable, instrumentSerif.variable, bricolage.variable)}
     >
@@ -73,7 +93,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           enableSystem={false}
           disableTransitionOnChange
         >
-          <SkipLink href={`#${anchors.main}`} />
+          <SkipLink href={`#${anchors.main}`} label={ui.skipToContent} />
           <SiteHeader />
           <main id={anchors.main} tabIndex={-1} className="outline-none">
             {children}
@@ -82,7 +102,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           <ContactModal />
         </ThemeProvider>
         {/* Site-wide, and outside <main>: modal dialogs leave the parents of scripts un-hidden. */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(organizationJsonLd()) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd(lang)) }} />
       </body>
     </html>
   );

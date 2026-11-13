@@ -17,7 +17,7 @@ export function ModelHarness({ figure, stats, capabilities }: ModelHarnessProps)
     <div className="overflow-hidden rounded-xl border border-[#e7e6e1]">
       <figure className="m-0">
         <div className="bg-paper px-4 pt-6 pb-5 sm:px-7 sm:pt-7 sm:pb-6">
-          <ModelFigure figureKey={figure.key} />
+          <ModelFigure figureKey={figure.key} label={figure.label} />
         </div>
         <figcaption>
           <ol className={cn("grid border-t border-[#e7e6e1]", columns === 3 ? "grid-cols-3" : "grid-cols-2")}>

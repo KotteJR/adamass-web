@@ -1,7 +1,7 @@
 // The short brief from the call-to-action card: its shape, the state the
 // server action returns, and the validation both sides agree on.
 
-import { briefTopics, type BriefTopic } from "@/content/contact";
+import { briefTopicValues, type BriefError, type BriefTopic } from "@/content/contact";
 
 export type BriefField = "topic" | "name" | "email" | "brief";
 
@@ -16,7 +16,7 @@ export type BriefState =
   | { status: "idle" }
   | {
       status: "invalid";
-      errors: Partial<Record<BriefField, string>>;
+      errors: Partial<Record<BriefField, BriefError>>;
       /** Echoed back so the form keeps what was typed. */
       values: Partial<Record<BriefField, string>>;
     }
@@ -34,13 +34,13 @@ const text = (form: FormData, key: string) => {
   return typeof value === "string" ? value.trim() : "";
 };
 
-const isTopic = (value: string): value is BriefTopic => briefTopics.some((t) => t.value === value);
+const isTopic = (value: string): value is BriefTopic => briefTopicValues.some((t) => t === value);
 
 export type BriefParseResult =
   | { ok: true; data: Brief }
-  | { ok: false; errors: Partial<Record<BriefField, string>>; values: Partial<Record<BriefField, string>> };
+  | { ok: false; errors: Partial<Record<BriefField, BriefError>>; values: Partial<Record<BriefField, string>> };
 
-/** Reads and checks the form. Messages are written for the person filling it in. */
+/** Reads and checks the form. Errors are codes; the form shows them in the page's language. */
 export function parseBrief(form: FormData): BriefParseResult {
   const values = {
     topic: text(form, "topic"),
@@ -48,15 +48,14 @@ export function parseBrief(form: FormData): BriefParseResult {
     email: text(form, "email"),
     brief: text(form, "brief"),
   };
-  const errors: Partial<Record<BriefField, string>> = {};
+  const errors: Partial<Record<BriefField, BriefError>> = {};
 
-  if (!isTopic(values.topic)) errors.topic = "Pick what the brief is about.";
-  if (!values.name) errors.name = "Tell us who you are.";
-  else if (values.name.length > BRIEF_LIMITS.name) errors.name = "That name is longer than we can store.";
-  if (!EMAIL.test(values.email) || values.email.length > BRIEF_LIMITS.email)
-    errors.email = "We need an email address we can reply to.";
-  if (values.brief.length < 10) errors.brief = "A few lines is enough, but we need a few.";
-  else if (values.brief.length > BRIEF_LIMITS.brief) errors.brief = "Keep it under 4,000 characters; we will ask for more.";
+  if (!isTopic(values.topic)) errors.topic = "topic";
+  if (!values.name) errors.name = "name";
+  else if (values.name.length > BRIEF_LIMITS.name) errors.name = "nameLong";
+  if (!EMAIL.test(values.email) || values.email.length > BRIEF_LIMITS.email) errors.email = "email";
+  if (values.brief.length < 10) errors.brief = "briefShort";
+  else if (values.brief.length > BRIEF_LIMITS.brief) errors.brief = "briefLong";
 
   if (Object.keys(errors).length > 0 || !isTopic(values.topic)) return { ok: false, errors, values };
   return { ok: true, data: { ...values, topic: values.topic } };

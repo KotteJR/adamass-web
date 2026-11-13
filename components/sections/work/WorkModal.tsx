@@ -1,5 +1,5 @@
 import { ProductStage, stageSize } from "@/components/products/stages/ProductStage";
-import { workProducts, workSection } from "@/content/work";
+import { getCopy } from "@/content/copy";
 import { ModelPanel } from "./ModelPanel";
 import { OverviewPanel } from "./OverviewPanel";
 import type { ProductView } from "./ProductModalBody";
@@ -7,7 +7,8 @@ import { StackPanel } from "./StackPanel";
 import { WorkDialog } from "./WorkDialog";
 
 /** Renders every product's stages and panels on the server, for the client modal to show. */
-export function WorkModal() {
+export async function WorkModal() {
+  const { workProducts, workSection } = await getCopy();
   const products: ProductView[] = workProducts.map((product) => ({
     slug: product.slug,
     name: product.name,

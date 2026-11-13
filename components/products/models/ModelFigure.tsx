@@ -17,11 +17,11 @@ const FIGURES = {
 } as const;
 
 /** "The model" tab's isometric figure and its motion. The harness around it names the steps. */
-export function ModelFigure({ figureKey }: { figureKey: ModelFigureKey }) {
+export function ModelFigure({ figureKey, label }: { figureKey: ModelFigureKey; label?: string }) {
   const { Art, motion } = FIGURES[figureKey];
   return (
     <PlayWhenVisible className={cn(styles.mf, motion)}>
-      <Art />
+      <Art label={label} />
     </PlayWhenVisible>
   );
 }

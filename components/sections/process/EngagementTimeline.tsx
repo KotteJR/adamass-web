@@ -1,7 +1,7 @@
 "use client";
 
 import { type CSSProperties, useEffect, useRef, useState } from "react";
-import type { Phase, WayIn } from "@/content/process";
+import type { Phase, TimeUnits, WayIn } from "@/content/process";
 import { cn } from "@/lib/utils";
 import {
   momentAt,
@@ -35,6 +35,7 @@ type EngagementTimelineProps = {
   /** Said to screen readers with the timeline: how long it runs in all, and how much of it is shown. */
   summary: string;
   labels: { previous: string; next: string };
+  units: TimeUnits;
   className?: string;
 };
 
@@ -50,7 +51,7 @@ type EngagementTimelineProps = {
  *
  * Drag (the knob stays where you let go), press to jump, or use the keys.
  */
-export function EngagementTimeline({ way, ways, phases, week, onWeek, label, summary, labels, className }: EngagementTimelineProps) {
+export function EngagementTimeline({ way, ways, phases, week, onWeek, label, summary, labels, units, className }: EngagementTimelineProps) {
   const root = useRef<HTMLDivElement>(null);
   const [dragging, setDragging] = useState(false);
   const [width, setWidth] = useState(1200);
@@ -135,7 +136,7 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
       onKey={onKey}
       onDragging={setDragging}
       label={label}
-      valueText={`${pointLabel(way, week)}, ${phases[current].title}: ${moment.text}`}
+      valueText={`${pointLabel(way, week, units)}, ${phases[current].title}: ${moment.text}`}
       className="absolute inset-0 z-10"
     />
   );
@@ -181,7 +182,7 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
                   {phase.title}
                 </span>
                 <span className="overflow-hidden font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap text-white/40 uppercase">
-                  {rangeLabel(way, bounds[i])}
+                  {rangeLabel(way, bounds[i], units)}
                 </span>
             </li>
           ))}
@@ -202,7 +203,7 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
         {slider}
       </div>
 
-      <MomentNote way={way} ways={ways} week={week} phases={phases} at={at} trackWidth={width} dragging={dragging} onWeek={onWeek} labels={labels} />
+      <MomentNote way={way} ways={ways} week={week} phases={phases} at={at} trackWidth={width} dragging={dragging} onWeek={onWeek} labels={labels} units={units} />
     </div>
   );
 }

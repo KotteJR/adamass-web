@@ -4,10 +4,10 @@ import { ModernisationArt } from "./art/ModernisationArt";
 import styles from "./figures.module.css";
 
 /** Modernisation: pipe sections swapped one at a time while the flow keeps moving. Animates only near the viewport. */
-export function ModernisationFigure({ className }: { className?: string }) {
+export function ModernisationFigure({ className, label }: { className?: string; label?: string }) {
   return (
     <PlayWhenVisible className={cn(styles.figure, styles.modernisation, className)}>
-      <ModernisationArt />
+      <ModernisationArt label={label} />
     </PlayWhenVisible>
   );
 }

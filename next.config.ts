@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
     qualities: [75, 90],
   },
   partialPrefetching: true,
+  experimental: {
+    // The root layout sits under [lang], so a URL that matches nothing needs a 404 of its own.
+    globalNotFound: true,
+  },
+  // English is the site's home: / serves the /en page, and /en itself sends people back to /.
+  async rewrites() {
+    return { beforeFiles: [{ source: "/", destination: "/en" }], afterFiles: [], fallback: [] };
+  },
+  async redirects() {
+    return [{ source: "/en", destination: "/", permanent: true }];
+  },
   // The same security headers the live site sends today.
   async headers() {
     return [

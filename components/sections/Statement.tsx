@@ -1,7 +1,7 @@
 import { ActionLink } from "@/components/kit/ActionLink";
 import { Container } from "@/components/kit/Container";
 import { SectionHeading } from "@/components/kit/SectionHeading";
-import { statement } from "@/content/home";
+import { getCopy } from "@/content/copy";
 import { anchors } from "@/content/site";
 
 /**
@@ -12,7 +12,8 @@ import { anchors } from "@/content/site";
  * paragraphs; on phones everything stacks. Each paragraph carries its own
  * button; margin-top auto puts both buttons on one baseline.
  */
-export function Statement() {
+export async function Statement() {
+  const { statement } = await getCopy();
   return (
     <section id={anchors.studio} aria-labelledby="statement-title" className="pt-14 lg:pt-[72px]">
       <Container className="grid items-start gap-8 md:gap-12 lg:split-cols">

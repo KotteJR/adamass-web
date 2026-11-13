@@ -29,7 +29,11 @@ export function BriefForm({ topics, copy }: BriefFormProps) {
   const id = useId();
 
   const values = state.status === "invalid" || state.status === "failed" ? state.values : {};
-  const errors: Partial<Record<BriefField, string>> = state.status === "invalid" ? state.errors : {};
+  // The server says what is wrong with each field; the words come from this page's copy.
+  const codes = state.status === "invalid" ? state.errors : {};
+  const errors: Partial<Record<BriefField, string>> = Object.fromEntries(
+    Object.entries(codes).map(([field, code]) => [field, copy.errors[code]]),
+  );
   const errorId = (field: BriefField) => `${id}-${field}-error`;
   const describe = (field: BriefField) => (errors[field] ? errorId(field) : undefined);
   const selectedTopic = values.topic || topics[0]?.value;

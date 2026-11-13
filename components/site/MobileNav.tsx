@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { MenuIcon } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,14 @@ type MobileNavProps = {
   items: readonly NavItem[];
   /** The brief, at the foot of the sheet where a thumb reaches it. */
   action: LinkAction;
+  labels: { openMenu: string; close: string; navigation: string; nav: string };
+  /** The language switch, above the brief. */
+  languageSwitch?: ReactNode;
   className?: string;
 };
 
-/** The phone menu: a sheet from the right with large rows and the brief at the bottom. */
-export function MobileNav({ items, action, className }: MobileNavProps) {
+/** The phone menu: a sheet from the right with large rows, the language switch and the brief at the bottom. */
+export function MobileNav({ items, action, labels, languageSwitch, className }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,11 +28,12 @@ export function MobileNav({ items, action, className }: MobileNavProps) {
       <SheetTrigger asChild>
         <Button variant="ghost" className={cn("-mr-2.5 size-11 rounded-lg p-0 text-ink", className)}>
           <MenuIcon aria-hidden className="size-6" strokeWidth={1.5} />
-          <span className="sr-only">Open menu</span>
+          <span className="sr-only">{labels.openMenu}</span>
         </Button>
       </SheetTrigger>
       <SheetContent
         side="right"
+        closeLabel={labels.close}
         className={cn(
           "w-[min(340px,88vw)] gap-0 border-0 bg-white p-0",
           "pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pb-[max(1.25rem,env(safe-area-inset-bottom))]",
@@ -40,9 +44,9 @@ export function MobileNav({ items, action, className }: MobileNavProps) {
           <SheetTitle>
             <Logo title="Adamass AB" className="h-[17px] w-auto" />
           </SheetTitle>
-          <SheetDescription className="sr-only">Site navigation</SheetDescription>
+          <SheetDescription className="sr-only">{labels.navigation}</SheetDescription>
         </SheetHeader>
-        <nav aria-label="Main" className="flex-1 overflow-y-auto">
+        <nav aria-label={labels.nav} className="flex-1 overflow-y-auto">
           <ul className="flex flex-col px-3 pt-2">
             {items.map((item) => (
               <li key={item.href}>
@@ -57,7 +61,8 @@ export function MobileNav({ items, action, className }: MobileNavProps) {
             ))}
           </ul>
         </nav>
-        <div className="px-5 pt-4">
+        <div className="flex flex-col gap-3 px-5 pt-4">
+          {languageSwitch}
           <a
             href={action.href}
             onClick={() => setOpen(false)}
