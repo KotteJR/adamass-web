@@ -84,7 +84,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       suppressHydrationWarning
       className={cn(geist.variable, geistMono.variable, instrumentSerif.variable, bricolage.variable)}
     >
-      <body>
+      {/* A column at least the screen's height: on short pages the footer still sits at the bottom. */}
+      <body className="flex min-h-svh flex-col">
         {/* Light is the designed mode. Dark tokens are prepared in globals.css; drop
             forcedTheme (and add a toggle) once a dark design exists. */}
         <ThemeProvider
@@ -96,7 +97,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         >
           <SkipLink href={`#${anchors.main}`} label={ui.skipToContent} />
           <SiteHeader />
-          <main id={anchors.main} tabIndex={-1} className="outline-none">
+          <main id={anchors.main} tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
           <SiteFooter />

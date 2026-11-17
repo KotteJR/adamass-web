@@ -3,55 +3,45 @@ import { Container } from "@/components/kit/Container";
 import { getCopy, getLang } from "@/content/copy";
 import { pathOf } from "@/content/routes";
 
-/** The thin white footer under the end screen. No rules, just space. */
+/**
+ * The white footer under the end screen, in two quiet rows: the mark and the
+ * studio's mail, then the legal line with the address and the policies.
+ */
 export async function SiteFooter() {
-  const [lang, { footer, footerNav, site, ui, pages, mainNav }] = await Promise.all([getLang(), getCopy()]);
-  const label = (hash: string) => mainNav.find((item) => item.href === hash)?.label ?? hash;
-  const links = [
-    { label: label("#services"), href: pathOf("services", lang) },
-    { label: label("#work"), href: pathOf("work", lang) },
-    { label: "AWS", href: pathOf("aws", lang) },
-    { label: pages.footer.faq, href: pathOf("faq", lang) },
-    ...footerNav.filter((item) => item.external),
-  ];
+  const [lang, { footer, site, ui, pages }] = await Promise.all([getLang(), getCopy()]);
   const { address } = site;
+  const link = "inline-flex min-h-11 items-center transition-colors hover:text-ink md:min-h-0";
+
   return (
     <footer className="text-sm text-slate">
-      <Container
-        className="grid gap-5 pt-10 pb-[max(2rem,env(safe-area-inset-bottom))] md:min-h-[120px] md:py-6 lg:grid-cols-[1.2fr_1fr_auto] lg:items-center xl:grid-cols-[1.2fr_1fr_1fr]"
-      >
-        <div className="flex flex-wrap items-center gap-x-[18px] gap-y-2">
-          <Logo className="h-4 w-auto" />
-          <span>{footer.blurb}</span>
+      <Container className="flex flex-col gap-5 pt-10 pb-[max(1.75rem,env(safe-area-inset-bottom))] md:gap-6 md:pt-12">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Logo className="h-4 w-auto" />
+            <span>{footer.blurb}</span>
+          </div>
+          <a href={`mailto:${site.email}`} className={`self-start text-ink-2 md:self-auto ${link}`}>
+            {site.email}
+          </a>
         </div>
-        <address className="not-italic">
-          <span className="block sm:inline sm:whitespace-nowrap">
-            {address.building}, {address.street}, {address.postalCode} {address.city}
-          </span>
-          <span className="hidden sm:inline"> · </span>
-          <span className="block whitespace-nowrap sm:inline">{ui.orgNumber} {site.orgNumber}</span>
-          <span className="hidden sm:inline"> · </span>
-          <span className="block whitespace-nowrap sm:inline">
-            <a href={pathOf("privacy", lang)} className="transition-colors hover:text-ink">{pages.footer.privacy}</a>
-            {" · "}
-            <a href={pathOf("terms", lang)} className="transition-colors hover:text-ink">{pages.footer.terms}</a>
-          </span>
-        </address>
-        <nav aria-label={ui.footerNav}>
-          <ul className="flex flex-wrap gap-x-6 lg:justify-end lg:gap-x-[22px] lg:gap-y-2">
-            {links.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="inline-flex min-h-11 min-w-11 items-center text-ink-2 transition-colors hover:text-ink lg:min-h-0 lg:min-w-0"
-                  {...("external" in item && item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+
+        <div className="flex flex-col gap-2 border-t border-black/[0.06] pt-5 text-xs md:flex-row md:items-center md:justify-between">
+          <address className="not-italic">
+            {site.name} · {ui.orgNumber} {site.orgNumber}
+            <span className="block md:inline">
+              <span aria-hidden className="hidden md:inline"> · </span>
+              {address.building}, {address.street}, {address.postalCode} {address.city}
+            </span>
+          </address>
+          <nav aria-label={ui.footerNav} className="flex gap-x-5">
+            <a href={pathOf("privacy", lang)} className={link}>
+              {pages.footer.privacy}
+            </a>
+            <a href={pathOf("terms", lang)} className={link}>
+              {pages.footer.terms}
+            </a>
+          </nav>
+        </div>
       </Container>
     </footer>
   );
