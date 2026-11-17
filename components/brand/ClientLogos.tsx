@@ -74,19 +74,25 @@ export function ClientLogos({ logos, label, slots: maxSlots = 5, slotSteps, clas
         ))}
       </ul>
       {Array.from({ length: Math.min(maxSlots, count) }, (_, slot) => (
-        <div key={slot} aria-hidden className={cn("relative grid grid-cols-1 place-items-center", slotClassName)}>
-          {set > 0 ? (
-            <ClientLogo
-              key={`out-${set}`}
-              logo={logoAt(set - 1, slot)}
-              className="absolute max-w-full animate-logo-out motion-reduce:hidden"
-            />
-          ) : null}
-          <ClientLogo
-            key={`in-${set}`}
-            logo={logoAt(set, slot)}
-            className={cn("max-w-full", set > 0 && "animate-logo-in motion-reduce:animate-none")}
-          />
+        <div key={slot} aria-hidden className={cn("grid grid-cols-1 place-items-center", slotClassName)}>
+          {/* Two layers per slot take turns, stacked in one cell: the one holding this set
+              fades in, the one that held the last set fades out. Neither is remounted or
+              moved, so a logo on screen is only ever faded, never drawn again. */}
+          {[0, 1].map((layer) => {
+            const current = set % 2 === layer;
+            if (!current && set === 0) return null;
+            return (
+              <ClientLogo
+                key={layer}
+                logo={logoAt(current ? set : set - 1, slot)}
+                className={cn(
+                  "col-start-1 row-start-1 max-w-full",
+                  set > 0 &&
+                    (current ? "animate-logo-in motion-reduce:animate-none" : "animate-logo-out motion-reduce:hidden"),
+                )}
+              />
+            );
+          })}
         </div>
       ))}
     </div>
