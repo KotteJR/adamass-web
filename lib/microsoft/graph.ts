@@ -147,13 +147,23 @@ export async function createMeeting(creds: GraphCredentials, meeting: Meeting): 
   }
 }
 
-export type Mail = { from: string; to: readonly string[]; replyTo?: string; subject: string; text: string };
+export type Mail = {
+  /** The mailbox that sends (the app may send from it). */
+  from: string;
+  /** The address readers see, when the sending mailbox has Send As on it (hello@, a distribution list). */
+  as?: string;
+  to: readonly string[];
+  replyTo?: string;
+  subject: string;
+  text: string;
+};
 
 /** Sends a plain-text mail from a mailbox the app may send from. Not saved to Sent Items. */
 export async function sendMail(creds: GraphCredentials, mail: Mail): Promise<void> {
   await graph(creds, `${user(mail.from)}/sendMail`, {
     message: {
       subject: mail.subject,
+      ...(mail.as && mail.as.toLowerCase() !== mail.from.toLowerCase() ? { from: { emailAddress: { address: mail.as, name: "Adamass" } } } : {}),
       body: { contentType: "text", content: mail.text },
       toRecipients: mail.to.map((address) => ({ emailAddress: { address } })),
       replyTo: mail.replyTo ? [{ emailAddress: { address: mail.replyTo } }] : [],

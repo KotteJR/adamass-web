@@ -67,9 +67,12 @@ const list = (value: string | undefined) => (value ?? "").split(",").map((s) => 
 function settings() {
   const hosts = list(process.env.BOOKING_HOSTS);
   const mode: BookingMode = process.env.BOOKING_MODE === "any" ? "any" : "all";
-  const mailFrom = list(process.env.MAIL_FROM)[0] ?? "hello@adamass.se";
+  // hello@ is a distribution list and cannot send itself: a small hidden mailbox sends, as hello@.
+  // Briefs go to hello@, which reaches both founders.
+  const mailFrom = list(process.env.MAIL_FROM)[0] ?? "website@adamass.se";
+  const mailAs = list(process.env.MAIL_AS)[0] ?? "hello@adamass.se";
   const briefTo = list(process.env.BRIEF_TO);
-  return { hosts, mode, mailFrom, briefTo: briefTo.length ? briefTo : [mailFrom] };
+  return { hosts, mode, mailFrom, mailAs, briefTo: briefTo.length ? briefTo : ["hello@adamass.se"] };
 }
 
 /** The hosts' addresses, lower case. Public anyway: they are on the site. */
@@ -112,7 +115,7 @@ export type BookingOutcome = { status: "booked"; start: string; end: string; tea
  */
 export async function book(request: BookingRequest, now = Date.now()): Promise<BookingOutcome> {
   const cal = calendar();
-  const { hosts, mode, mailFrom } = settings();
+  const { hosts, mode, mailFrom, mailAs } = settings();
   if (!cal || hosts.length === 0) return { status: "unavailable" };
 
   const start = Date.parse(request.start);
@@ -152,6 +155,7 @@ export async function book(request: BookingRequest, now = Date.now()): Promise<B
   await cal
     .mail({
       from: mailFrom,
+      as: mailAs,
       to: chosen,
       replyTo: request.email,
       subject: line(`Call booked: ${when}, ${request.name}${request.company ? `, ${request.company}` : ""}`, 200),
@@ -166,10 +170,11 @@ export async function book(request: BookingRequest, now = Date.now()): Promise<B
 export async function deliverBriefMail(brief: { topic: string; name: string; email: string; brief: string }): Promise<boolean> {
   const cal = calendar();
   if (!cal) return false;
-  const { mailFrom, briefTo } = settings();
+  const { mailFrom, mailAs, briefTo } = settings();
   const topic = enTopics.find((t) => t.value === brief.topic)?.label ?? brief.topic;
   await cal.mail({
     from: mailFrom,
+    as: mailAs,
     to: briefTo,
     replyTo: brief.email,
     subject: line(`Brief from adamass.se: ${topic}, ${brief.name}`, 200),

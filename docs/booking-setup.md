@@ -36,12 +36,13 @@ visitors to write to hello@adamass.se instead.
   confirmation page reads the booking from the browser tab's session, not the
   address bar.
 
-## 1. Check hello@adamass.se is a mailbox
+## 1. How mail is sent
 
-Microsoft 365 admin center → **Teams & groups → Shared mailboxes** (or
-**Users**). hello@ must be a real mailbox (a free shared mailbox is fine), not
-only an alias on someone's account. If it is only an alias, either create a
-shared mailbox called hello, or use a founder's address for `MAIL_FROM` below.
+hello@adamass.se is a distribution list: it delivers to both founders, but
+nothing can send from it. So the site sends through a free shared mailbox,
+`website@adamass.se`, hidden from the address book, which has **Send As** on
+hello@. Readers see mail from hello@, and hello@ keeps working as before. Step 3
+creates the mailbox and the permission.
 
 ## 2. Register the app (Entra admin center)
 
@@ -71,7 +72,7 @@ shared mailbox called hello, or use a founder's address for `MAIL_FROM` below.
 On a Mac, install PowerShell once:
 
 ```bash
-brew install powershell/tap/powershell
+brew install powershell
 ```
 
 ```bash
@@ -111,8 +112,9 @@ the secret as **Sensitive**.
 | `MS_CLIENT_SECRET` | the secret's Value |
 | `BOOKING_HOSTS` | `vlatko.kotevski@adamass.se,aleksandar.kotevski@adamass.se` |
 | `BOOKING_MODE` | `all` (both join every call) or `any` (whoever is free takes it) |
-| `MAIL_FROM` | `hello@adamass.se` |
-| `BRIEF_TO` | where briefs go, comma-separated (defaults to `MAIL_FROM`) |
+| `MAIL_FROM` | `website@adamass.se` (the hidden mailbox that sends) |
+| `MAIL_AS` | `hello@adamass.se` (the address readers see) |
+| `BRIEF_TO` | `hello@adamass.se` (where briefs go; comma-separated for more) |
 
 Then **Redeploy**. The Book a call tab appears with that deployment.
 
