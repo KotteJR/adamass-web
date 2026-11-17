@@ -4,6 +4,7 @@
 // are left out, and so is anything the page itself does not say.
 
 import { copies, homePath } from "@/content/languages";
+import { pageKeys, pathOf } from "@/content/routes";
 import { anchors } from "@/content/site";
 
 const en = copies.en;
@@ -86,6 +87,10 @@ ${howWeWork.phases.map((phase, i) => `${i + 1}. ${phase.title}: ${phase.body}`).
 ## På svenska
 
 ${swedishSummary()}
+
+## Pages
+
+${pageKeys.map((key) => `- [${en.pages.meta[key].title}](${en.site.url}${pathOf(key, "en")}): ${en.pages.meta[key].description}`).join("\n")}
 
 ## Optional
 

@@ -1,10 +1,19 @@
 import { Logo } from "@/components/brand/Logo";
 import { Container } from "@/components/kit/Container";
-import { getCopy } from "@/content/copy";
+import { getCopy, getLang } from "@/content/copy";
+import { pathOf } from "@/content/routes";
 
 /** The thin white footer under the end screen. No rules, just space. */
 export async function SiteFooter() {
-  const { footer, footerNav, site, ui } = await getCopy();
+  const [lang, { footer, footerNav, site, ui, pages, mainNav }] = await Promise.all([getLang(), getCopy()]);
+  const label = (hash: string) => mainNav.find((item) => item.href === hash)?.label ?? hash;
+  const links = [
+    { label: label("#services"), href: pathOf("services", lang) },
+    { label: label("#work"), href: pathOf("work", lang) },
+    { label: "AWS", href: pathOf("aws", lang) },
+    { label: pages.footer.faq, href: pathOf("faq", lang) },
+    ...footerNav.filter((item) => item.external),
+  ];
   const { address } = site;
   return (
     <footer className="text-sm text-slate">
@@ -21,15 +30,21 @@ export async function SiteFooter() {
           </span>
           <span className="hidden sm:inline"> · </span>
           <span className="block whitespace-nowrap sm:inline">{ui.orgNumber} {site.orgNumber}</span>
+          <span className="hidden sm:inline"> · </span>
+          <span className="block whitespace-nowrap sm:inline">
+            <a href={pathOf("privacy", lang)} className="transition-colors hover:text-ink">{pages.footer.privacy}</a>
+            {" · "}
+            <a href={pathOf("terms", lang)} className="transition-colors hover:text-ink">{pages.footer.terms}</a>
+          </span>
         </address>
         <nav aria-label={ui.footerNav}>
           <ul className="flex flex-wrap gap-x-6 lg:justify-end lg:gap-x-[22px] lg:gap-y-2">
-            {footerNav.map((item) => (
+            {links.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   className="inline-flex min-h-11 min-w-11 items-center text-ink-2 transition-colors hover:text-ink lg:min-h-0 lg:min-w-0"
-                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...("external" in item && item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 >
                   {item.label}
                 </a>

@@ -16,7 +16,9 @@ import { MobileNav } from "./MobileNav";
  * scroll up.
  */
 export async function SiteHeader() {
-  const [lang, { mainNav, contactNav, ui }] = await Promise.all([getLang(), getCopy()]);
+  const [lang, { mainNav: sectionNav, contactNav, ui }] = await Promise.all([getLang(), getCopy()]);
+  // "#work" becomes "/#work" ("/sv#work"), so the links work from every page, not only the home page.
+  const mainNav = sectionNav.map((item) => ({ ...item, href: `${lang === "en" ? "/" : "/sv"}${item.href}` }));
   return (
     <>
       {/* The top of the page, for links back up. The bar itself sticks, so it cannot be the anchor. */}

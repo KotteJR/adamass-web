@@ -1,5 +1,9 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Flag } from "@/components/brand/Flag";
-import { homePath, languages, type Lang } from "@/content/languages";
+import { homePath, languages, type Lang } from "@/content/locale";
+import { pageAt, pathOf } from "@/content/routes";
 import type { UiContent } from "@/content/ui";
 import { cn } from "@/lib/utils";
 
@@ -11,12 +15,25 @@ type LanguageSwitchProps = {
   className?: string;
 };
 
+/** The same page in another language: the page's twin if it has one, else that language's home page. */
+function twin(pathname: string, target: Lang): string {
+  const parts = pathname.split("/").filter(Boolean);
+  // "/en/p/..." is how a prerendered page sees itself; "/..." and "/sv/..." are how the browser does.
+  const from: Lang = parts[0] === "sv" ? "sv" : "en";
+  let rest = parts[0] === "sv" || parts[0] === "en" ? parts.slice(1) : parts;
+  if (rest[0] === "p") rest = rest.slice(1);
+  if (rest.length === 0) return homePath[target];
+  const key = pageAt(from, rest);
+  return key ? pathOf(key, target) : homePath[target];
+}
+
 /**
  * English and Swedish as two segments on a soft track, each a round one-colour
  * flag and its code, both in the text colour; the page's own language is the
- * white one, in ink. Each is a plain link to that language's home page.
+ * white one, in ink. Each links to the same page in that language.
  */
 export function LanguageSwitch({ current, labels, size = "compact", className }: LanguageSwitchProps) {
+  const pathname = usePathname() ?? "/";
   const full = size === "full";
   return (
     <div
@@ -29,7 +46,7 @@ export function LanguageSwitch({ current, labels, size = "compact", className }:
         return (
           <a
             key={lang}
-            href={homePath[lang]}
+            href={twin(pathname, lang)}
             hrefLang={lang}
             lang={lang}
             aria-current={active ? "page" : undefined}

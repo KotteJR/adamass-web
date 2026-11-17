@@ -9,6 +9,8 @@ type WorkCardProps = {
   product: WorkProduct;
   /** One of the two cards on top from 768 to 1279 px. */
   wide?: boolean;
+  /** Where the card leads; by default its modal (#work/<product>). */
+  href?: string;
 };
 
 /**
@@ -16,7 +18,7 @@ type WorkCardProps = {
  * accent and one feature of the work, 600 x 780, scaled to the card), then the
  * caption. The live product is in the modal; the whole card opens it (#work/<product>).
  */
-export async function WorkCard({ product, wide = false }: WorkCardProps) {
+export async function WorkCard({ product, wide = false, href }: WorkCardProps) {
   const { workSection, ui } = await getCopy();
   return (
     <article aria-labelledby={`work-${product.slug}`} className="group relative flex w-full min-w-0 flex-col">
@@ -34,7 +36,7 @@ export async function WorkCard({ product, wide = false }: WorkCardProps) {
         titleId={`work-${product.slug}`}
         name={product.name}
         line={product.cardLine}
-        href={`#${workHash(product.slug)}`}
+        href={href ?? `#${workHash(product.slug)}`}
         wide={wide}
         link={
           <>

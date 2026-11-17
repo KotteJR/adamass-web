@@ -7,14 +7,14 @@ import { anchors } from "@/content/site";
 import { AwsExplorer } from "./aws/AwsExplorer";
 
 /** AWS, from the first account up: the explorer, then how buying works. */
-export async function Aws() {
+export async function Aws({ as = "h2" }: { as?: "h1" | "h2" } = {}) {
   const { awsOffers, awsSection } = await getCopy();
   const { tabsLabel, legend, listed, direct } = awsSection;
   return (
     <section id={anchors.aws} aria-labelledby="aws-title" className="pt-16 pb-20 lg:pt-[72px] lg:pb-28">
       <Container className="flex flex-col gap-12 lg:gap-16">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-          <SectionHeading id="aws-title" headline={awsSection.headline} />
+          <SectionHeading id="aws-title" as={as} headline={awsSection.headline} />
           <p className="max-w-[400px] text-base text-slate">{awsSection.intro}</p>
         </div>
 

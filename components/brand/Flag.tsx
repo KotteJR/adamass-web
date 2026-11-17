@@ -1,4 +1,4 @@
-import type { Lang } from "@/content/languages";
+import type { Lang } from "@/content/locale";
 import { cn } from "@/lib/utils";
 
 /**

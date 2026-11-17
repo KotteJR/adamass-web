@@ -1,31 +1,20 @@
-import type { ComponentType } from "react";
-import { DiligenceFigure } from "@/components/brand/figures/DiligenceFigure";
-import { EmbeddedDeliveryFigure } from "@/components/brand/figures/EmbeddedDeliveryFigure";
-import { GenAiFigure } from "@/components/brand/figures/GenAiFigure";
-import { ModernisationFigure } from "@/components/brand/figures/ModernisationFigure";
-import { Soc2Figure } from "@/components/brand/figures/Soc2Figure";
 import { ArrowLink } from "@/components/kit/ArrowLink";
 import { Container } from "@/components/kit/Container";
 import { SpecList } from "@/components/kit/SpecList";
 import { Tag } from "@/components/kit/Tag";
 import { anchors } from "@/content/site";
-import { getCopy } from "@/content/copy";
-import type { ServiceId } from "@/content/services";
+import { getCopy, getLang } from "@/content/copy";
+import { pathOf, serviceKey } from "@/content/routes";
+import { SERVICE_FIGURES } from "@/components/brand/figures/serviceFigures";
 import { ServiceFigurePanel } from "./four-ways/ServiceFigurePanel";
 import { StepObserver } from "./four-ways/StepObserver";
 import styles from "./four-ways/four-ways.module.css";
 
-const FIGURES: Record<ServiceId, ComponentType<{ label?: string }>> = {
-  embedded: EmbeddedDeliveryFigure,
-  modernisation: ModernisationFigure,
-  diligence: DiligenceFigure,
-  genai: GenAiFigure,
-  soc2: Soc2Figure,
-};
+const FIGURES = SERVICE_FIGURES;
 
 /** Five ways in: the services as a sticky scroll, one animated figure each. */
 export async function FourWays() {
-  const { services, servicesSection } = await getCopy();
+  const [lang, { services, servicesSection }] = await Promise.all([getLang(), getCopy()]);
   return (
     <section id={anchors.services} aria-labelledby="services-title" className="pt-[72px] pb-16 lg:pb-[72px]">
       <Container>
@@ -44,7 +33,9 @@ export async function FourWays() {
                 <div data-step={index} data-step-text className={styles.text}>
                   <Tag className="self-start">{service.tag}</Tag>
                   <h3 id={`service-${service.id}`} className="text-4xl font-medium text-balance">
-                    {service.title}
+                    <a href={pathOf(serviceKey(service.id), lang)} className="transition-colors hover:text-lit">
+                      {service.title}
+                    </a>
                   </h3>
                   <p className="max-w-[460px] text-lg text-ink-2">{service.summary}</p>
                   <SpecList specs={service.specs} className="max-w-[460px]" />

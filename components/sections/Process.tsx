@@ -12,8 +12,19 @@ import { ProcessTimeline } from "./process/ProcessTimeline";
  * shares with the end screen (ClosingBackdrop): dark at the top, and over its
  * last 20rem the dark fades out into the end screen.
  */
-export async function Process() {
+type ProcessProps = {
+  /** On a service's page: only its own way in, with no picker. */
+  only?: string;
+  /** Replaces the eyebrow ("How it runs" on a service's page). */
+  label?: string;
+};
+
+export async function Process({ only, label }: ProcessProps = {}) {
   const { howWeWork } = await getCopy();
+  const one = only ? howWeWork.ways.find((w) => w.id === only) : undefined;
+  const ways = one ? [one] : howWeWork.ways;
+  const intro = one ? `${howWeWork.lengthLabel}: ${one.length}.` : howWeWork.intro;
+  const introPhone = one ? intro : howWeWork.introPhone;
   return (
     <section id={anchors.process} aria-labelledby="process-title" className="relative isolate overflow-x-clip text-white">
       <div
@@ -23,7 +34,7 @@ export async function Process() {
       <Container className="flex flex-col gap-14 pt-20 pb-60 lg:gap-20 lg:pt-28 lg:pb-[clamp(15rem,6rem+12vw,18rem)]">
         <div className="flex max-w-[720px] flex-col gap-5">
           <MonoLabel size="md" className="text-white/60">
-            {howWeWork.label}
+            {label ?? howWeWork.label}
           </MonoLabel>
           <h2
             id="process-title"
@@ -32,14 +43,14 @@ export async function Process() {
             <span className="block">{howWeWork.title.lead}</span>
             <span className="block text-white/45">{howWeWork.title.rest}</span>
           </h2>
-          <p className="max-w-[560px] text-lg leading-[1.55] text-white/75 max-sm:hidden">{howWeWork.intro}</p>
-          <p className="text-lg leading-[1.55] text-white/75 sm:hidden">{howWeWork.introPhone}</p>
+          <p className="max-w-[560px] text-lg leading-[1.55] text-white/75 max-sm:hidden">{intro}</p>
+          <p className="text-lg leading-[1.55] text-white/75 sm:hidden">{introPhone}</p>
         </div>
 
         <ProcessTimeline
           phases={howWeWork.phases}
-          ways={howWeWork.ways}
-          defaultWay={howWeWork.defaultWay}
+          ways={ways}
+          defaultWay={one ? one.id : howWeWork.defaultWay}
           waysLabel={howWeWork.waysLabel}
           lengthLabel={howWeWork.lengthLabel}
           scrubLabel={howWeWork.scrubLabel}

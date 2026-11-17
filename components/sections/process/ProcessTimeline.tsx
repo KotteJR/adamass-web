@@ -41,6 +41,7 @@ export function ProcessTimeline(props: ProcessTimelineProps) {
   return (
     <div className="flex flex-col gap-7 sm:gap-10">
       {/* The ways in, as buttons in one row: where they do not fit, the row scrolls sideways, never wraps. */}
+      {ways.length > 1 ? (
       <Tabs value={way.id} onValueChange={pick} className="min-w-0">
         <TabsList
           ref={list}
@@ -67,6 +68,7 @@ export function ProcessTimeline(props: ProcessTimelineProps) {
           ))}
         </TabsList>
       </Tabs>
+      ) : null}
 
       {/* From 640 px: the timeline you drag. Phones: the same way in as a list you read. */}
       <EngagementTimeline
