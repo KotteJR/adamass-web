@@ -1,3 +1,4 @@
+import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
 import { pageKeys, routes } from "./content/routes";
 
@@ -64,4 +65,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// BotID serves its check through this site's own address (rewrites added by withBotId).
+export default withBotId(nextConfig);

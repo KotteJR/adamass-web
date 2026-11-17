@@ -11,6 +11,13 @@ import { cn } from "@/lib/utils";
 /** Fired after the dialog clears the hash itself (replaceState fires no hashchange). */
 const CLEARED = "contact-dialog:cleared";
 
+/** Closes the dialog from anywhere: drops the hash without a history entry. */
+export function closeContactDialog() {
+  const { pathname, search } = window.location;
+  window.history.replaceState(window.history.state, "", `${pathname}${search}`);
+  window.dispatchEvent(new Event(CLEARED));
+}
+
 function subscribe(onChange: () => void) {
   window.addEventListener("hashchange", onChange);
   window.addEventListener(CLEARED, onChange);
@@ -25,9 +32,12 @@ type ContactDialogProps = {
   hash: string;
   label: string;
   title: Headline;
-  description: string;
-  email: LinkAction;
+  /** The line under the title. Left out when the tabs carry their own (the booking layout). */
+  description?: string;
+  email?: LinkAction;
   closeLabel: string;
+  /** Room for the booking calendar beside the form on large screens. */
+  wide?: boolean;
   /** The card body (tabs, form, founders), rendered on the server. */
   children: ReactNode;
 };
@@ -44,6 +54,7 @@ export function ContactDialog({
   description,
   email,
   closeLabel,
+  wide = false,
   children,
 }: ContactDialogProps) {
   const target = `#${hash}`;
@@ -66,17 +77,14 @@ export function ContactDialog({
     return () => document.removeEventListener("click", remember, true);
   }, [target]);
 
-  const close = () => {
-    const { pathname, search } = window.location;
-    window.history.replaceState(window.history.state, "", `${pathname}${search}`);
-    window.dispatchEvent(new Event(CLEARED));
-  };
+  const close = closeContactDialog;
 
   return (
     <Dialog open={open} onOpenChange={(next) => (next ? undefined : close())}>
       <DialogContent
         ref={content}
         showCloseButton={false}
+        {...(description ? {} : { "aria-describedby": undefined })}
         // Behind it, the page itself: dimmed a little and blurred well out of focus. Phones get a plain
         // dim: the sheet covers the whole screen, and a full-page blur there only costs frames as it opens.
         overlayClassName="bg-[#0b1421]/25 supports-backdrop-filter:backdrop-blur-xl max-sm:supports-backdrop-filter:backdrop-blur-none"
@@ -94,6 +102,7 @@ export function ContactDialog({
         }}
         className={cn(
           "block max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-white p-0 text-ink ring-1 ring-black/5 shadow-[0_40px_100px_-30px_rgba(10,24,44,0.55)] sm:max-w-[600px]",
+          wide && "md:max-w-[720px] lg:max-w-[880px]",
           // Phones: a full-screen sheet that slides up from the bottom and back down, solid all the way
           // (a fade would show the page's text through the form while it opens).
           "max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:bg-white",
@@ -118,13 +127,17 @@ export function ContactDialog({
                 <span className="block">{title.lead}</span>
                 <span className="block text-haze">{title.rest}</span>
               </DialogTitle>
-              <DialogDescription className="max-w-[460px] text-sm text-slate">
-                {description}{" "}
-                {/* Inline padding grows the tap area to 44 px without moving the lines. */}
-                <a href={email.href} className="py-3.5 font-medium text-ink no-underline hover:text-lit">
-                  {email.label}
-                </a>
-              </DialogDescription>
+              {description ? (
+                <DialogDescription className="max-w-[460px] text-sm text-slate">
+                  {description}{" "}
+                  {/* Inline padding grows the tap area to 44 px without moving the lines. */}
+                  {email ? (
+                    <a href={email.href} className="py-3.5 font-medium text-ink no-underline hover:text-lit">
+                      {email.label}
+                    </a>
+                  ) : null}
+                </DialogDescription>
+              ) : null}
             </div>
             {children}
           </div>

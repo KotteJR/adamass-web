@@ -14,7 +14,8 @@ export type PageKey =
   | `work:${ProductSlug}`
   | "faq"
   | "privacy"
-  | "terms";
+  | "terms"
+  | "booked";
 
 /** Path segments under the language's home, per language. */
 export const routes: Record<PageKey, Record<Lang, string>> = {
@@ -33,9 +34,14 @@ export const routes: Record<PageKey, Record<Lang, string>> = {
   faq: { en: "faq", sv: "vanliga-fragor" },
   privacy: { en: "privacy", sv: "integritet" },
   terms: { en: "terms", sv: "villkor" },
+  // Where the booking calendar lands after a call is booked. Not indexed, not in the sitemap.
+  booked: { en: "booked", sv: "bokat" },
 };
 
 export const pageKeys = Object.keys(routes) as PageKey[];
+
+/** Pages that search engines and assistants should know about (all but the booking confirmation). */
+export const listedPageKeys = pageKeys.filter((key) => key !== "booked");
 
 /** The site-relative path of a page: /services/genai-development, /sv/tjanster/generativ-ai. */
 export function pathOf(key: PageKey | "home", lang: Lang): string {

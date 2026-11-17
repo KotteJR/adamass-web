@@ -4,7 +4,7 @@
 // are left out, and so is anything the page itself does not say.
 
 import { copies, homePath } from "@/content/languages";
-import { pageKeys, pathOf } from "@/content/routes";
+import { listedPageKeys, pathOf } from "@/content/routes";
 import { anchors } from "@/content/site";
 
 const en = copies.en;
@@ -90,7 +90,7 @@ ${swedishSummary()}
 
 ## Pages
 
-${pageKeys.map((key) => `- [${en.pages.meta[key].title}](${en.site.url}${pathOf(key, "en")}): ${en.pages.meta[key].description}`).join("\n")}
+${listedPageKeys.map((key) => `- [${en.pages.meta[key].title}](${en.site.url}${pathOf(key, "en")}): ${en.pages.meta[key].description}`).join("\n")}
 
 ## Optional
 

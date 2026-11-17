@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
@@ -101,6 +102,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           <SiteFooter />
           <ContactModal />
         </ThemeProvider>
+        {/* Page views for the Vercel dashboard: no cookies, nothing stored in the browser (see the privacy policy). */}
+        <Analytics />
         {/* Site-wide, and outside <main>: modal dialogs leave the parents of scripts un-hidden. */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd(lang)) }} />
       </body>

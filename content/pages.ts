@@ -22,6 +22,8 @@ export type PagesContent = {
   faq: { label: string; title: Headline; intro: string; items: { q: string; a: string }[] };
   legal: { updatedLabel: string; updated: string; privacy: { title: string; body: Block[] }; terms: { title: string; body: Block[] } };
   footer: { services: string; company: string; faq: string; privacy: string; terms: string };
+  /** The page after a booking. {email} is filled in in the browser, from the booking just made. */
+  booked: { label: string; title: Headline; when: string; sentTo: string; sent: string; move: string; back: string };
 };
 
 /** Which way in on the timeline belongs to a service (modernisation has none of its own). */
@@ -106,6 +108,7 @@ export const pages: PagesContent = {
     },
     privacy: { title: "Privacy policy", description: "How Adamass AB handles personal data on adamass.se, in briefs sent through the site and in email." },
     terms: { title: "Terms of use", description: "The terms for using adamass.se, the website of Adamass AB in Malmö, Sweden." },
+    booked: { title: "Call booked", description: "Your intro call with Adamass is booked. The invitation is on its way by email." },
   },
   crumbs: { label: "Breadcrumb", home: "Home", services: "Services", work: "Work" },
   servicesIndex: {
@@ -177,14 +180,17 @@ export const pages: PagesContent = {
         { p: `Adamass AB, organisation number ${site.orgNumber}, is the controller for the personal data described here. Write to ${site.email} with any question about this policy or your data.` },
         { h: "What we collect" },
         { p: "When you send a brief through the site, we receive what you enter: the topic, your name, your work email and your message. When you email us, we receive your address, the message and any attachments. We use these only to reply, to assess whether we are the right team, and to keep a record of the conversation." },
+        { p: "When you book a call in the calendar on the site, we receive the time you pick, your name, your work email, your company if you give it, the topic and any note. They become a meeting in our Microsoft 365 calendars, and Microsoft sends you the invitation. We use them to hold the call and keep a record of it." },
         { p: "Our hosting provider keeps ordinary technical logs for a short time (IP address, browser, the page requested and when) to run and secure the site, not to profile you. The site's fonts are served from our own domain, so no font requests go to third parties." },
-        { p: "We do not place tracking cookies, do not use third-party analytics and do not sell personal data." },
+        { p: "To see which pages are read, we use Vercel Web Analytics from our hosting provider. It sets no cookies. For each page view it records the page, the site you came from, your browser, operating system and type of device, and an approximate location (country, region, city) taken from the request. A visitor is recognised only by a hash of the request that is discarded after 24 hours, and we see the numbers only in aggregate, never tied to a person or an IP address." },
+        { p: "To keep automated traffic out of the booking calendar and the brief form, those requests pass Vercel BotID, a check our hosting provider runs in your browser. It tells us only whether a request looks automated." },
+        { p: "We do not place tracking cookies, do not use advertising trackers and do not sell personal data." },
         { h: "Why we process it" },
-        { p: "We process briefs and email to respond and to take steps at your request before a possible engagement (GDPR article 6(1)(b)), and hosting logs in our legitimate interest of keeping the site available and secure (article 6(1)(f))." },
+        { p: "We process briefs, bookings and email to respond and to take steps at your request before a possible engagement (GDPR article 6(1)(b)), and hosting logs and page statistics in our legitimate interest of keeping the site available and secure and of knowing which pages are useful (article 6(1)(f))." },
         { h: "How long we keep it" },
-        { p: "Briefs and email are kept while the conversation is active and for a reasonable time afterwards, or longer when accounting rules, a contract or a legal claim requires it. Technical logs are kept only as long as the host needs them for operations and security." },
+        { p: "Briefs, bookings and email are kept while the conversation is active and for a reasonable time afterwards, or longer when accounting rules, a contract or a legal claim requires it. Technical logs are kept only as long as the host needs them for operations and security." },
         { h: "Who we share it with" },
-        { p: "We use a website host and email infrastructure to run adamass.se and receive messages; they process data on our instructions. We do not share your data with anyone else unless you ask us to, a contract requires it, or the law does." },
+        { p: "We use a website host (Vercel) and Microsoft 365 for email and calendars to run adamass.se, receive messages and book calls; they process data on our instructions. We do not share your data with anyone else unless you ask us to, a contract requires it, or the law does." },
         { h: "Your rights" },
         { p: `You may ask for access to the personal data we hold about you, ask us to correct or delete it, restrict or object to certain processing, and request portability where that right applies. Write to ${site.email}. You may also complain to Integritetsskyddsmyndigheten (IMY), the Swedish supervisory authority.` },
         { h: "Changes" },
@@ -215,4 +221,13 @@ export const pages: PagesContent = {
     },
   },
   footer: { services: "Services", company: "Company", faq: "Questions", privacy: "Privacy", terms: "Terms" },
+  booked: {
+    label: "Booked",
+    title: { lead: "Your call is booked.", rest: "Talk soon." },
+    when: "When",
+    sentTo: "The invitation is on its way to {email}.",
+    sent: "The invitation is on its way to your inbox.",
+    move: `To move or cancel the call, use the invitation or write to ${site.email}.`,
+    back: "Back to the site",
+  },
 };

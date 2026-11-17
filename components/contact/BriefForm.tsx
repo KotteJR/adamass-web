@@ -1,12 +1,11 @@
 "use client";
 
 import { useActionState, useId } from "react";
-import { sendBrief } from "@/app/actions/send-brief";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { ContactContent } from "@/content/contact";
-import { BRIEF_LIMITS, initialBriefState, type BriefField } from "@/lib/brief";
+import { BRIEF_LIMITS, initialBriefState, type BriefField, type BriefState } from "@/lib/brief";
 import { cn } from "@/lib/utils";
 import { FieldError } from "./FieldError";
 
@@ -23,7 +22,18 @@ const FIELD = cn(
   "aria-invalid:ring-2 aria-invalid:ring-destructive/30",
 );
 
-/** "Reach out": a topic, a name, an email and a few lines. Posts to a server action. */
+/** Posts the form to /api/brief, which answers with the form's next state. */
+async function sendBrief(_previous: BriefState, form: FormData): Promise<BriefState> {
+  try {
+    const response = await fetch("/api/brief", { method: "POST", body: form });
+    return (await response.json()) as BriefState;
+  } catch {
+    const keep = (key: BriefField) => String(form.get(key) ?? "");
+    return { status: "failed", values: { topic: keep("topic"), name: keep("name"), email: keep("email"), brief: keep("brief") } };
+  }
+}
+
+/** "Reach out": a topic, a name, an email and a few lines. Mailed to the studio. */
 export function BriefForm({ topics, copy }: BriefFormProps) {
   const [state, formAction, pending] = useActionState(sendBrief, initialBriefState);
   const id = useId();

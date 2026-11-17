@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/kit/Container";
 import { MonoLabel } from "@/components/kit/MonoLabel";
 import { SectionHeading } from "@/components/kit/SectionHeading";
+import { BookedPage } from "@/components/pages/BookedPage";
 import { Breadcrumbs } from "@/components/pages/Breadcrumbs";
 import { JsonLd } from "@/components/pages/JsonLd";
 import { ServicePage } from "@/components/pages/ServicePage";
@@ -56,6 +57,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
       locale: ogLocale[lang],
     },
     twitter: { card: "summary_large_image", title: `${title} · ${site.shortName}`, description },
+    // The booking confirmation is for the person who just booked, not for search.
+    ...(key === "booked" ? { robots: { index: false, follow: true } } : {}),
   };
 }
 
@@ -114,6 +117,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     );
   } else if (key === "faq") {
     body = <FaqPage />;
+  } else if (key === "booked") {
+    return <BookedPage />;
   } else {
     body = <LegalPage which={key === "privacy" ? "privacy" : "terms"} />;
   }

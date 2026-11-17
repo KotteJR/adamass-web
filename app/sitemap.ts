@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { languages } from "@/content/languages";
-import { pageKeys, pathOf, type PageKey } from "@/content/routes";
+import { listedPageKeys, pathOf, type PageKey } from "@/content/routes";
 import { site } from "@/content/site";
 
 /** How much each page matters, for the sitemap. */
@@ -11,7 +11,7 @@ const PRIORITY = (key: PageKey | "home") =>
 // the Swedish pages for Swedish searches.
 export default function sitemap(): MetadataRoute.Sitemap {
   const url = (path: string) => (path === "/" ? site.url : `${site.url}${path}`);
-  const keys: (PageKey | "home")[] = ["home", ...pageKeys];
+  const keys: (PageKey | "home")[] = ["home", ...listedPageKeys];
   return keys.flatMap((key) => {
     const alternates = { languages: Object.fromEntries(languages.map((lang) => [lang, url(pathOf(key, lang))])) };
     return languages.map((lang) => ({
