@@ -42,7 +42,7 @@ export function ModelHarness({ figure, stats, capabilities }: ModelHarnessProps)
           {stats.map((stat, k) => (
             <div key={stat.label} className={cn("flex flex-col gap-1.5 px-3 pt-5 pb-[22px] sm:px-[18px]", k > 0 && "border-l border-[#e7e6e1] dark:border-line")}>
               <dt className="order-last text-[13px] leading-[1.4] text-slate">{stat.label}</dt>
-              <dd className="text-[22px] leading-[1.05] font-medium tracking-[-0.035em] sm:text-[28px]">{stat.value}</dd>
+              <dd className="text-[22px] leading-[1.05] font-medium tracking-[-0.02em] sm:text-[28px]">{stat.value}</dd>
             </div>
           ))}
         </dl>

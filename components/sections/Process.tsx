@@ -38,7 +38,7 @@ export async function Process({ only, label }: ProcessProps = {}) {
           </MonoLabel>
           <h2
             id="process-title"
-            className="text-[clamp(2.125rem,1.3rem+2.6vw,3.5rem)] leading-[1.04] font-medium tracking-[-0.045em] text-balance"
+            className="text-[clamp(2.125rem,1.3rem+2.6vw,3.5rem)] leading-[1.04] font-medium tracking-[-0.025em] text-balance"
           >
             <span className="block">{howWeWork.title.lead}</span>
             <span className="block text-white/45">{howWeWork.title.rest}</span>

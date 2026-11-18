@@ -13,18 +13,20 @@ import { serializeJsonLd, siteJsonLd } from "@/lib/json-ld";
 import { cn } from "@/lib/utils";
 import "../globals.css";
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
+// The site's face. Optical sizes on: headings get the display cut, running text the reading cut.
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
+  subsets: ["latin"],
+  axes: ["opsz"],
+});
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// The product stages keep Geist, as in the products' own interfaces: loaded only where they show.
+const geist = Geist({ variable: "--font-geist", subsets: ["latin"], preload: false });
 // Product wordmarks only (Murmur, morrow): not worth a preload.
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
-  preload: false,
-});
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage-grotesque",
-  subsets: ["latin"],
   preload: false,
 });
 
