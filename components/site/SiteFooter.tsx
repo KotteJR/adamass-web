@@ -25,7 +25,7 @@ export async function SiteFooter() {
           </a>
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-black/[0.06] pt-5 text-xs md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-2 border-t border-black/[0.06] dark:border-white/[0.08] pt-5 text-xs md:flex-row md:items-center md:justify-between">
           <address className="not-italic">
             {site.name} · {ui.orgNumber} {site.orgNumber}
             <span className="block md:inline">

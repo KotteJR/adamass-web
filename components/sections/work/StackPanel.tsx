@@ -12,7 +12,7 @@ export function StackPanel({ stack }: { stack: StackGroup[] }) {
             {group.items.map((item) => (
               <li
                 key={item}
-                className="inline-flex h-[26px] items-center rounded-md bg-soft px-[9px] text-[12.5px] whitespace-nowrap text-[#2a2d33]"
+                className="inline-flex h-[26px] items-center rounded-md bg-soft px-[9px] text-[12.5px] whitespace-nowrap text-[#2a2d33] dark:text-ink-2"
               >
                 {item}
               </li>

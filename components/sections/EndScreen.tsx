@@ -16,7 +16,7 @@ export async function EndScreen() {
   return (
     <section
       aria-labelledby="end-title"
-      className="relative isolate flex min-h-[min(100svh,760px)] flex-col items-center overflow-hidden pt-16 pb-24 text-center text-white md:h-[780px] md:min-h-0 md:pt-[120px] md:pb-20"
+      className="keep-light relative isolate flex min-h-[min(100svh,760px)] flex-col items-center overflow-hidden pt-16 pb-24 text-center text-white md:h-[780px] md:min-h-0 md:pt-[120px] md:pb-20"
     >
       <MalmoClock
         timeZone={site.timeZone}

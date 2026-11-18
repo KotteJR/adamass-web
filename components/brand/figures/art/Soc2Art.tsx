@@ -3,7 +3,7 @@
 
 export function Soc2Art({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-356.2 -359.1 622.3 534.7" width="622.3" height="534.7" role="img" aria-label={label ?? "Control drawers light up one by one, evidence sheets travel into an archive, and an auditor's stamp seals the report."} className={className}>
+    <svg data-art viewBox="-356.2 -359.1 622.3 534.7" width="622.3" height="534.7" role="img" aria-label={label ?? "Control drawers light up one by one, evidence sheets travel into an archive, and an auditor's stamp seals the report."} className={className}>
       <defs>
         <filter id="fig-soc2-hl" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="8" />

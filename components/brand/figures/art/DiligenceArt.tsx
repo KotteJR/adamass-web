@@ -3,7 +3,7 @@
 
 export function DiligenceArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-327.9 -174.2 635.7 390.1" width="635.7" height="390.1" role="img" aria-label={label ?? "A closed box rides a conveyor through a scanner arch; inside, it turns see-through to show three parts, then a report with three verdict marks comes out."} className={className}>
+    <svg data-art viewBox="-327.9 -174.2 635.7 390.1" width="635.7" height="390.1" role="img" aria-label={label ?? "A closed box rides a conveyor through a scanner arch; inside, it turns see-through to show three parts, then a report with three verdict marks comes out."} className={className}>
       <defs>
         <filter id="fig-diligence-hl" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="8" />

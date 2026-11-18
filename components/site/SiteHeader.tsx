@@ -8,10 +8,12 @@ import { cn } from "@/lib/utils";
 import { HeaderShell } from "./HeaderShell";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { MobileNav } from "./MobileNav";
+import { SettingsMenu } from "./SettingsMenu";
+import { ThemeSwitch } from "./ThemeSwitch";
 
 /**
- * Logo left; on the right the four links as quiet buttons, the language switch
- * and Contact as an ink one. On phones: a compact bar, the links and the
+ * Logo left; on the right the four links as quiet buttons, the settings menu
+ * (language) and Contact as an ink one. On phones: a compact bar, the links and the
  * switch in a sheet. It hides as you scroll down and comes back when you
  * scroll up.
  */
@@ -44,13 +46,13 @@ export async function SiteHeader() {
                   </a>
                 </li>
               ))}
-              <li className="ml-2">
-                <LanguageSwitch current={lang} labels={ui.language} />
+              <li className="ml-1">
+                <SettingsMenu current={lang} label={ui.settings} language={ui.language} theme={ui.theme} />
               </li>
               <li className="ml-2">
                 <a
                   href={contactNav.href}
-                  className="inline-flex h-9 items-center rounded-sm bg-ink px-3.5 font-medium text-white transition-colors hover:bg-graphite"
+                  className="inline-flex h-9 items-center rounded-sm bg-ink px-3.5 font-medium text-canvas transition-colors hover:bg-graphite"
                 >
                   {contactNav.label}
                 </a>
@@ -61,7 +63,12 @@ export async function SiteHeader() {
             items={mainNav}
             action={contactNav}
             labels={{ openMenu: ui.openMenu, close: ui.closeMenu, navigation: ui.siteNavigation, nav: ui.mainNav }}
-            languageSwitch={<LanguageSwitch current={lang} labels={ui.language} size="full" />}
+            languageSwitch={
+              <>
+                <LanguageSwitch current={lang} labels={ui.language} size="full" />
+                <ThemeSwitch labels={ui.theme} />
+              </>
+            }
             className="md:hidden"
           />
         </Container>

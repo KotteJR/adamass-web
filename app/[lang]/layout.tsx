@@ -86,15 +86,8 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     >
       {/* A column at least the screen's height: on short pages the footer still sits at the bottom. */}
       <body className="flex min-h-svh flex-col">
-        {/* Light is the designed mode. Dark tokens are prepared in globals.css; drop
-            forcedTheme (and add a toggle) once a dark design exists. */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          forcedTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+        {/* Light by default; visitors pick Dark or Auto (the system's) in the settings menu. */}
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <SkipLink href={`#${anchors.main}`} label={ui.skipToContent} />
           <SiteHeader />
           <main id={anchors.main} tabIndex={-1} className="flex-1 outline-none">

@@ -101,19 +101,19 @@ export function ContactDialog({
           opener.current = null;
         }}
         className={cn(
-          "block max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-white p-0 text-ink ring-1 ring-black/5 shadow-[0_40px_100px_-30px_rgba(10,24,44,0.55)] sm:max-w-[600px]",
+          "block max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain bg-canvas p-0 text-ink ring-1 ring-black/5 shadow-[0_40px_100px_-30px_rgba(10,24,44,0.55)] sm:max-w-[600px]",
           wide && "md:max-w-[720px] lg:max-w-[880px]",
           // Phones: a full-screen sheet that slides up from the bottom and back down, solid all the way
           // (a fade would show the page's text through the form while it opens).
-          "max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:bg-white",
+          "max-sm:top-0 max-sm:left-0 max-sm:h-dvh max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:bg-canvas",
           "max-sm:duration-300 max-sm:ease-out-soft max-sm:data-open:fade-in-100 max-sm:data-open:zoom-in-100 max-sm:data-open:slide-in-from-bottom max-sm:data-closed:fade-out-100 max-sm:data-closed:zoom-out-100 max-sm:data-closed:slide-out-to-bottom",
         )}
       >
         <div className="relative">
-          <div className="relative flex min-h-dvh flex-col gap-5 bg-white px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:min-h-0 sm:px-[26px] sm:pt-6 sm:pb-[22px]">
+          <div className="relative flex min-h-dvh flex-col gap-5 bg-canvas px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:min-h-0 sm:px-[26px] sm:pt-6 sm:pb-[22px]">
             {/* Phones: a sticky bar keeps the close button in reach while the form scrolls. Solid white:
                 Safari draws a frosted bar inside a scrolling sheet see-through, with the form showing under it. */}
-            <div className="sticky top-0 z-10 -mx-5 flex items-center justify-between bg-white px-5 pt-[max(0.5rem,env(safe-area-inset-top))] pb-1 sm:static sm:m-0 sm:-mt-1 sm:bg-transparent sm:p-0">
+            <div className="sticky top-0 z-10 -mx-5 flex items-center justify-between bg-canvas px-5 pt-[max(0.5rem,env(safe-area-inset-top))] pb-1 sm:static sm:m-0 sm:-mt-1 sm:bg-transparent sm:p-0">
               <MonoLabel>{label}</MonoLabel>
               <DialogClose asChild>
                 <Button variant="ghost" className="-mr-2.5 size-11 shrink-0 rounded-lg p-0 text-slate hover:text-ink">

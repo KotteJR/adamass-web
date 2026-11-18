@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* next-themes puts .dark on <html>. Light is the designed mode. */
+/* next-themes puts .dark on <html>; visitors choose it in the settings menu. */
 @custom-variant dark (&:is(.dark *));
 
 /* ───────────────────────────────────────────────────────────
@@ -55,11 +55,18 @@
   --ring: var(--lit);
   --radius: 0.5rem;
 
+  /* The logo's letters and its AB mark. */
+  --logo-letters: #0b1b33;
+  --logo-ab: #0066ff;
+
   color-scheme: light;
 }
 
-/* Prepared, not designed: dark mode keeps the structure and inverts the neutrals. */
+/* Dark mode: the same structure with the neutrals turned over. Paintings, the night
+   band and pictures of products keep their own colours (see .keep-light below). */
 .dark {
+  --logo-letters: #f1f1ef;
+  --logo-ab: #4d94ff;
   --ink: #f1f1ef;
   --ink-2: #c3c6cc;
   --graphite: #d9dbdf;
@@ -78,7 +85,55 @@
   color-scheme: dark;
 }
 
+/* Pictures of products, the work-card faces and the end screen sit on paintings: they
+   keep the light palette in dark mode, so they look the same in both themes. The
+   derived colours are declared again so they resolve against these values. */
+.dark .keep-light {
+  --ink: #111214;
+  --ink-2: #4a4f57;
+  --graphite: #2b2f36;
+  --slate: #6b7079;
+  --mute: #8a8f98;
+  --haze: #a3a8b0;
+  --line: #e4e3df;
+  --paper: #f7f7f5;
+  --soft: #f3f2ee;
+  --soft-2: #ecebe7;
+  --white: #ffffff;
+  --lit: #2f5b8c;
+  --signal: #2f6fb0;
+  --destructive: #b4312a;
+  --background: var(--white);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--white);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--white);
+  --secondary: var(--soft);
+  --muted: var(--paper);
+  --muted-foreground: var(--slate);
+  --accent: var(--soft);
+  --border: var(--line);
+  --input: var(--soft);
+  --logo-letters: #0b1b33;
+  --logo-ab: #0066ff;
+  color-scheme: light;
+}
+
+/* The isometric drawings are drawn in light greys with steel-blue accents. In dark mode
+   each is shown as its negative with the hues kept: white faces sink into the dark
+   panel, outlines turn light and the blue stays blue, like a blueprint of the same piece. */
+.dark [data-art] {
+  filter: invert(0.9) hue-rotate(180deg);
+}
+
 @theme inline {
+  /* The page's own surface: white in light, near black in dark. Tailwind's white stays
+     white for what sits on paintings and the night band; UI surfaces and the text on
+     ink buttons use canvas so they follow the theme. */
+  --color-canvas: var(--white);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-graphite: var(--graphite);

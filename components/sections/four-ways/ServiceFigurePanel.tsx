@@ -23,7 +23,7 @@ export function ServiceFigurePanel({ service, index, className, children }: Serv
       <div className="absolute inset-x-4 top-11 bottom-11 flex items-center justify-center sm:inset-x-6 @min-[520px]:bottom-[136px] [&>*]:max-h-full [&>*]:w-full [&_svg]:max-h-full">
         {children}
       </div>
-      <figcaption className="absolute inset-x-0 bottom-0 hidden border-t border-black/[0.06] px-6 pt-5 pb-6 @min-[520px]:block">
+      <figcaption className="absolute inset-x-0 bottom-0 hidden border-t border-black/[0.06] dark:border-white/[0.07] px-6 pt-5 pb-6 @min-[520px]:block">
         <ul className="grid grid-cols-3 gap-6">
           {service.entails.map((part) => (
             <li key={part.title} className="flex flex-col gap-1.5">

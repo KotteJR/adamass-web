@@ -28,7 +28,7 @@ export async function Hero() {
           href={hero.action.href}
           className="group flex w-full shrink-0 gap-1.5 rounded-xs sm:w-auto sm:self-start md:self-auto md:pb-1.5"
         >
-          <span className="inline-flex h-12 flex-1 items-center justify-center rounded-xs bg-ink px-5 text-md font-medium text-white transition-colors group-hover:bg-graphite sm:h-11 sm:flex-none">
+          <span className="inline-flex h-12 flex-1 items-center justify-center rounded-xs bg-ink px-5 text-md font-medium text-canvas transition-colors group-hover:bg-graphite sm:h-11 sm:flex-none">
             {hero.action.label}
           </span>
           <span

@@ -3,7 +3,7 @@
 
 export function ModelMurmurArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-60.6 -108.4 491.6 146.7" width="491.6" height="146.7" role="img" aria-label={label ?? "Lofi and noise go into the model; nine of its ten layers light up as they are retrained; a loop comes out and goes round without a seam"} className={className}>
+    <svg data-art viewBox="-60.6 -108.4 491.6 146.7" width="491.6" height="146.7" role="img" aria-label={label ?? "Lofi and noise go into the model; nine of its ten layers light up as they are retrained; a loop comes out and goes round without a seam"} className={className}>
       <defs>
         <filter id="fig-mmur-mh" x="-20%" y="-50%" width="140%" height="200%">
           <feGaussianBlur stdDeviation="4" />

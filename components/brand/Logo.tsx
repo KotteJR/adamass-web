@@ -2,7 +2,7 @@
 // and -reversed.svg. Brand colours are fixed by the lockup files.
 
 const TONES = {
-  primary: { letters: "#0B1B33", ab: "#0066FF" },
+  primary: { letters: "var(--logo-letters)", ab: "var(--logo-ab)" },
   reversed: { letters: "#FFFFFF", ab: "#4D94FF" },
 } as const;
 

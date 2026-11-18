@@ -3,7 +3,7 @@
 
 export function ModernisationArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-322.9 -188.4 625.7 401.4" width="625.7" height="401.4" role="img" aria-label={label ?? "A pipeline of four sections between a pump and a tank; worn sections are swapped for new ones one at a time while the flow keeps moving."} className={className}>
+    <svg data-art viewBox="-322.9 -188.4 625.7 401.4" width="625.7" height="401.4" role="img" aria-label={label ?? "A pipeline of four sections between a pump and a tank; worn sections are swapped for new ones one at a time while the flow keeps moving."} className={className}>
       <defs>
         <filter id="fig-modern-hl" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="8" />

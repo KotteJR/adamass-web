@@ -16,7 +16,7 @@ type LanguageSwitchProps = {
 };
 
 /** The same page in another language: the page's twin if it has one, else that language's home page. */
-function twin(pathname: string, target: Lang): string {
+export function twin(pathname: string, target: Lang): string {
   const parts = pathname.split("/").filter(Boolean);
   // "/en/p/..." is how a prerendered page sees itself; "/..." and "/sv/..." are how the browser does.
   const from: Lang = parts[0] === "sv" ? "sv" : "en";
@@ -53,7 +53,7 @@ export function LanguageSwitch({ current, labels, size = "compact", className }:
             className={cn(
               "inline-flex h-full items-center justify-center gap-2 rounded-[5px] transition-colors",
               full ? "flex-1 text-base font-medium" : "px-2.5 font-mono text-[0.6875rem] tracking-[0.06em] uppercase",
-              active ? "bg-white text-ink shadow-[0_1px_2px_rgb(13_23_38/0.08)]" : "text-slate hover:text-ink",
+              active ? "bg-canvas text-ink shadow-[0_1px_2px_rgb(13_23_38/0.08)]" : "text-slate hover:text-ink",
             )}
           >
             <Flag lang={lang} className={full ? "size-5" : undefined} />

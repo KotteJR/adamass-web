@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const actionVariants = cva("font-medium transition-colors", {
   variants: {
     tone: {
-      ink: "bg-ink text-white hover:bg-graphite",
+      ink: "bg-ink text-canvas hover:bg-graphite",
       soft: "bg-soft text-ink hover:bg-soft-2",
       white: "bg-white text-ink hover:bg-white/90",
       /** On a painting: frosted, white text. */

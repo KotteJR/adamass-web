@@ -3,7 +3,7 @@
 
 export function ModelSlmArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-43.4 -92.5 474.4 147.4" width="474.4" height="147.4" role="img" aria-label={label ?? "Expert-labelled work and synthetic data feed the model; its layers light as it is fine-tuned; a held-out gold set lights 94 of 100 cells, and a loop runs back for reinforcement learning"} className={className}>
+    <svg data-art viewBox="-43.4 -92.5 474.4 147.4" width="474.4" height="147.4" role="img" aria-label={label ?? "Expert-labelled work and synthetic data feed the model; its layers light as it is fine-tuned; a held-out gold set lights 94 of 100 cells, and a loop runs back for reinforcement learning"} className={className}>
       <defs>
         <filter id="fig-mslm-mh" x="-20%" y="-50%" width="140%" height="200%">
           <feGaussianBlur stdDeviation="4" />

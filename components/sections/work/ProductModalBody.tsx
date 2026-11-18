@@ -73,7 +73,7 @@ export function ProductModalBody({
       <div className="sticky top-0 z-20 h-0 lg:hidden">
         <DialogClose
           aria-label={labels.close}
-          className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-3 inline-flex size-11 items-center justify-center rounded-full bg-white/90 text-ink shadow-[0_6px_20px_-8px_rgba(10,20,40,0.45)] backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lit"
+          className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-3 inline-flex size-11 items-center justify-center keep-light rounded-full bg-white/90 text-ink shadow-[0_6px_20px_-8px_rgba(10,20,40,0.45)] backdrop-blur-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lit"
         >
           <XIcon className="size-4" aria-hidden />
         </DialogClose>
@@ -139,7 +139,7 @@ export function ProductModalBody({
           >
             <span
               aria-hidden
-              className="absolute top-1 left-1 h-11 w-[calc((100%-8px)/3)] rounded-md bg-white sm:w-28 shadow-[0_1px_2px_rgba(17,18,20,0.06)] transition-transform duration-400 ease-out-soft motion-reduce:transition-none lg:h-[34px]"
+              className="absolute top-1 left-1 h-11 w-[calc((100%-8px)/3)] rounded-md bg-canvas sm:w-28 shadow-[0_1px_2px_rgba(17,18,20,0.06)] transition-transform duration-400 ease-out-soft motion-reduce:transition-none lg:h-[34px]"
               style={{ transform: `translateX(${TABS.indexOf(tab) * 100}%)` }}
             />
             {TABS.map((key) => (
@@ -173,7 +173,7 @@ export function ProductModalBody({
         <div
           className={cn(
             // Below 1024 px: a sticky footer with full-width buttons and the pager.
-            "sticky bottom-0 -mx-5 flex flex-col gap-3 border-t border-line bg-white px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:-mx-8 sm:px-8",
+            "sticky bottom-0 -mx-5 flex flex-col gap-3 border-t border-line bg-canvas px-5 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:-mx-8 sm:px-8",
             "lg:static lg:mx-0 lg:h-11 lg:flex-row lg:items-center lg:justify-between lg:border-0 lg:p-0",
             // 1024 to 1279 px the half is 488 px wide: the buttons tighten and the pager drops its count.
             styles.item,

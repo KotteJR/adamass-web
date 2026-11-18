@@ -34,7 +34,7 @@ function featureFor(feature: CardFaceContent["feature"]) {
  */
 export function CardFace({ face }: { face: CardFaceContent }) {
   return (
-    <div aria-hidden className="relative isolate h-full overflow-hidden text-white">
+    <div aria-hidden className="keep-light relative isolate h-full overflow-hidden text-white">
       <Painting name={face.painting} position={face.position} drift="none" sizes={CARD_SIZES} />
       <FaceLayers face={face} />
       {featureFor(face.feature)}

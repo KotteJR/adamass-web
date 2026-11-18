@@ -3,7 +3,7 @@
 
 export function ModelMorrowArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-53.7 -62.1 490.4 119" width="490.4" height="119" role="img" aria-label={label ?? "Drafts leave a hopper on a belt and pass a solver gate; most drop into a bin, and the shelf of eleven fills up"} className={className}>
+    <svg data-art viewBox="-53.7 -62.1 490.4 119" width="490.4" height="119" role="img" aria-label={label ?? "Drafts leave a hopper on a belt and pass a solver gate; most drop into a bin, and the shelf of eleven fills up"} className={className}>
       <defs>
         <filter id="fig-mmor-mh" x="-20%" y="-50%" width="140%" height="200%">
           <feGaussianBlur stdDeviation="4" />

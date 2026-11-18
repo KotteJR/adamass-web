@@ -3,7 +3,7 @@
 
 export function AwsCabinetArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-433.1 -421.5 714.6 659.5" width="714.6" height="659.5" role="img" aria-label={label ?? "Your AWS organisation as an equipment cabinet on a bench: trays for accounts, a guardrail bar, a card drawer, a dial and a printer on top, a trolley, a private cable, and the parts each service adds."} className={className}>
+    <svg data-art viewBox="-433.1 -421.5 714.6 659.5" width="714.6" height="659.5" role="img" aria-label={label ?? "Your AWS organisation as an equipment cabinet on a bench: trays for accounts, a guardrail bar, a card drawer, a dial and a printer on top, a trolley, a private cable, and the parts each service adds."} className={className}>
       <defs>
         <filter id="fig-aws-halo" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="9" />

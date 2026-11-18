@@ -3,7 +3,7 @@
 
 export function EmbeddedDeliveryArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-320.4 -171.2 615.6 382.7" width="615.6" height="382.7" role="img" aria-label={label ?? "A line of workstations with a conveyor; our station stamps each piece of work as it passes."} className={className}>
+    <svg data-art viewBox="-320.4 -171.2 615.6 382.7" width="615.6" height="382.7" role="img" aria-label={label ?? "A line of workstations with a conveyor; our station stamps each piece of work as it passes."} className={className}>
       <defs>
         <filter id="fig-embedded-hl" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="8" />

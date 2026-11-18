@@ -8,9 +8,9 @@ const tagVariants = cva(
     variants: {
       tone: {
         soft: "bg-soft text-slate",
-        white: "bg-white text-slate",
-        ink: "bg-ink text-white",
-        lit: "bg-lit text-white",
+        white: "bg-canvas text-slate",
+        ink: "bg-ink text-canvas",
+        lit: "bg-lit text-canvas",
         sky: "bg-[#e7ecf3] text-lit",
       },
     },

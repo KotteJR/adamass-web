@@ -17,6 +17,9 @@ export type UiContent = {
   greetingFrom: string;
   /** The language switch: its name, and each language in its own words. */
   language: { label: string; en: string; sv: string };
+  /** The header's settings button: language and theme. */
+  settings: string;
+  theme: { label: string; light: string; dark: string; system: string };
 };
 
 export const ui: UiContent = {
@@ -31,4 +34,6 @@ export const ui: UiContent = {
   about: "about",
   greetingFrom: "from",
   language: { label: "Language", en: "English", sv: "Svenska" },
+  settings: "Settings",
+  theme: { label: "Theme", light: "Light", dark: "Dark", system: "Auto" },
 };

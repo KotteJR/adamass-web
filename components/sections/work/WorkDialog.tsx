@@ -83,7 +83,7 @@ export function WorkDialog({ products, labels }: WorkDialogProps) {
         }}
         className={cn(
           styles.panel,
-          "gap-0 overflow-hidden bg-white p-0 text-ink ring-0",
+          "gap-0 overflow-hidden bg-canvas p-0 text-ink ring-0",
           // Below 1024 px: a full-screen sheet that scrolls.
           "max-lg:top-0 max-lg:left-0 max-lg:block max-lg:h-dvh max-lg:max-w-none sm:max-w-none max-lg:translate-x-0 max-lg:translate-y-0 max-lg:overflow-y-auto max-lg:overscroll-contain max-lg:rounded-none",
           // From 1024 px: 1200 x 780, two equal halves.

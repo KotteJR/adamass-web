@@ -71,8 +71,8 @@ export function BriefForm({ topics, copy }: BriefFormProps) {
                 <label
                   key={topic.value}
                   className={cn(
-                    "inline-flex h-11 cursor-pointer items-center rounded-sm bg-soft px-4 text-sm text-[#3b3f46] transition-colors select-none hover:bg-soft-2 lg:h-8 lg:px-2.5",
-                    "has-checked:bg-ink has-checked:text-white",
+                    "inline-flex h-11 cursor-pointer items-center rounded-sm bg-soft px-4 text-sm text-[#3b3f46] transition-colors dark:text-ink-2 select-none hover:bg-soft-2 lg:h-8 lg:px-2.5",
+                    "has-checked:bg-ink has-checked:text-canvas dark:has-checked:text-canvas",
                     "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-lit",
                   )}
                 >
@@ -164,7 +164,7 @@ export function BriefForm({ topics, copy }: BriefFormProps) {
             <button
               type="submit"
               disabled={pending}
-              className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-ink px-[18px] text-md font-medium whitespace-nowrap text-white transition-colors hover:bg-graphite disabled:opacity-60 sm:h-11 sm:w-auto"
+              className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-ink px-[18px] text-md font-medium whitespace-nowrap text-canvas transition-colors hover:bg-graphite disabled:opacity-60 sm:h-11 sm:w-auto"
             >
               {pending ? copy.pending : copy.submit}
               <span aria-hidden>→</span>

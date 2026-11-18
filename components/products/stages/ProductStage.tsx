@@ -26,5 +26,10 @@ export function stageSize(stage: StageKey, variant: StageVariant) {
 /** A product's live stage, in its card or modal shape. */
 export function ProductStage({ stage, variant }: { stage: StageKey; variant: StageVariant }) {
   const Stage = STAGES[stage];
-  return <Stage variant={variant} />;
+  // A picture of the product: it looks the same in both themes.
+  return (
+    <div className="keep-light contents">
+      <Stage variant={variant} />
+    </div>
+  );
 }

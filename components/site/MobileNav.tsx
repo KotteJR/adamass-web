@@ -35,7 +35,7 @@ export function MobileNav({ items, action, labels, languageSwitch, className }: 
         side="right"
         closeLabel={labels.close}
         className={cn(
-          "w-[min(340px,88vw)] gap-0 border-0 bg-white p-0",
+          "w-[min(340px,88vw)] gap-0 border-0 bg-canvas p-0",
           "pt-[env(safe-area-inset-top)] pr-[env(safe-area-inset-right)] pb-[max(1.25rem,env(safe-area-inset-bottom))]",
           "[&>[data-slot=sheet-close]]:top-[calc(env(safe-area-inset-top)+0.625rem)] [&>[data-slot=sheet-close]]:right-3 [&>[data-slot=sheet-close]]:size-11",
         )}
@@ -66,7 +66,7 @@ export function MobileNav({ items, action, labels, languageSwitch, className }: 
           <a
             href={action.href}
             onClick={() => setOpen(false)}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink text-base font-medium text-white transition-colors active:bg-graphite"
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink text-base font-medium text-canvas transition-colors active:bg-graphite"
           >
             {action.label}
             <span aria-hidden>→</span>

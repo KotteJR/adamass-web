@@ -14,4 +14,6 @@ export const ui: UiContent = {
   about: "om",
   greetingFrom: "från",
   language: { label: "Språk", en: "English", sv: "Svenska" },
+  settings: "Inställningar",
+  theme: { label: "Tema", light: "Ljust", dark: "Mörkt", system: "Auto" },
 };

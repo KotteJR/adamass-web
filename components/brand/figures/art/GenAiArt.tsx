@@ -3,7 +3,7 @@
 
 export function GenAiArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-327.9 -192.9 650.8 408.8" width="650.8" height="408.8" role="img" aria-label={label ?? "A board with three systems; a model module is lowered into the socket and signals run out along the traces."} className={className}>
+    <svg data-art viewBox="-327.9 -192.9 650.8 408.8" width="650.8" height="408.8" role="img" aria-label={label ?? "A board with three systems; a model module is lowered into the socket and signals run out along the traces."} className={className}>
       <defs>
         <filter id="fig-genai-hl" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="8" />

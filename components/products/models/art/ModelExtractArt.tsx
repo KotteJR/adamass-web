@@ -3,7 +3,7 @@
 
 export function ModelExtractArt({ className, label }: { className?: string; label?: string }) {
   return (
-    <svg viewBox="-43.4 -93.1 433.3 148" width="433.3" height="148" role="img" aria-label={label ?? "The regulation is read on one path and the library of risks and controls is searched on the other; both feed one extraction, and a reviewer signs the result"} className={className}>
+    <svg data-art viewBox="-43.4 -93.1 433.3 148" width="433.3" height="148" role="img" aria-label={label ?? "The regulation is read on one path and the library of risks and controls is searched on the other; both feed one extraction, and a reviewer signs the result"} className={className}>
       <defs>
         <filter id="fig-mext-mh" x="-20%" y="-50%" width="140%" height="200%">
           <feGaussianBlur stdDeviation="4" />

@@ -103,7 +103,7 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
             >
               <span className="flex min-h-[18px] items-center gap-2.5 font-mono text-[0.6875rem] tracking-[0.06em] text-haze">
                 {o.marketplaceUrl ? (
-                  <span className="inline-flex h-[18px] items-center rounded-xs bg-soft px-1.5 text-3xs text-mute uppercase transition-colors group-data-[state=active]/tab:bg-white">
+                  <span className="inline-flex h-[18px] items-center rounded-xs bg-soft px-1.5 text-3xs text-mute uppercase transition-colors group-data-[state=active]/tab:bg-canvas">
                     Marketplace
                   </span>
                 ) : null}
@@ -111,7 +111,7 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
               <span className="text-[1rem] font-medium tracking-[-0.015em] text-balance text-mute transition-colors group-hover/tab:text-ink group-data-[state=active]/tab:text-ink">
                 {o.title}
               </span>
-              <span className="text-sm leading-[1.4] text-balance text-[#b4b8bf] transition-colors group-data-[state=active]/tab:text-slate">
+              <span className="text-sm leading-[1.4] text-balance text-[#b4b8bf] transition-colors dark:text-haze group-data-[state=active]/tab:text-slate">
                 {o.short}
               </span>
             </TabsTrigger>
@@ -168,7 +168,7 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
               className="flex animate-slide-in flex-col gap-6 px-5 pt-6 pb-6 text-base motion-reduce:animate-none sm:gap-7 sm:px-9 sm:pt-11 sm:pb-9 md:px-7 lg:px-9"
             >
               <h3 className="text-2xl font-medium text-balance">{o.title}</h3>
-              <p className="text-lg leading-[1.55] tracking-[-0.01em] text-[#3b3f46]">{o.body}</p>
+              <p className="text-lg leading-[1.55] tracking-[-0.01em] text-[#3b3f46] dark:text-ink-2">{o.body}</p>
               <SpecList specs={o.specs} labelWidth={96} density="loose" className="mt-auto" />
               {o.marketplaceUrl ? (
                 <ActionLink href={o.marketplaceUrl} size="wide" className="justify-center">
