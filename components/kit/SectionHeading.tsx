@@ -23,7 +23,7 @@ type SectionHeadingProps = {
 /** Two-line headline: ink, then haze. No blue words. */
 export function SectionHeading({ headline, id, as: Tag = "h2", size = "section", className }: SectionHeadingProps) {
   return (
-    <Tag id={id} className={cn("font-display font-normal text-balance", SIZES[size], className)}>
+    <Tag id={id} className={cn("font-display font-medium text-balance", SIZES[size], className)}>
       <span className="block">{headline.lead}</span>
       <span className="block text-haze">{headline.rest}</span>
     </Tag>

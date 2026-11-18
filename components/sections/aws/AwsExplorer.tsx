@@ -167,7 +167,7 @@ export function AwsExplorer({ offers, labels, figure }: AwsExplorerProps) {
               value={o.id}
               className="flex animate-slide-in flex-col gap-6 px-5 pt-6 pb-6 text-base motion-reduce:animate-none sm:gap-7 sm:px-9 sm:pt-11 sm:pb-9 md:px-7 lg:px-9"
             >
-              <h3 className="font-display text-2xl font-normal text-balance">{o.title}</h3>
+              <h3 className="font-display text-2xl font-medium text-balance">{o.title}</h3>
               <p className="text-lg leading-[1.55] tracking-[-0.01em] text-[#3b3f46] dark:text-ink-2">{o.body}</p>
               <SpecList specs={o.specs} labelWidth={96} density="loose" className="mt-auto" />
               {o.marketplaceUrl ? (

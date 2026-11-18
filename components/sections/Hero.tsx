@@ -20,7 +20,7 @@ export async function Hero() {
       <Container
         className="flex flex-col gap-6 pt-3 md:flex-row md:items-end md:justify-between md:gap-10 md:pt-[29px]"
       >
-        <h1 id="hero-title" className="font-display text-6xl font-normal text-balance">
+        <h1 id="hero-title" className="font-display text-6xl font-medium text-balance">
           <span className="block text-mute">{hero.headline.lead}</span>
           <span className="block">{hero.headline.rest}</span>
         </h1>

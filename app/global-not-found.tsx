@@ -16,7 +16,7 @@ export default function GlobalNotFound() {
       <body className="flex min-h-svh flex-col items-start justify-center gap-6 px-6 sm:px-12">
         <Logo className="h-[17px] w-auto" />
         <div className="flex flex-col gap-2">
-          <h1 className="font-display text-3xl font-normal">This page does not exist.</h1>
+          <h1 className="font-display text-3xl font-medium">This page does not exist.</h1>
           <p lang="sv" className="text-lg text-slate">
             Sidan finns inte.
           </p>

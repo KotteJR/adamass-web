@@ -47,7 +47,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
         <div className="grid items-center gap-10 lg:split-cols">
           <div className="flex flex-col gap-5">
             <Tag className="self-start">{service.tag}</Tag>
-            <h1 className="font-display text-5xl font-normal text-balance">{service.title}</h1>
+            <h1 className="font-display text-5xl font-medium text-balance">{service.title}</h1>
             <p className="max-w-[520px] text-lg text-ink-2">{service.summary}</p>
             <SpecList specs={service.specs} className="max-w-[520px]" />
             <ActionLink href="#contact" className="self-start">
@@ -70,7 +70,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
             {service.entails.map((part, i) => (
               <li key={part.title} className="flex flex-col gap-2 rounded-xl bg-paper p-6">
                 <span className="font-mono text-2xs text-mute">{String(i + 1).padStart(2, "0")}</span>
-                <span className="font-display text-xl font-normal">{part.title}</span>
+                <span className="font-display text-xl font-medium">{part.title}</span>
                 <span className="text-base text-slate">{part.text}</span>
               </li>
             ))}
@@ -86,7 +86,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
                   <span className="flex items-center gap-2">
                     {offer.marketplaceUrl ? <Tag tone="white">Marketplace</Tag> : null}
                   </span>
-                  <span className="font-display text-2xl font-normal">{offer.title}</span>
+                  <span className="font-display text-2xl font-medium">{offer.title}</span>
                   <span className="text-base text-slate">{offer.body}</span>
                   <ArrowLink href={offer.marketplaceUrl ?? pathOf("aws", lang)} className="mt-auto self-start pt-2">
                     {offer.marketplaceUrl ? copy.awsSection.listed.action : pages.service.more}

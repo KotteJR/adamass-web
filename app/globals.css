@@ -171,7 +171,8 @@
   --color-ring: var(--ring);
 
   --font-sans: var(--font-sphere-sans), ui-sans-serif, system-ui, sans-serif;
-  /* Headlines (font-display): the text cut at 400, as studiosphere.co sets them. */
+  /* Headlines (font-display): the text cut at font-medium (the Regular cut), the
+     stroke the site was designed with in Geist 500. */
   --font-display: var(--font-sphere-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
   --font-heading: var(--font-display);

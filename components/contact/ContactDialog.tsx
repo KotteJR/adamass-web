@@ -123,7 +123,7 @@ export function ContactDialog({
               </DialogClose>
             </div>
             <div className="-mt-2 flex flex-col gap-2.5 sm:-mt-3">
-              <DialogTitle className="font-display text-2xl leading-[1.16] font-normal text-balance">
+              <DialogTitle className="font-display text-2xl leading-[1.16] font-medium text-balance">
                 <span className="block">{title.lead}</span>
                 <span className="block text-haze">{title.rest}</span>
               </DialogTitle>
