@@ -12,7 +12,7 @@ export async function BookedPage() {
   return (
     <Container className="flex min-h-[60vh] flex-col justify-center gap-6 py-16 md:py-24">
       <MonoLabel size="md">{booked.label}</MonoLabel>
-      <h1 className="text-5xl font-medium text-balance">
+      <h1 className="font-display text-5xl font-medium text-balance">
         <span className="block">{booked.title.lead}</span>
         <span className="block text-haze">{booked.title.rest}</span>
       </h1>

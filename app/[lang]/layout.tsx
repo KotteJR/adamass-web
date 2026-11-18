@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { sphereSans, sphereSansDisplay } from "@/app/fonts";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
@@ -13,12 +14,6 @@ import { serializeJsonLd, siteJsonLd } from "@/lib/json-ld";
 import { cn } from "@/lib/utils";
 import "../globals.css";
 
-// The site's face. Optical sizes on: headings get the display cut, running text the reading cut.
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage-grotesque",
-  subsets: ["latin"],
-  axes: ["opsz"],
-});
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 // The product stages keep Geist, as in the products' own interfaces: loaded only where they show.
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"], preload: false });
@@ -27,6 +22,11 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
+  preload: false,
+});
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage-grotesque",
+  subsets: ["latin"],
   preload: false,
 });
 
@@ -84,7 +84,14 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
     <html
       lang={lang}
       suppressHydrationWarning
-      className={cn(geist.variable, geistMono.variable, instrumentSerif.variable, bricolage.variable)}
+      className={cn(
+        sphereSans.variable,
+        sphereSansDisplay.variable,
+        geist.variable,
+        geistMono.variable,
+        instrumentSerif.variable,
+        bricolage.variable,
+      )}
     >
       {/* A column at least the screen's height: on short pages the footer still sits at the bottom. */}
       <body className="flex min-h-svh flex-col">

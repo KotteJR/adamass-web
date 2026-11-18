@@ -32,7 +32,7 @@ export async function FourWays() {
                 </ServiceFigurePanel>
                 <div data-step={index} data-step-text className={styles.text}>
                   <Tag className="self-start">{service.tag}</Tag>
-                  <h3 id={`service-${service.id}`} className="text-4xl font-medium text-balance">
+                  <h3 id={`service-${service.id}`} className="font-display text-4xl font-medium text-balance">
                     <a href={pathOf(serviceKey(service.id), lang)} className="transition-colors hover:text-lit">
                       {service.title}
                     </a>

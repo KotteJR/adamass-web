@@ -30,7 +30,7 @@ export async function EndScreen() {
         <RevealOnce threshold={0.5}>
           <SketchMark className="w-[min(220px,58vw)] sm:w-[300px]" />
         </RevealOnce>
-        <h2 id="end-title" className="text-[1.375rem] font-medium tracking-[-0.02em]">
+        <h2 id="end-title" className="font-display text-[1.375rem] font-medium">
           {endScreen.name}
         </h2>
         <p className="-mt-2.5 max-w-[460px] text-[1rem] leading-normal text-white/86">{endScreen.tagline}</p>

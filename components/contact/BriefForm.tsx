@@ -59,7 +59,7 @@ export function BriefForm({ topics, copy }: BriefFormProps) {
 
       {state.status === "sent" ? (
         <div className="flex min-h-[260px] flex-col justify-center gap-2 py-6">
-          <p className="text-xl font-medium">{copy.success.title}</p>
+          <p className="font-display text-xl font-medium">{copy.success.title}</p>
           <p className="max-w-[420px] text-base text-slate">{copy.success.body}</p>
         </div>
       ) : (

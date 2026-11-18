@@ -40,7 +40,7 @@ export function WorkCardCaption({
       <h3
         id={titleId}
         className={cn(
-          "text-[17px] leading-[1.12] font-medium tracking-[-0.015em] text-balance transition-colors duration-300 group-hover:text-lit md:text-[22px]",
+          "font-display text-[17px] leading-[1.12] font-medium text-balance transition-colors duration-300 group-hover:text-lit md:text-[22px]",
           wide && "md:max-xl:text-[26px]",
           lineOnlyOnPhone && "max-md:sr-only",
         )}

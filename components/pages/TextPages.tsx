@@ -20,7 +20,7 @@ export async function FaqPage() {
       <dl className="flex flex-col gap-8 lg:gap-10">
         {faq.items.map((item) => (
           <div key={item.q} className="grid gap-3 lg:split-cols">
-            <dt className="text-xl font-medium text-balance">{item.q}</dt>
+            <dt className="font-display text-xl font-medium text-balance">{item.q}</dt>
             <dd className="max-w-[620px] text-base text-slate">{item.a}</dd>
           </div>
         ))}
@@ -37,13 +37,13 @@ export async function LegalPage({ which }: { which: "privacy" | "terms" }) {
     <Container className="flex flex-col gap-8 pt-6 pb-24 md:pt-10 lg:pb-32">
       <Breadcrumbs label={pages.crumbs.label} items={[{ label: pages.crumbs.home, href: pathOf("home", lang) }, { label: doc.title }]} />
       <article className="flex max-w-[680px] flex-col gap-4">
-        <h1 className="text-5xl font-medium text-balance">{doc.title}</h1>
+        <h1 className="font-display text-5xl font-medium text-balance">{doc.title}</h1>
         <p className="font-mono text-2xs tracking-[0.08em] text-mute uppercase">
           {pages.legal.updatedLabel} {pages.legal.updated}
         </p>
         {doc.body.map((block, i) =>
           "h" in block ? (
-            <h2 key={i} className="pt-6 text-xl font-medium">
+            <h2 key={i} className="pt-6 font-display text-xl font-medium">
               {block.h}
             </h2>
           ) : (

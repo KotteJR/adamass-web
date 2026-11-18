@@ -53,7 +53,7 @@ export function MobileNav({ items, action, labels, languageSwitch, className }: 
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-14 items-center rounded-lg px-2 text-2xl font-medium text-ink transition-colors active:bg-soft"
+                  className="flex min-h-14 items-center rounded-lg px-2 font-display text-2xl font-medium text-ink transition-colors active:bg-soft"
                 >
                   {item.label}
                 </a>
