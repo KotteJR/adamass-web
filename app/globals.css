@@ -225,7 +225,8 @@
   --text-5xl: clamp(2.125rem, 1.3rem + 3vw, 3.25rem); /* 52 call to action */
   --text-5xl--line-height: 1.02;
   --text-5xl--letter-spacing: -0.01em;
-  --text-6xl: clamp(2rem, 1.2rem + 4vw, 3.375rem); /* 54 hero; ~34 px on phones */
+  /* The hero, sized so Sphere Sans's taller x-height takes the room Geist 54 px did. */
+  --text-6xl: clamp(1.875rem, 1.14rem + 3.8vw, 3.1875rem); /* 51 hero; ~32 px on phones */
   --text-6xl--line-height: 1.02;
   --text-6xl--letter-spacing: -0.01em;
   --text-7xl: clamp(2.75rem, 2rem + 3vw, 3.5rem); /* 56 key figures */
