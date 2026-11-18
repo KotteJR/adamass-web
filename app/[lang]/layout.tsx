@@ -2,7 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import { sphereSans, sphereSansDisplay } from "@/app/fonts";
+import { sphereSans } from "@/app/fonts";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
@@ -86,7 +86,6 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
       suppressHydrationWarning
       className={cn(
         sphereSans.variable,
-        sphereSansDisplay.variable,
         geist.variable,
         geistMono.variable,
         instrumentSerif.variable,

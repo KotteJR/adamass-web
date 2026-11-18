@@ -34,7 +34,7 @@ const arrowButton =
 function NoteText({ where, moment, phase }: { where: string; moment: Moment; phase: Phase }) {
   return (
     <>
-      <span className="font-mono text-[0.6875rem] tracking-[0.08em] text-[#9cc0e6] uppercase">
+      <span className="type-label text-[#9cc0e6]">
         {where} · {phase.title}
       </span>
       <p className="mt-3 text-[1.25rem] leading-[1.3] font-medium tracking-[-0.02em] text-balance text-white sm:text-[1.5rem]">

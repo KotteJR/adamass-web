@@ -117,7 +117,7 @@ export function ProductModalBody({
 
         <DialogTitle
           className={cn(
-            "mt-5 font-display text-[30px] leading-[1.08] font-medium text-balance lg:mt-[26px] lg:text-[38px]",
+            "mt-5 font-display text-[30px] leading-[1.05] font-normal tracking-[-0.02em] text-balance lg:mt-[26px] lg:text-[38px]",
             styles.item,
           )}
           style={order(1)}

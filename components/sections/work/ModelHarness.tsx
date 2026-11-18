@@ -42,7 +42,7 @@ export function ModelHarness({ figure, stats, capabilities }: ModelHarnessProps)
           {stats.map((stat, k) => (
             <div key={stat.label} className={cn("flex flex-col gap-1.5 px-3 pt-5 pb-[22px] sm:px-[18px]", k > 0 && "border-l border-[#e7e6e1] dark:border-line")}>
               <dt className="order-last text-[13px] leading-[1.4] text-slate">{stat.label}</dt>
-              <dd className="font-display text-[22px] leading-[1.05] font-medium sm:text-[28px]">{stat.value}</dd>
+              <dd className="font-display text-[22px] leading-[1.05] font-normal tracking-[-0.02em] sm:text-[28px]">{stat.value}</dd>
             </div>
           ))}
         </dl>
@@ -60,7 +60,7 @@ export function ModelHarness({ figure, stats, capabilities }: ModelHarnessProps)
                 className="flex items-center justify-between gap-4 border-t border-[#e7e6e1] dark:border-line px-3 py-[11px] sm:px-[18px]"
               >
                 <dt className="text-[14px] text-[#3d424a] dark:text-ink-2">{item.text}</dt>
-                <dd className="flex-none font-mono text-[10.5px] tracking-[0.08em] text-lit uppercase">{item.value}</dd>
+                <dd className="flex-none type-label text-lit">{item.value}</dd>
               </div>
             ))}
           </dl>

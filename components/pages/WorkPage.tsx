@@ -40,21 +40,21 @@ export async function WorkPage({ slug }: { slug: ProductSlug }) {
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-4">
               <MonoLabel>{modal.label}</MonoLabel>
-              <h1 className="font-display text-5xl font-medium text-balance">
+              <h1 className="font-display text-5xl font-normal text-balance">
                 <span className="block">{modal.title.lead}</span>
                 <span className="block text-haze">{modal.title.rest}</span>
               </h1>
             </div>
             <section className="flex flex-col gap-4">
-              <h2 className="font-display text-2xl font-medium">{workSection.modal.tabs.overview}</h2>
+              <h2 className="font-display text-2xl font-normal">{workSection.modal.tabs.overview}</h2>
               <OverviewPanel overview={modal.overview} />
             </section>
             <section className="flex flex-col gap-4">
-              <h2 className="font-display text-2xl font-medium">{workSection.modal.tabs.model}</h2>
+              <h2 className="font-display text-2xl font-normal">{workSection.modal.tabs.model}</h2>
               <ModelPanel model={modal.model} />
             </section>
             <section className="flex flex-col gap-4">
-              <h2 className="font-display text-2xl font-medium">{workSection.modal.tabs.stack}</h2>
+              <h2 className="font-display text-2xl font-normal">{workSection.modal.tabs.stack}</h2>
               <StackPanel stack={modal.stack} />
             </section>
             <div className="flex flex-wrap items-center gap-2">
@@ -77,7 +77,7 @@ export async function WorkPage({ slug }: { slug: ProductSlug }) {
         </div>
 
         <div className="flex flex-col gap-5 pt-6 lg:pt-10">
-          <MonoLabel size="md">{pages.workPage.all}</MonoLabel>
+          <MonoLabel>{pages.workPage.all}</MonoLabel>
           <ul className="flex flex-wrap gap-x-8 gap-y-3">
             {others.map((other) => (
               <li key={other.slug}>

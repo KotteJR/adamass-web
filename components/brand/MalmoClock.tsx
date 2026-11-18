@@ -75,7 +75,7 @@ export function MalmoClock({ timeZone, place, greetings, from, className }: Malm
       ))}
       <p
         className={cn(
-          "font-mono text-[0.6875rem] tracking-[0.1em] text-white/88 uppercase",
+          "type-label text-white/88 tabular-nums",
           className,
         )}
       >

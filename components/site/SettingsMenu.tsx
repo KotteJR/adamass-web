@@ -20,7 +20,7 @@ type SettingsMenuProps = {
 
 const ITEM =
   "flex h-10 cursor-pointer items-center gap-2.5 rounded-md px-2.5 text-sm text-ink-2 outline-none select-none data-[highlighted]:bg-soft data-[highlighted]:text-ink data-[state=checked]:font-medium data-[state=checked]:text-ink";
-const LABEL = "px-2.5 pt-1.5 pb-1.5 font-mono text-2xs text-mute uppercase";
+const LABEL = "px-2.5 pt-1.5 pb-1.5 type-label text-mute";
 
 /**
  * The header's settings: a quiet sliders button that opens a small menu with

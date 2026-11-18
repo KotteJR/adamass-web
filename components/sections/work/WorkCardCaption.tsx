@@ -31,7 +31,7 @@ export function WorkCardCaption({
     <div className="flex flex-1 flex-col gap-1.5 px-0.5 pt-3 md:pt-4">
       <span
         className={cn(
-          "font-mono text-[9.5px] tracking-[0.08em] text-mute uppercase md:text-[10.5px]",
+          "type-label text-mute",
           lineOnlyOnPhone && "max-md:hidden",
         )}
       >
@@ -40,7 +40,7 @@ export function WorkCardCaption({
       <h3
         id={titleId}
         className={cn(
-          "font-display text-[17px] leading-[1.12] font-medium text-balance transition-colors duration-300 group-hover:text-lit md:text-[22px]",
+          "font-display text-[17px] leading-[1.2] font-normal tracking-[-0.01em] text-balance transition-colors duration-300 group-hover:text-lit md:text-[22px]",
           wide && "md:max-xl:text-[26px]",
           lineOnlyOnPhone && "max-md:sr-only",
         )}

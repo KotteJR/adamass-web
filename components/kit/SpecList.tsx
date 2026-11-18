@@ -29,7 +29,7 @@ export function SpecList({ specs, labelWidth = 120, density = "tight", className
             density === "tight" ? "gap-4 py-[7px] text-base" : "gap-3 py-[11px] text-[0.875rem] max-md:text-base",
           )}
         >
-          <dt className="font-mono text-2xs uppercase text-mute">{spec.label}</dt>
+          <dt className="type-label text-mute">{spec.label}</dt>
           <dd>{spec.value}</dd>
         </div>
       ))}

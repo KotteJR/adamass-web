@@ -10,7 +10,7 @@ They are used unchanged and drawn in the text colour.
 
 ## Sphere Sans
 
-The site is set in Sphere Sans and Sphere Sans Display (`app/fonts/sphere-sans/`),
+The site is set in Sphere Sans (`app/fonts/sphere-sans/`),
 Copyright 2026 Studio Sphere, with Reserved Font Name "Sphere Sans", licensed
 under the SIL Open Font License 1.1 (`app/fonts/sphere-sans/OFL.txt`). The
 font files are used unchanged.

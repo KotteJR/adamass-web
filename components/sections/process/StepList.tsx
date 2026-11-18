@@ -26,7 +26,7 @@ export function StepList({ way, phases, units, className }: StepListProps) {
           <span aria-hidden className="absolute top-[0.5625rem] -left-[3.5px] size-1.5 rounded-full bg-white" />
           <div className="flex items-baseline justify-between gap-3">
             <h3 className="text-lg leading-snug font-medium tracking-[-0.01em] text-white">{phase.title}</h3>
-            <span className="font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap text-white/45 uppercase">
+            <span className="type-meta whitespace-nowrap text-white/45">
               {rangeLabel(way, bounds[i], units)}
             </span>
           </div>
@@ -35,7 +35,7 @@ export function StepList({ way, phases, units, className }: StepListProps) {
               .filter((moment) => phaseAt(way, moment.week) === i)
               .map((moment) => (
                 <li key={moment.week} className="flex flex-col gap-1">
-                  <span className="font-mono text-[0.625rem] tracking-[0.08em] text-[#9cc0e6] uppercase">{moment.when}</span>
+                  <span className="type-meta text-[#9cc0e6]">{moment.when}</span>
                   <p className="text-[0.9375rem] leading-[1.5] text-white/70">{moment.text}</p>
                 </li>
               ))}

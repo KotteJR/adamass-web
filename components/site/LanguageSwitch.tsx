@@ -52,7 +52,7 @@ export function LanguageSwitch({ current, labels, size = "compact", className }:
             aria-current={active ? "page" : undefined}
             className={cn(
               "inline-flex h-full items-center justify-center gap-2 rounded-[5px] transition-colors",
-              full ? "flex-1 text-base font-medium" : "px-2.5 font-mono text-[0.6875rem] tracking-[0.06em] uppercase",
+              full ? "flex-1 text-base font-medium" : "px-2.5 type-label uppercase",
               active ? "bg-canvas text-ink shadow-[0_1px_2px_rgb(13_23_38/0.08)]" : "text-slate hover:text-ink",
             )}
           >

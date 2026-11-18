@@ -181,7 +181,7 @@ export function EngagementTimeline({ way, ways, phases, week, onWeek, label, sum
                 >
                   {phase.title}
                 </span>
-                <span className="overflow-hidden font-mono text-[0.625rem] tracking-[0.08em] whitespace-nowrap text-white/40 uppercase">
+                <span className="overflow-hidden type-meta whitespace-nowrap text-white/40">
                   {rangeLabel(way, bounds[i], units)}
                 </span>
             </li>

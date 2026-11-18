@@ -47,7 +47,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
         <div className="grid items-center gap-10 lg:split-cols">
           <div className="flex flex-col gap-5">
             <Tag className="self-start">{service.tag}</Tag>
-            <h1 className="font-display text-5xl font-medium text-balance">{service.title}</h1>
+            <h1 className="font-display text-5xl font-normal text-balance">{service.title}</h1>
             <p className="max-w-[520px] text-lg text-ink-2">{service.summary}</p>
             <SpecList specs={service.specs} className="max-w-[520px]" />
             <ActionLink href="#contact" className="self-start">
@@ -65,12 +65,12 @@ export async function ServicePage({ id }: { id: ServiceId }) {
 
         {/* What it involves, in words (the figure's strip says it in short). */}
         <div className="flex flex-col gap-5 pt-6 lg:pt-10">
-          <MonoLabel size="md">{pages.service.involves}</MonoLabel>
+          <MonoLabel>{pages.service.involves}</MonoLabel>
           <ol className="grid gap-6 md:grid-cols-3 md:gap-8">
             {service.entails.map((part, i) => (
               <li key={part.title} className="flex flex-col gap-2 rounded-xl bg-paper p-6">
                 <span className="font-mono text-2xs text-mute">{String(i + 1).padStart(2, "0")}</span>
-                <span className="font-display text-xl font-medium">{part.title}</span>
+                <span className="font-display text-xl font-normal">{part.title}</span>
                 <span className="text-base text-slate">{part.text}</span>
               </li>
             ))}
@@ -79,14 +79,14 @@ export async function ServicePage({ id }: { id: ServiceId }) {
 
         {offers.length > 0 ? (
           <div className="flex flex-col gap-5 pt-6 lg:pt-10">
-            <MonoLabel size="md">{pages.service.aws}</MonoLabel>
+            <MonoLabel>{pages.service.aws}</MonoLabel>
             <ul className="grid gap-6 md:grid-cols-2 md:gap-8">
               {offers.map((offer) => (
                 <li key={offer.id} className="flex flex-col gap-3 rounded-xl bg-paper p-6">
                   <span className="flex items-center gap-2">
                     {offer.marketplaceUrl ? <Tag tone="white">Marketplace</Tag> : null}
                   </span>
-                  <span className="font-display text-2xl font-medium">{offer.title}</span>
+                  <span className="font-display text-2xl font-normal">{offer.title}</span>
                   <span className="text-base text-slate">{offer.body}</span>
                   <ArrowLink href={offer.marketplaceUrl ?? pathOf("aws", lang)} className="mt-auto self-start pt-2">
                     {offer.marketplaceUrl ? copy.awsSection.listed.action : pages.service.more}
@@ -99,7 +99,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
 
         {work.length > 0 ? (
           <div className="flex flex-col gap-5 pt-6 lg:pt-10">
-            <MonoLabel size="md">{pages.service.work}</MonoLabel>
+            <MonoLabel>{pages.service.work}</MonoLabel>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-4 md:gap-x-4">
               {work.map((product) => (
                 <li key={product.slug} className="flex min-w-0">
@@ -111,7 +111,7 @@ export async function ServicePage({ id }: { id: ServiceId }) {
         ) : null}
 
         <div className="flex flex-col gap-5 pt-6 lg:pt-10">
-          <MonoLabel size="md">{pages.service.others}</MonoLabel>
+          <MonoLabel>{pages.service.others}</MonoLabel>
           <ul className="flex flex-wrap gap-x-8 gap-y-3">
             {others.map((other) => (
               <li key={other.id}>

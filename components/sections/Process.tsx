@@ -33,12 +33,12 @@ export async function Process({ only, label }: ProcessProps = {}) {
       />
       <Container className="flex flex-col gap-14 pt-20 pb-60 lg:gap-20 lg:pt-28 lg:pb-[clamp(15rem,6rem+12vw,18rem)]">
         <div className="flex max-w-[720px] flex-col gap-5">
-          <MonoLabel size="md" className="text-white/60">
+          <MonoLabel className="text-white/60">
             {label ?? howWeWork.label}
           </MonoLabel>
           <h2
             id="process-title"
-            className="font-display text-[clamp(2.125rem,1.3rem+2.6vw,3.5rem)] leading-[1.04] font-medium text-balance"
+            className="font-display text-[clamp(2.125rem,1.3rem+2.6vw,3.5rem)] leading-[1.02] font-normal tracking-[-0.01em] text-balance"
           >
             <span className="block">{howWeWork.title.lead}</span>
             <span className="block text-white/45">{howWeWork.title.rest}</span>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sphereSans, sphereSansDisplay } from "@/app/fonts";
+import { sphereSans } from "@/app/fonts";
 import { Logo } from "@/components/brand/Logo";
 import { homePath } from "@/content/languages";
 import "./globals.css";
@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 /** A URL that matches nothing. The layout is per language, so this page says it in both. */
 export default function GlobalNotFound() {
   return (
-    <html lang="en" className={`${sphereSans.variable} ${sphereSansDisplay.variable}`}>
+    <html lang="en" className={sphereSans.variable}>
       <body className="flex min-h-svh flex-col items-start justify-center gap-6 px-6 sm:px-12">
         <Logo className="h-[17px] w-auto" />
         <div className="flex flex-col gap-2">
-          <h1 className="font-display text-3xl font-medium">This page does not exist.</h1>
+          <h1 className="font-display text-3xl font-normal">This page does not exist.</h1>
           <p lang="sv" className="text-lg text-slate">
             Sidan finns inte.
           </p>

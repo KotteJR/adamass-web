@@ -362,7 +362,7 @@ export function BookingPanel({ lang, copy, form, topics, hosts, mode, bookedPath
             {grid ? (
               <div role="group" aria-label={copy.days} className={cn("grid gap-1", weekends ? "grid-cols-7" : "grid-cols-5")}>
                 {Array.from({ length: weekends ? 7 : 5 }, (_, n) => (
-                  <span key={n} aria-hidden className="pb-1 text-center font-mono text-2xs text-mute uppercase">
+                  <span key={n} aria-hidden className="pb-1 text-center type-meta text-mute">
                     {new Intl.DateTimeFormat(locale, { timeZone: "UTC", weekday: "short" }).format(new Date(Date.UTC(2024, 0, n + 1, 12))).replace(".", "")}
                   </span>
                 ))}
@@ -418,7 +418,7 @@ export function BookingPanel({ lang, copy, form, topics, hosts, mode, bookedPath
                 </li>
               ))}
             </ul>
-            <p className="pt-1 font-mono text-2xs text-mute uppercase">{footnote}</p>
+            <p className="pt-1 type-meta text-mute">{footnote}</p>
           </div>
         </div>
       )}

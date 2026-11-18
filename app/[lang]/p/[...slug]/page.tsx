@@ -79,7 +79,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         <Container className="flex flex-col gap-6 pt-6 md:pt-10">
           <Breadcrumbs label={pages.crumbs.label} items={[{ label: pages.crumbs.home, href: pathOf("home", lang) }, { label: pages.crumbs.services }]} />
           <div className="flex max-w-[720px] flex-col gap-5">
-            <MonoLabel size="md">{pages.servicesIndex.label}</MonoLabel>
+            <MonoLabel>{pages.servicesIndex.label}</MonoLabel>
             <SectionHeading as="h1" headline={pages.servicesIndex.title} size="cta" />
             <p className="max-w-[560px] text-lg text-slate">{pages.servicesIndex.intro}</p>
           </div>
