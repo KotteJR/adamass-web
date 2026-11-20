@@ -1,15 +1,15 @@
 import type { StageVariant } from "@/content/product-stages";
 import type { StageKey } from "@/content/work";
 import { ComplianceStage } from "./ComplianceStage";
-import { ExtractionStage } from "./ExtractionStage";
 import { MorrowStage } from "./MorrowStage";
 import { MurmurStage } from "./MurmurStage";
+import { StudioStage } from "./StudioStage";
 
 const STAGES = {
   murmur: MurmurStage,
   morrow: MorrowStage,
+  studio: StudioStage,
   compliance: ComplianceStage,
-  extraction: ExtractionStage,
 } as const;
 
 /**

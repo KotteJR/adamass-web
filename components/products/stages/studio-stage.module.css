@@ -1,0 +1,218 @@
+/* Adamass Studio's stage, in its own dark look (pbn-lab public/static/style.css): ground #0C0C0B, ink #EEECE6,
+   Sphere Sans, pills on #1F1F1C. Modal 600 x 780; card 780 x 450. */
+
+.root {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 22px;
+  padding: 36px;
+  overflow: hidden;
+  background: #0c0c0b;
+  color: #eeece6;
+  font-family: var(--font-sphere-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.card {
+  gap: 18px;
+  padding: 26px 28px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  gap: 18px;
+  font-size: 13px;
+  color: #c8c5bd;
+}
+
+.card .nav {
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.card .title {
+  font-size: 30px;
+}
+
+.row {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 466px 1fr;
+  align-items: start;
+  gap: 26px;
+}
+
+/* Low / Medium / High, as the shop's detail switch: a pill track, the chosen one in ink. */
+.switch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 4px;
+  border-radius: 999px;
+  background: #1f1f1c;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 7px 0;
+  border-radius: 999px;
+  color: #c8c5bd;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+
+.option b {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.option small {
+  font-size: 11.5px;
+  color: #75726b;
+  transition: color 0.5s ease;
+}
+
+.on {
+  background: #eeece6;
+  color: #0c0c0b;
+}
+
+.on small {
+  color: #4a4844;
+}
+
+.card .switch {
+  grid-template-columns: 1fr;
+  border-radius: 16px;
+}
+
+.card .option {
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-radius: 12px;
+}
+
+/* The picture: the numbered template under the painted preview, which a wipe reveals and takes back. */
+.picture {
+  position: relative;
+  aspect-ratio: 1965 / 1392;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.level {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.shown {
+  opacity: 1;
+}
+
+.img {
+  object-fit: cover;
+}
+
+.paint {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 50%);
+}
+
+.paint::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 2px;
+  margin-left: -1px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.wipe {
+  animation: wipe 7s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+
+/* From all template to all paint and halfway back, each level. */
+@keyframes wipe {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  45%,
+  60% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 50%);
+  }
+}
+
+/* The colour key: the first paints of the level, numbered as on the template. */
+.key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.paintChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 9px 0 5px;
+  border-radius: 999px;
+  background: #1f1f1c;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #c8c5bd;
+  animation: chipIn 0.5s ease both;
+}
+
+.paintChip i {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  /* The darkest paints would vanish on the pill without it. */
+  box-shadow: inset 0 0 0 1px rgba(238, 236, 230, 0.22);
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+  }
+}
+
+.fact {
+  font-size: 13px;
+  color: #9a978f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wipe,
+  .paintChip {
+    animation: none;
+  }
+}

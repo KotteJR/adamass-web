@@ -1,7 +1,7 @@
 /* "The model" figures, one per Work modal. Moved from design/handoff/figures/models.css
    (generators/round2/models.py). The part classes come from the generated SVG, so they are
-   global; .mf and the figure's own class scope them: .slt the SLM's training, .slm the
-   library-backed extraction (the two-path figure), .mur Murmur, .mor Morrow. */
+   global; .mf and the figure's own class scope them: .slt the SLM's training, .mur Murmur,
+   .mor Morrow, .pnb Adamass Studio's paint by numbers. */
 
 .mf {
   margin: 0 auto;
@@ -16,24 +16,6 @@
 
 .mf :global(.l) { transition:opacity .3s; }
 .mf { margin:0 auto; }
-@keyframes slmScan {0.00%{transform:translate(0,0);opacity:0}2.22%{transform:translate(0,0);opacity:1}26.67%{transform:translate(24.0px,13.9px);opacity:1}27.78%{transform:translate(24.0px,13.9px);opacity:0}100.00%{transform:translate(0,0);opacity:0}}
-@keyframes slmLib {0.00%{transform:translate(0,0)}6.67%{transform:translate(0,0)}15.56%{transform:translate(0.0px,-11.9px)}33.33%{transform:translate(0.0px,-11.9px)}40.00%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
-@keyframes slmLibL {0.00%{opacity:0}8.89%{opacity:0}13.33%{opacity:1}37.78%{opacity:1}42.22%{opacity:0}100.00%{opacity:0}}
-@keyframes slmPulse {0.00%{stroke-dashoffset:128}22.22%{stroke-dashoffset:128}36.67%{stroke-dashoffset:14}100.00%{stroke-dashoffset:14}}
-@keyframes slmHead {0.00%{transform:translate(0,0)}36.67%{transform:translate(0,0)}41.11%{transform:translate(0.0px,6.6px)}45.56%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
-@keyframes slmWin {0.00%{opacity:0}37.78%{opacity:0}41.11%{opacity:.85}51.11%{opacity:0}100.00%{opacity:0}}
-@keyframes slmOut {0.00%{transform:translate(-34.3px,-19.8px);opacity:0}45.56%{transform:translate(-34.3px,-19.8px);opacity:0}47.78%{transform:translate(-34.3px,-19.8px);opacity:1}58.89%{transform:translate(0,0);opacity:1}93.33%{transform:translate(0,0);opacity:1}97.78%{transform:translate(0,0);opacity:0}100.00%{transform:translate(-34.3px,-19.8px);opacity:0}}
-@keyframes slmStamp {0.00%{transform:translate(0,0)}63.33%{transform:translate(0,0)}68.89%{transform:translate(0.0px,21.3px)}72.22%{transform:translate(0.0px,21.3px)}78.89%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
-@keyframes slmOk {0.00%{opacity:0}70.00%{opacity:0}72.22%{opacity:1}93.33%{opacity:1}96.67%{opacity:0}100.00%{opacity:0}}
-.slm :global(.scanA) { animation:slmScan 9s ease-in-out infinite; }
-.slm :global(.libcard) { animation:slmLib 9s cubic-bezier(.45,0,.2,1) infinite; }
-.slm :global(.libcard .l) { opacity:0;animation:slmLibL 9s ease infinite; }
-.slm :global(.pa), .slm :global(.pb) { animation:slmPulse 9s linear infinite; }
-.slm :global(.head) { animation:slmHead 9s cubic-bezier(.45,0,.2,1) infinite; }
-.slm :global(.win) { opacity:0;animation:slmWin 9s ease infinite; }
-.slm :global(.outcard) { animation:slmOut 9s cubic-bezier(.2,.7,.2,1) infinite; }
-.slm :global(.stamp) { animation:slmStamp 9s cubic-bezier(.45,0,.2,1) infinite; }
-.slm :global(.ok) { opacity:0;animation:slmOk 9s ease infinite; }
 @keyframes muPin {0.00%{stroke-dashoffset:128}2.22%{stroke-dashoffset:128}13.33%{stroke-dashoffset:14}14.44%{stroke-dashoffset:128}24.44%{stroke-dashoffset:128}35.56%{stroke-dashoffset:14}36.67%{stroke-dashoffset:128}44.44%{stroke-dashoffset:128}55.56%{stroke-dashoffset:14}100.00%{stroke-dashoffset:14}}
 @keyframes muPout {0.00%{stroke-dashoffset:128}60.00%{stroke-dashoffset:128}71.11%{stroke-dashoffset:14}100.00%{stroke-dashoffset:14}}
 @keyframes muL0 {0.00%{opacity:0}10.00%{opacity:0}13.89%{opacity:1}94.44%{opacity:1}98.33%{opacity:0}100.00%{opacity:0}}
@@ -139,6 +121,52 @@
 .slt :global(.ta), .slt :global(.tb) { animation:slT1 9s linear infinite; }
 .slt :global(.tc) { animation:slT2 9s linear infinite; }
 .slt :global(.rl) { animation:slRL 9s linear infinite; }
+@keyframes pnPh {0.00%{transform:translate(0,0)}4.44%{transform:translate(0,0)}25.56%{transform:translate(155.5px,0.0px)}92.22%{transform:translate(-50.3px,0.0px)}99.44%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnPhF {0.00%{opacity:1}20.00%{opacity:1}25.00%{opacity:0}92.78%{opacity:0}98.89%{opacity:1}100.00%{opacity:1}}
+@keyframes pnPi {0.00%{stroke-dashoffset:158}2.22%{stroke-dashoffset:158}14.44%{stroke-dashoffset:24}100.00%{stroke-dashoffset:24}}
+@keyframes pnPo {0.00%{stroke-dashoffset:158}57.78%{stroke-dashoffset:158}67.78%{stroke-dashoffset:24}100.00%{stroke-dashoffset:24}}
+@keyframes pnL0 {0.00%{opacity:0}25.56%{opacity:0}28.89%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz0 .l) { opacity:0;animation:pnL0 9s ease infinite; }
+@keyframes pnL1 {0.00%{opacity:0}30.00%{opacity:0}33.33%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz1 .l) { opacity:0;animation:pnL1 9s ease infinite; }
+@keyframes pnL2 {0.00%{opacity:0}34.44%{opacity:0}37.78%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz2 .l) { opacity:0;animation:pnL2 9s ease infinite; }
+@keyframes pnL3 {0.00%{opacity:0}38.89%{opacity:0}42.22%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz3 .l) { opacity:0;animation:pnL3 9s ease infinite; }
+@keyframes pnL4 {0.00%{opacity:0}43.33%{opacity:0}46.67%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz4 .l) { opacity:0;animation:pnL4 9s ease infinite; }
+@keyframes pnL5 {0.00%{opacity:0}47.78%{opacity:0}51.11%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz5 .l) { opacity:0;animation:pnL5 9s ease infinite; }
+@keyframes pnL6 {0.00%{opacity:0}52.22%{opacity:0}55.56%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz6 .l) { opacity:0;animation:pnL6 9s ease infinite; }
+@keyframes pnL7 {0.00%{opacity:0}56.67%{opacity:0}60.00%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.lz7 .l) { opacity:0;animation:pnL7 9s ease infinite; }
+@keyframes pnScan {0.00%{transform:translate(0,0);opacity:0}66.11%{transform:translate(0,0);opacity:0}67.78%{transform:translate(0,0);opacity:1}88.89%{transform:translate(95.1px,0.0px);opacity:1}91.11%{transform:translate(95.1px,0.0px);opacity:0}100.00%{transform:translate(0,0);opacity:0}}
+@keyframes pnLid0 {0.00%{transform:translate(0,0)}67.16%{transform:translate(0,0)}70.50%{transform:translate(0.0px,-8.6px)}93.33%{transform:translate(0.0px,-8.6px)}97.78%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnD0 {0.00%{opacity:0}68.27%{opacity:0}70.50%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.pt0 .lid) { animation:pnLid0 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.pt0 .l) { opacity:0;animation:pnD0 9s ease infinite; }
+@keyframes pnLid1 {0.00%{transform:translate(0,0)}72.75%{transform:translate(0,0)}76.08%{transform:translate(0.0px,-8.6px)}93.33%{transform:translate(0.0px,-8.6px)}97.78%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnD1 {0.00%{opacity:0}73.86%{opacity:0}76.08%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.pt1 .lid) { animation:pnLid1 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.pt1 .l) { opacity:0;animation:pnD1 9s ease infinite; }
+@keyframes pnLid2 {0.00%{transform:translate(0,0)}78.33%{transform:translate(0,0)}81.67%{transform:translate(0.0px,-8.6px)}93.33%{transform:translate(0.0px,-8.6px)}97.78%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnD2 {0.00%{opacity:0}79.44%{opacity:0}81.67%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.pt2 .lid) { animation:pnLid2 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.pt2 .l) { opacity:0;animation:pnD2 9s ease infinite; }
+@keyframes pnLid3 {0.00%{transform:translate(0,0)}83.92%{transform:translate(0,0)}87.25%{transform:translate(0.0px,-8.6px)}93.33%{transform:translate(0.0px,-8.6px)}97.78%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnD3 {0.00%{opacity:0}85.03%{opacity:0}87.25%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.pt3 .lid) { animation:pnLid3 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.pt3 .l) { opacity:0;animation:pnD3 9s ease infinite; }
+@keyframes pnLid4 {0.00%{transform:translate(0,0)}89.50%{transform:translate(0,0)}92.84%{transform:translate(0.0px,-8.6px)}93.33%{transform:translate(0.0px,-8.6px)}97.78%{transform:translate(0,0)}100.00%{transform:translate(0,0)}}
+@keyframes pnD4 {0.00%{opacity:0}90.61%{opacity:0}92.84%{opacity:1}93.33%{opacity:1}97.78%{opacity:0}100.00%{opacity:0}}
+.pnb :global(.pt4 .lid) { animation:pnLid4 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.pt4 .l) { opacity:0;animation:pnD4 9s ease infinite; }
+.pnb :global(.ph) { animation:pnPh 9s cubic-bezier(.45,0,.2,1) infinite; }
+.pnb :global(.phf) { animation:pnPhF 9s ease infinite; }
+.pnb :global(.pi) { animation:pnPi 9s linear infinite; }
+.pnb :global(.po) { animation:pnPo 9s linear infinite; }
+.pnb :global(.scan) { opacity:0;animation:pnScan 9s linear infinite; }
 @media (prefers-reduced-motion: reduce) {
   .mf * { animation:none!important; }
   .mf :global(.l), .mf :global(.ok), .slt :global(.gr) { opacity:1; }

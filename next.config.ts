@@ -34,6 +34,9 @@ const nextConfig: NextConfig = {
       { source: "/en/p/:path*", destination: "/:path*", permanent: true },
       { source: "/sv/p/:path*", destination: "/sv/:path*", permanent: true },
       { source: "/en", destination: "/", permanent: true },
+      // Library-backed extraction is now part of the compliance work.
+      { source: "/work/library-extraction", destination: "/work/compliance-slm", permanent: true },
+      { source: "/sv/arbeten/library-extraction", destination: "/sv/arbeten/compliance-slm", permanent: true },
       { source: "/en/:path((?!opengraph-image).+)", destination: "/:path", permanent: true },
     ];
   },

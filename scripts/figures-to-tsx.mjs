@@ -29,9 +29,9 @@ const FIGURES = [
   { file: "aws-cabinet.svg", name: "AwsCabinetArt", ns: "fig-aws" },
   // "The model" figures in the Work modals (round 2).
   { file: "model-slm.svg", name: "ModelSlmArt", ns: "fig-mslm", out: "components/products/models/art" },
-  { file: "model-extract.svg", name: "ModelExtractArt", ns: "fig-mext", out: "components/products/models/art" },
   { file: "model-murmur.svg", name: "ModelMurmurArt", ns: "fig-mmur", out: "components/products/models/art" },
   { file: "model-morrow.svg", name: "ModelMorrowArt", ns: "fig-mmor", out: "components/products/models/art" },
+  { file: "model-pnb.svg", name: "ModelPnbArt", ns: "fig-mpnb", out: "components/products/models/art" },
 ];
 
 const KEEP = new Set(["viewBox", "pathLength", "stdDeviation", "role"]);

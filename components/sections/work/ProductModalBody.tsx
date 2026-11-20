@@ -188,6 +188,13 @@ export function ProductModalBody({
               className="flex-[1_1_auto] px-[18px] text-[15px] lg:flex-none lg:px-4 lg:text-[14px] xl:px-[18px] xl:text-[15px]"
             >
               {product.cta.label}
+              {/^https?:\/\//.test(product.cta.href) ? (
+                <>
+                  {" "}
+                  <span aria-hidden>↗</span>
+                  <span className="sr-only">{labels.newTab}</span>
+                </>
+              ) : null}
             </ActionLink>
             <ActionLink
               href={labels.write.href}

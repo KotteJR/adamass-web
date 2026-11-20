@@ -30,7 +30,6 @@ function facts() {
 function aiWork() {
   const product = (slug: string) => en.workProducts.find((p) => p.slug === slug)!;
   const slm = product("compliance-slm");
-  const extraction = product("library-extraction");
   const genai = en.services.find((s) => s.id === "genai")!;
   const bedrock = en.awsOffers.find((o) => o.id === "genai-bedrock")!;
   const perimeter = en.awsOffers.find((o) => o.id === "perimeter")!;
@@ -39,9 +38,9 @@ function aiWork() {
     `- ${bedrock.title}: ${bedrock.body}`,
     `- ${perimeter.title} (on AWS Marketplace): ${perimeter.body}`,
     `- ${slm.name} (client work): ${slm.modal.overview.body} ${slm.modal.model.body} On a held-out test, 94 of 100 answers match the human reviewer.`,
-    `- ${extraction.name} (client work): ${extraction.line}`,
     `- ${product("murmur").name} (our product): ${product("murmur").line}`,
-    `- ${product("morrow").name} (our product): ${product("morrow").line}`,
+    `- ${product("morrow").name} (our product, ${product("morrow").modal.cta.href}): ${product("morrow").line}`,
+    `- ${product("paint-by-numbers").name} (our product, ${product("paint-by-numbers").modal.cta.href}): ${product("paint-by-numbers").line}`,
   ].join("\n");
 }
 

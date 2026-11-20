@@ -45,7 +45,7 @@ export const pages: PagesContent = {
     work: {
       title: "Utvalda arbeten: AI-system och produkter",
       description:
-        "Våra egna produkter Murmur och Morrow, och två AI-system byggda för kunder i reglerade verksamheter: en 27B-modell för regelefterlevnad och extraktion mot ett bibliotek.",
+        "Våra egna produkter Murmur, Morrow och Adamass Studio, och ett AI-system byggt för en kund i en reglerad verksamhet: en 27B-modell för regelefterlevnad med extraktion mot ett bibliotek.",
     },
     "work:murmur": {
       title: "Murmur: en musikmodell för fokus och sömn",
@@ -55,14 +55,15 @@ export const pages: PagesContent = {
       title: "Morrow: dagliga pussel skrivna av vår egen modell",
       description: "Morrow ger bort elva pussel varje morgon, skrivna av en pusselmodell som vi har tränat själva och kontrollerade av lösare så att varje pussel har ett svar.",
     },
+    "work:paint-by-numbers": {
+      title: "Adamass Studio: måla efter nummer från vilken bild som helst",
+      description:
+        "En diffusionsmodell som vi har tränat målar om en bild så att den går att måla, och vår kod hittar varje färg och numrerar den: A4-satser att skriva ut i tre detaljnivåer.",
+    },
     "work:compliance-slm": {
       title: "Compliance SLM: en 27B-modell i kundens moln",
       description:
-        "En specialiserad 27B-modell, finjusterad och förstärkt, som läser en artikel i ett regelverk och returnerar de risker och kontroller som binder. 94 av 100 stämmer med granskaren.",
-    },
-    "work:library-extraction": {
-      title: "Extraktion mot ett bibliotek för regelefterlevnad",
-      description: "Två sökvägar, en i dokumentet och en i ett bibliotek av kontroller, så att varje svar är en kontroll som granskarna redan känner igen.",
+        "En finjusterad 27B-modell och extraktion mot ett bibliotek läser en artikel i ett regelverk och returnerar de risker och kontroller som binder. 94 av 100 stämmer med granskaren.",
     },
     faq: {
       title: "Vanliga frågor om Adamass",
@@ -95,7 +96,7 @@ export const pages: PagesContent = {
     items: [
       {
         q: "Vad är Adamass?",
-        a: "Adamass AB är ett mjukvaru- och AI-företag i Malmö som har arbetat sedan 2019. Data scientists, ML-ingenjörer, mjukvaru- och molnutvecklare samt arkitekter går in i kundens team eller levererar hela projektet, och vi bygger egna produkter, Murmur och Morrow, på samma teknik.",
+        a: "Adamass AB är ett mjukvaru- och AI-företag i Malmö som har arbetat sedan 2019. Data scientists, ML-ingenjörer, mjukvaru- och molnutvecklare samt arkitekter går in i kundens team eller levererar hela projektet, och vi bygger egna produkter, Murmur, Morrow och Adamass Studio, på samma teknik.",
       },
       {
         q: "Vad arbetar ni med?",

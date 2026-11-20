@@ -177,7 +177,6 @@
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
   --font-heading: var(--font-display);
   --font-serif: var(--font-instrument-serif), Georgia, serif;
-  --font-grotesque: var(--font-bricolage-grotesque), var(--font-geist), sans-serif;
 
   /* Radii: chips 4–6, buttons 8, cards 12. */
   --radius-xs: 4px;
@@ -393,4 +392,50 @@
   line-height: 1.5;
   font-weight: 400;
   letter-spacing: 0.02em;
+}
+
+/* Morrow's game films (components/products/stages/MorrowFilm): the still, the film's
+   canvas over it while it plays, and the game's painted back, faint, under both. A film
+   always fills its positioned box. */
+.morrow-film {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+.morrow-film::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--film-back) center / cover no-repeat;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.morrow-film.is-bare::before {
+  content: none;
+}
+.morrow-film > [data-film="still"],
+.morrow-film > [data-film="canvas"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.28s ease-out;
+}
+.morrow-film[data-playing] > [data-film="still"] {
+  opacity: 0;
+  transition: none;
+}
+.morrow-film > [data-film="canvas"][data-out] {
+  opacity: 0;
+}
+.morrow-film > [data-film="source"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
 }

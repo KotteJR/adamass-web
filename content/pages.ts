@@ -39,7 +39,7 @@ export const serviceRelated: Record<ServiceId, { aws: AwsMode[]; work: ProductSl
   embedded: { aws: ["aas"], work: [] },
   modernisation: { aws: ["mig", "lz"], work: [] },
   diligence: { aws: ["aas"], work: [] },
-  genai: { aws: ["genai", "sap"], work: ["compliance-slm", "library-extraction"] },
+  genai: { aws: ["genai", "sap"], work: ["compliance-slm", "paint-by-numbers"] },
   soc2: { aws: ["lz"], work: [] },
 };
 
@@ -83,7 +83,7 @@ export const pages: PagesContent = {
     work: {
       title: "Selected work: AI systems and products",
       description:
-        "Our own products, Murmur and Morrow, and two AI systems built for clients in regulated work: a 27B compliance model and library-backed extraction.",
+        "Our own products, Murmur, Morrow and Adamass Studio, and an AI system built for a client in regulated work: a 27B compliance model with library-backed extraction.",
     },
     "work:murmur": {
       title: "Murmur: a music model for focus and sleep",
@@ -93,14 +93,15 @@ export const pages: PagesContent = {
       title: "Morrow: daily puzzles written by our own model",
       description: "Morrow gives away eleven puzzles every morning, written by a puzzle model we trained in house and checked by solvers for one answer.",
     },
+    "work:paint-by-numbers": {
+      title: "Adamass Studio: paint-by-numbers kits from any picture",
+      description:
+        "A diffusion model we trained repaints a picture to be painted, and our code finds every colour and numbers it: printable A4 kits at three levels of detail.",
+    },
     "work:compliance-slm": {
       title: "Compliance SLM: a 27B model in the client's cloud",
       description:
-        "A 27B specialist model, fine-tuned and reinforced, that reads a regulatory article and returns the risks and controls that bind. 94 in 100 match the reviewer.",
-    },
-    "work:library-extraction": {
-      title: "Library-backed extraction for compliance review",
-      description: "Two retrieval paths, one over the document and one over a library of controls, so every answer is a control reviewers already recognise.",
+        "A fine-tuned 27B model and library-backed extraction read a regulatory article and return the risks and controls that bind. 94 in 100 match the reviewer.",
     },
     faq: {
       title: "Questions about Adamass",
@@ -133,7 +134,7 @@ export const pages: PagesContent = {
     items: [
       {
         q: "What is Adamass?",
-        a: "Adamass AB is a software and AI company in Malmö, Sweden, working since 2019. Data scientists, ML engineers, software and cloud engineers and architects join a client's team or deliver the whole project, and we build our own products, Murmur and Morrow, on the same stack.",
+        a: "Adamass AB is a software and AI company in Malmö, Sweden, working since 2019. Data scientists, ML engineers, software and cloud engineers and architects join a client's team or deliver the whole project, and we build our own products, Murmur, Morrow and Adamass Studio, on the same stack.",
       },
       {
         q: "What do you work on?",

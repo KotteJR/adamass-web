@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { sphereSans } from "@/app/fonts";
 import { ContactModal } from "@/components/contact/ContactModal";
 import { SiteFooter } from "@/components/site/SiteFooter";
@@ -22,11 +22,6 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
   weight: "400",
-  preload: false,
-});
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage-grotesque",
-  subsets: ["latin"],
   preload: false,
 });
 
@@ -89,7 +84,6 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         geist.variable,
         geistMono.variable,
         instrumentSerif.variable,
-        bricolage.variable,
       )}
     >
       {/* A column at least the screen's height: on short pages the footer still sits at the bottom. */}

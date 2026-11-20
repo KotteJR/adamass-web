@@ -1,710 +1,152 @@
-/* Morrow's stages. Generated from design/handoff/generators/round2/stages.py; timings and colours are the board's.
-   Card: Quint on an 11 s loop. Modal: three 12 s rounds (Quint + Nib, Sheaf + Orbit, Nonet + Skein), 36 s in all. */
+/* Morrow's stage, in the Morrow app's own look (its docs/02-design.md: the Today band, game cards and their films).
+   Geist, as in the app. Modal 600 x 780; sheet 600 x 420. */
 
 .root {
   position: relative;
+  isolation: isolate;
   height: 100%;
   overflow: hidden;
-  font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  color: #fff;
+  background: #0e1013;
+}
+
+/* The band's night over the painting, as Morrow sets it. */
+.night {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14, 16, 19, 0.72), rgba(14, 16, 19, 0.9));
+}
+
+.body {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 24px;
+  padding: 36px;
+}
+
+.sheet .body {
+  gap: 14px;
+  padding: 22px 24px;
+}
+
+/* A game card: paper, radius 22, the film at 4:3 on its studio ground (radius 15), the words under it. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 10px 10px 18px;
+  border-radius: 22px;
+  background: #f7f7f5;
   color: #111214;
 }
 
-.qt {
+.sheet .card {
+  flex: 1;
+  min-height: 0;
+  gap: 10px;
+  padding-bottom: 14px;
+}
+
+.art {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--t);
-  height: var(--t);
-  border-radius: calc(var(--t) * 0.22);
-  background: #fff;
-  font-family: var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
-  color: rgba(6, 96, 58, 0);
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 15px;
   overflow: hidden;
-  animation-duration: 11s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  background: radial-gradient(62% 70% at 50% 44%, rgba(255, 255, 255, 0.8), transparent 72%), #f1f1ef;
 }
 
-.empty {
-  animation: none;
+.sheet .art {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: auto;
 }
 
-/* Nib's squares and the status lines run on the modal's 36 s loop. */
-.nc {
+.film {
+  animation: filmIn 0.4s ease-out both;
+}
+
+@keyframes filmIn {
+  from {
+    opacity: 0;
+  }
+}
+
+.words {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 6px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+/* The status as a soft label in the game's colour: its tint behind its deep shade, never a solid pill. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  background: var(--acc-tint);
+  color: var(--acc-deep);
+  font-size: 12.5px;
+  font-weight: 500;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.line {
+  min-height: 2.9em;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #4a4f57;
+}
+
+/* Today's games: each one's still, the playing one ringed in its colour. */
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.thumb {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  background: #fff;
-  font-family: var(--font-bricolage-grotesque), ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
-  color: rgba(140, 18, 55, 0);
-  animation-duration: 36s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #21252a;
+  opacity: 0.55;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition:
+    opacity 0.4s ease,
+    outline-color 0.4s ease;
 }
 
-.clue {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  opacity: 0;
-  animation-duration: 36s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+.on {
+  opacity: 1;
+  outline-color: var(--acc);
 }
 
-/* ---------- card: Quint, 11 s ---------- */
-@keyframes kq00 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}4.545%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}5.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}6.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}14.091%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}16.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}16.318%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}18.636%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kqm00 {0.000%{opacity:0}16.318%{opacity:0}16.364%{opacity:1}92.727%{opacity:1}97.273%{opacity:0}100.000%{opacity:0}}
-@keyframes kq01 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}6.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}6.727%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}7.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}15.727%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}17.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}17.955%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}20.273%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}92.727%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq02 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}7.455%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}8.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}9.091%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}17.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.545%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}19.591%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}21.909%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}92.727%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq03 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}8.909%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}10.545%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}21.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}21.227%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}23.545%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}92.727%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq04 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}10.364%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}11.091%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}12.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}20.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}22.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}22.864%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}25.182%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}92.727%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq10 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.182%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}29.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}37.727%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}39.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}39.955%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}42.273%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq11 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.636%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}30.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}31.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}39.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}41.545%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}41.591%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}43.909%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}92.727%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq12 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}31.091%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}31.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}32.727%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}41.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}43.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}43.227%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}45.545%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq13 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}32.545%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}33.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}34.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}42.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}44.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}44.864%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}47.182%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq14 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}34.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}34.727%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}35.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}44.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}46.455%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}46.500%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}48.818%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq20 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}51.818%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}52.545%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}53.455%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}61.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}63.545%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}63.591%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}65.909%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}74.091%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}75.273%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}76.818%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq21 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}53.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}54.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}54.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}63.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}65.182%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}65.227%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}67.545%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}74.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}75.909%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}77.455%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq22 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}54.727%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}55.455%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}56.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}64.636%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}66.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}66.864%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}69.182%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}75.364%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}76.545%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}78.091%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq23 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}56.182%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}56.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}57.818%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}66.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}68.455%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}68.500%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}70.818%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}76.000%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}77.182%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}78.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kq24 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}57.636%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}58.364%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}59.273%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}67.909%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}70.091%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}70.136%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}72.455%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}76.636%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}77.818%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}79.364%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}92.727%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}97.273%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kqToast {0.000%{opacity:0;transform:translate(-50%,8px)}77.727%{opacity:0;transform:translate(-50%,8px)}80.909%{opacity:1;transform:translate(-50%,0)}92.727%{opacity:1;transform:translate(-50%,0)}96.364%{opacity:0;transform:translate(-50%,0)}100.000%{opacity:0;transform:translate(-50%,8px)}}
-@keyframes kqSeg {0.000%{transform:scaleX(0)}76.818%{transform:scaleX(0)}82.273%{transform:scaleX(1)}94.545%{transform:scaleX(1)}98.182%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kqCount {0.000%{opacity:1}78.636%{opacity:1}79.545%{opacity:0}95.455%{opacity:0}96.364%{opacity:1}100.000%{opacity:1}}
-@keyframes kqCount2 {0.000%{opacity:0}78.636%{opacity:0}79.545%{opacity:1}95.455%{opacity:1}96.364%{opacity:0}100.000%{opacity:0}}
-.q00 { animation-name: kq00; }
-.qm00 { animation: kqm00 11s linear infinite; }
-.q01 { animation-name: kq01; }
-.q02 { animation-name: kq02; }
-.q03 { animation-name: kq03; }
-.q04 { animation-name: kq04; }
-.q10 { animation-name: kq10; }
-.q11 { animation-name: kq11; }
-.q12 { animation-name: kq12; }
-.q13 { animation-name: kq13; }
-.q14 { animation-name: kq14; }
-.q20 { animation-name: kq20; }
-.q21 { animation-name: kq21; }
-.q22 { animation-name: kq22; }
-.q23 { animation-name: kq23; }
-.q24 { animation-name: kq24; }
-.toast { animation: kqToast 11s linear infinite; }
-.seg { animation: kqSeg 11s linear infinite; }
-.count1 { animation: kqCount 11s linear infinite; }
-.count2 { animation: kqCount2 11s linear infinite; }
-
-/* ---------- modal: Quint and Nib (round 1) ---------- */
-@keyframes kMqToast {0.000%{opacity:0;transform:translate(-50%,8px)}23.750%{opacity:0;transform:translate(-50%,8px)}24.722%{opacity:1;transform:translate(-50%,0)}28.333%{opacity:1;transform:translate(-50%,0)}29.444%{opacity:0;transform:translate(-50%,0)}100.000%{opacity:0;transform:translate(-50%,8px)}}
-@keyframes kMq00 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}1.389%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}1.611%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}1.889%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}4.306%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}4.972%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}4.986%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}5.694%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#ffffff;color:#06603A;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMqm00 {0.000%{opacity:0}4.986%{opacity:0}5.000%{opacity:1}28.333%{opacity:1}29.722%{opacity:0}100.000%{opacity:0}}
-@keyframes kMq01 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}1.833%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}2.056%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}2.333%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}4.806%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}5.472%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}5.486%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}6.194%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.333%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq02 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}2.278%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}2.500%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}2.778%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}5.306%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}5.972%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}5.986%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}6.694%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.333%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq03 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}2.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}2.944%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}3.222%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}5.806%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}6.472%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}6.486%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}7.194%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.333%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq04 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}3.167%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}3.389%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}3.667%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}6.306%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}6.972%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}6.986%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}7.694%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.333%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq10 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}8.611%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}8.833%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}9.111%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}11.528%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}12.194%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}12.208%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}12.917%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq11 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.056%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.278%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}9.556%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}12.028%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}12.694%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}12.708%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:rotateX(90deg)}13.417%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}28.333%{background-color:#D5EBDD;color:rgba(6,96,58,.45);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq12 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.500%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.722%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}10.000%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}12.528%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}13.194%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}13.208%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}13.917%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq13 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}9.944%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}10.167%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}10.444%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}13.028%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}13.694%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}13.708%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}14.417%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq14 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}10.389%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}10.611%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}10.889%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}13.528%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}14.194%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}14.208%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}14.917%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq20 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}15.833%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}16.056%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}16.333%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}18.750%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.417%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}19.431%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}20.139%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}22.639%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.000%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}23.472%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq21 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}16.278%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}16.500%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}16.778%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.250%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.917%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}19.931%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}20.639%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}22.833%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.194%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}23.667%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq22 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}16.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}16.944%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}17.222%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}19.750%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}20.417%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}20.431%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}21.139%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.028%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.389%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}23.861%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq23 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}17.167%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}17.389%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}17.667%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}20.250%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}20.917%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}20.931%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}21.639%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.222%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.583%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}24.056%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kMq24 {0.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}17.611%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}17.833%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:scale(1.1)}18.111%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}20.750%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:none}21.417%{background-color:#ffffff;color:#06603A;box-shadow:inset 0 0 0 2px rgba(6,96,58,.22);transform:rotateX(90deg)}21.431%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:rotateX(90deg)}22.139%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.417%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}23.778%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:translateY(-10px)}24.250%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}28.333%{background-color:#24A26A;color:#ffffff;box-shadow:0 4px 0 0 #06603A;transform:none}29.722%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}100.000%{background-color:#ffffff;color:rgba(6,96,58,0);box-shadow:0 0 0 0 rgba(6,96,58,0);transform:none}}
-@keyframes kn00 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}1.389%{background-color:#ffffff;color:rgba(140,18,55,0)}1.528%{background-color:#f6cdd8;color:rgba(140,18,55,0)}1.639%{background-color:#E0577D;color:rgba(255,255,255,0)}2.083%{background-color:#E0577D;color:rgba(255,255,255,0)}2.167%{background-color:#E0577D;color:#ffffff}2.806%{background-color:#E0577D;color:#ffffff}2.917%{background-color:#f6cdd8;color:#8C1237}4.556%{background-color:#f6cdd8;color:#8C1237}4.972%{background-color:#ffffff;color:#8C1237}26.028%{background-color:#ffffff;color:#8C1237}26.583%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn01 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}1.389%{background-color:#ffffff;color:rgba(140,18,55,0)}1.528%{background-color:#f6cdd8;color:rgba(140,18,55,0)}2.139%{background-color:#f6cdd8;color:rgba(140,18,55,0)}2.250%{background-color:#E0577D;color:rgba(255,255,255,0)}2.861%{background-color:#E0577D;color:rgba(255,255,255,0)}2.944%{background-color:#E0577D;color:#ffffff}3.583%{background-color:#E0577D;color:#ffffff}3.694%{background-color:#f6cdd8;color:#8C1237}4.556%{background-color:#f6cdd8;color:#8C1237}4.972%{background-color:#ffffff;color:#8C1237}26.194%{background-color:#ffffff;color:#8C1237}26.750%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn02 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}1.389%{background-color:#ffffff;color:rgba(140,18,55,0)}1.528%{background-color:#f6cdd8;color:rgba(140,18,55,0)}2.917%{background-color:#f6cdd8;color:rgba(140,18,55,0)}3.028%{background-color:#E0577D;color:rgba(255,255,255,0)}3.639%{background-color:#E0577D;color:rgba(255,255,255,0)}3.722%{background-color:#E0577D;color:#ffffff}4.361%{background-color:#E0577D;color:#ffffff}4.472%{background-color:#f6cdd8;color:#8C1237}4.556%{background-color:#f6cdd8;color:#8C1237}4.972%{background-color:#ffffff;color:#8C1237}26.361%{background-color:#ffffff;color:#8C1237}26.917%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn10 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}5.583%{background-color:#ffffff;color:rgba(140,18,55,0)}5.722%{background-color:#f6cdd8;color:rgba(140,18,55,0)}5.833%{background-color:#E0577D;color:rgba(255,255,255,0)}6.278%{background-color:#E0577D;color:rgba(255,255,255,0)}6.361%{background-color:#E0577D;color:#ffffff}7.000%{background-color:#E0577D;color:#ffffff}7.111%{background-color:#f6cdd8;color:#8C1237}9.528%{background-color:#f6cdd8;color:#8C1237}9.944%{background-color:#ffffff;color:#8C1237}26.194%{background-color:#ffffff;color:#8C1237}26.750%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn11 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}5.583%{background-color:#ffffff;color:rgba(140,18,55,0)}5.722%{background-color:#f6cdd8;color:rgba(140,18,55,0)}6.333%{background-color:#f6cdd8;color:rgba(140,18,55,0)}6.444%{background-color:#E0577D;color:rgba(255,255,255,0)}7.056%{background-color:#E0577D;color:rgba(255,255,255,0)}7.139%{background-color:#E0577D;color:#ffffff}7.778%{background-color:#E0577D;color:#ffffff}7.889%{background-color:#f6cdd8;color:#8C1237}9.528%{background-color:#f6cdd8;color:#8C1237}9.944%{background-color:#ffffff;color:#8C1237}26.361%{background-color:#ffffff;color:#8C1237}26.917%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn12 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}5.583%{background-color:#ffffff;color:rgba(140,18,55,0)}5.722%{background-color:#f6cdd8;color:rgba(140,18,55,0)}7.111%{background-color:#f6cdd8;color:rgba(140,18,55,0)}7.222%{background-color:#E0577D;color:rgba(255,255,255,0)}7.833%{background-color:#E0577D;color:rgba(255,255,255,0)}7.917%{background-color:#E0577D;color:#ffffff}8.556%{background-color:#E0577D;color:#ffffff}8.667%{background-color:#f6cdd8;color:#8C1237}9.528%{background-color:#f6cdd8;color:#8C1237}9.944%{background-color:#ffffff;color:#8C1237}26.528%{background-color:#ffffff;color:#8C1237}27.083%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn13 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}5.583%{background-color:#ffffff;color:rgba(140,18,55,0)}5.722%{background-color:#f6cdd8;color:rgba(140,18,55,0)}7.889%{background-color:#f6cdd8;color:rgba(140,18,55,0)}8.000%{background-color:#E0577D;color:rgba(255,255,255,0)}8.611%{background-color:#E0577D;color:rgba(255,255,255,0)}8.694%{background-color:#E0577D;color:#ffffff}9.333%{background-color:#E0577D;color:#ffffff}9.444%{background-color:#f6cdd8;color:#8C1237}9.528%{background-color:#f6cdd8;color:#8C1237}9.944%{background-color:#ffffff;color:#8C1237}26.694%{background-color:#ffffff;color:#8C1237}27.250%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn20 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}10.556%{background-color:#ffffff;color:rgba(140,18,55,0)}10.694%{background-color:#f6cdd8;color:rgba(140,18,55,0)}10.806%{background-color:#E0577D;color:rgba(255,255,255,0)}11.250%{background-color:#E0577D;color:rgba(255,255,255,0)}11.333%{background-color:#E0577D;color:#ffffff}11.972%{background-color:#E0577D;color:#ffffff}12.083%{background-color:#f6cdd8;color:#8C1237}15.278%{background-color:#f6cdd8;color:#8C1237}15.694%{background-color:#ffffff;color:#8C1237}26.361%{background-color:#ffffff;color:#8C1237}26.917%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn21 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}10.556%{background-color:#ffffff;color:rgba(140,18,55,0)}10.694%{background-color:#f6cdd8;color:rgba(140,18,55,0)}11.306%{background-color:#f6cdd8;color:rgba(140,18,55,0)}11.417%{background-color:#E0577D;color:rgba(255,255,255,0)}12.028%{background-color:#E0577D;color:rgba(255,255,255,0)}12.111%{background-color:#E0577D;color:#ffffff}12.750%{background-color:#E0577D;color:#ffffff}12.861%{background-color:#f6cdd8;color:#8C1237}15.278%{background-color:#f6cdd8;color:#8C1237}15.694%{background-color:#ffffff;color:#8C1237}26.528%{background-color:#ffffff;color:#8C1237}27.083%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn22 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}10.556%{background-color:#ffffff;color:rgba(140,18,55,0)}10.694%{background-color:#f6cdd8;color:rgba(140,18,55,0)}12.083%{background-color:#f6cdd8;color:rgba(140,18,55,0)}12.194%{background-color:#E0577D;color:rgba(255,255,255,0)}12.806%{background-color:#E0577D;color:rgba(255,255,255,0)}12.889%{background-color:#E0577D;color:#ffffff}13.528%{background-color:#E0577D;color:#ffffff}13.639%{background-color:#f6cdd8;color:#8C1237}15.278%{background-color:#f6cdd8;color:#8C1237}15.694%{background-color:#ffffff;color:#8C1237}26.694%{background-color:#ffffff;color:#8C1237}27.250%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn23 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}10.556%{background-color:#ffffff;color:rgba(140,18,55,0)}10.694%{background-color:#f6cdd8;color:rgba(140,18,55,0)}12.861%{background-color:#f6cdd8;color:rgba(140,18,55,0)}12.972%{background-color:#E0577D;color:rgba(255,255,255,0)}13.583%{background-color:#E0577D;color:rgba(255,255,255,0)}13.667%{background-color:#E0577D;color:#ffffff}14.306%{background-color:#E0577D;color:#ffffff}14.417%{background-color:#f6cdd8;color:#8C1237}15.278%{background-color:#f6cdd8;color:#8C1237}15.694%{background-color:#ffffff;color:#8C1237}26.861%{background-color:#ffffff;color:#8C1237}27.417%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn24 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}10.556%{background-color:#ffffff;color:rgba(140,18,55,0)}10.694%{background-color:#f6cdd8;color:rgba(140,18,55,0)}13.639%{background-color:#f6cdd8;color:rgba(140,18,55,0)}13.750%{background-color:#E0577D;color:rgba(255,255,255,0)}14.361%{background-color:#E0577D;color:rgba(255,255,255,0)}14.444%{background-color:#E0577D;color:#ffffff}15.083%{background-color:#E0577D;color:#ffffff}15.194%{background-color:#f6cdd8;color:#8C1237}15.278%{background-color:#f6cdd8;color:#8C1237}15.694%{background-color:#ffffff;color:#8C1237}27.028%{background-color:#ffffff;color:#8C1237}27.583%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn31 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}16.306%{background-color:#ffffff;color:rgba(140,18,55,0)}16.444%{background-color:#f6cdd8;color:rgba(140,18,55,0)}16.556%{background-color:#E0577D;color:rgba(255,255,255,0)}17.000%{background-color:#E0577D;color:rgba(255,255,255,0)}17.083%{background-color:#E0577D;color:#ffffff}17.722%{background-color:#E0577D;color:#ffffff}17.833%{background-color:#f6cdd8;color:#8C1237}20.250%{background-color:#f6cdd8;color:#8C1237}20.667%{background-color:#ffffff;color:#8C1237}26.694%{background-color:#ffffff;color:#8C1237}27.250%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn32 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}16.306%{background-color:#ffffff;color:rgba(140,18,55,0)}16.444%{background-color:#f6cdd8;color:rgba(140,18,55,0)}17.056%{background-color:#f6cdd8;color:rgba(140,18,55,0)}17.167%{background-color:#E0577D;color:rgba(255,255,255,0)}17.778%{background-color:#E0577D;color:rgba(255,255,255,0)}17.861%{background-color:#E0577D;color:#ffffff}18.500%{background-color:#E0577D;color:#ffffff}18.611%{background-color:#f6cdd8;color:#8C1237}20.250%{background-color:#f6cdd8;color:#8C1237}20.667%{background-color:#ffffff;color:#8C1237}26.861%{background-color:#ffffff;color:#8C1237}27.417%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn33 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}16.306%{background-color:#ffffff;color:rgba(140,18,55,0)}16.444%{background-color:#f6cdd8;color:rgba(140,18,55,0)}17.833%{background-color:#f6cdd8;color:rgba(140,18,55,0)}17.944%{background-color:#E0577D;color:rgba(255,255,255,0)}18.556%{background-color:#E0577D;color:rgba(255,255,255,0)}18.639%{background-color:#E0577D;color:#ffffff}19.278%{background-color:#E0577D;color:#ffffff}19.389%{background-color:#f6cdd8;color:#8C1237}20.250%{background-color:#f6cdd8;color:#8C1237}20.667%{background-color:#ffffff;color:#8C1237}27.028%{background-color:#ffffff;color:#8C1237}27.583%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn34 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}16.306%{background-color:#ffffff;color:rgba(140,18,55,0)}16.444%{background-color:#f6cdd8;color:rgba(140,18,55,0)}18.611%{background-color:#f6cdd8;color:rgba(140,18,55,0)}18.722%{background-color:#E0577D;color:rgba(255,255,255,0)}19.333%{background-color:#E0577D;color:rgba(255,255,255,0)}19.417%{background-color:#E0577D;color:#ffffff}20.056%{background-color:#E0577D;color:#ffffff}20.167%{background-color:#f6cdd8;color:#8C1237}20.250%{background-color:#f6cdd8;color:#8C1237}20.667%{background-color:#ffffff;color:#8C1237}27.194%{background-color:#ffffff;color:#8C1237}27.750%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn42 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}21.278%{background-color:#ffffff;color:rgba(140,18,55,0)}21.417%{background-color:#f6cdd8;color:rgba(140,18,55,0)}21.528%{background-color:#E0577D;color:rgba(255,255,255,0)}21.972%{background-color:#E0577D;color:rgba(255,255,255,0)}22.056%{background-color:#E0577D;color:#ffffff}22.694%{background-color:#E0577D;color:#ffffff}22.806%{background-color:#f6cdd8;color:#8C1237}24.444%{background-color:#f6cdd8;color:#8C1237}24.861%{background-color:#ffffff;color:#8C1237}27.028%{background-color:#ffffff;color:#8C1237}27.583%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn43 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}21.278%{background-color:#ffffff;color:rgba(140,18,55,0)}21.417%{background-color:#f6cdd8;color:rgba(140,18,55,0)}22.028%{background-color:#f6cdd8;color:rgba(140,18,55,0)}22.139%{background-color:#E0577D;color:rgba(255,255,255,0)}22.750%{background-color:#E0577D;color:rgba(255,255,255,0)}22.833%{background-color:#E0577D;color:#ffffff}23.472%{background-color:#E0577D;color:#ffffff}23.583%{background-color:#f6cdd8;color:#8C1237}24.444%{background-color:#f6cdd8;color:#8C1237}24.861%{background-color:#ffffff;color:#8C1237}27.194%{background-color:#ffffff;color:#8C1237}27.750%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes kn44 {0.000%{background-color:#ffffff;color:rgba(140,18,55,0)}21.278%{background-color:#ffffff;color:rgba(140,18,55,0)}21.417%{background-color:#f6cdd8;color:rgba(140,18,55,0)}22.806%{background-color:#f6cdd8;color:rgba(140,18,55,0)}22.917%{background-color:#E0577D;color:rgba(255,255,255,0)}23.528%{background-color:#E0577D;color:rgba(255,255,255,0)}23.611%{background-color:#E0577D;color:#ffffff}24.250%{background-color:#E0577D;color:#ffffff}24.361%{background-color:#f6cdd8;color:#8C1237}24.444%{background-color:#f6cdd8;color:#8C1237}24.861%{background-color:#ffffff;color:#8C1237}27.361%{background-color:#ffffff;color:#8C1237}27.917%{background-color:#f2b8c8;color:#8C1237}30.278%{background-color:#f2b8c8;color:#8C1237}31.944%{background-color:#ffffff;color:rgba(140,18,55,0)}100.000%{background-color:#ffffff;color:rgba(140,18,55,0)}}
-@keyframes knc0 {0.000%{opacity:1}5.583%{opacity:1}5.917%{opacity:0}32.222%{opacity:0}100.000%{opacity:1}}
-@keyframes knc1 {0.000%{opacity:0}5.583%{opacity:0}6.000%{opacity:1}10.556%{opacity:1}10.889%{opacity:0}100.000%{opacity:0}}
-@keyframes knc2 {0.000%{opacity:0}10.556%{opacity:0}10.972%{opacity:1}16.306%{opacity:1}16.639%{opacity:0}100.000%{opacity:0}}
-@keyframes knc3 {0.000%{opacity:0}16.306%{opacity:0}16.722%{opacity:1}21.278%{opacity:1}21.611%{opacity:0}100.000%{opacity:0}}
-@keyframes knc4 {0.000%{opacity:0}21.278%{opacity:0}21.694%{opacity:1}26.028%{opacity:1}26.361%{opacity:0}100.000%{opacity:0}}
-@keyframes kncS {0.000%{opacity:0}26.028%{opacity:0}26.583%{opacity:1}31.667%{opacity:1}32.222%{opacity:0}100.000%{opacity:0}}
-.Mq00 { animation: kMq00 36s linear infinite; }
-.Mqm00 { animation: kMqm00 36s linear infinite; }
-.Mq01 { animation: kMq01 36s linear infinite; }
-.Mq02 { animation: kMq02 36s linear infinite; }
-.Mq03 { animation: kMq03 36s linear infinite; }
-.Mq04 { animation: kMq04 36s linear infinite; }
-.Mq10 { animation: kMq10 36s linear infinite; }
-.Mq11 { animation: kMq11 36s linear infinite; }
-.Mq12 { animation: kMq12 36s linear infinite; }
-.Mq13 { animation: kMq13 36s linear infinite; }
-.Mq14 { animation: kMq14 36s linear infinite; }
-.Mq20 { animation: kMq20 36s linear infinite; }
-.Mq21 { animation: kMq21 36s linear infinite; }
-.Mq22 { animation: kMq22 36s linear infinite; }
-.Mq23 { animation: kMq23 36s linear infinite; }
-.Mq24 { animation: kMq24 36s linear infinite; }
-.MqToast { animation: kMqToast 36s linear infinite; }
-.n00 { animation-name: kn00; }
-.n01 { animation-name: kn01; }
-.n02 { animation-name: kn02; }
-.n10 { animation-name: kn10; }
-.n11 { animation-name: kn11; }
-.n12 { animation-name: kn12; }
-.n13 { animation-name: kn13; }
-.n20 { animation-name: kn20; }
-.n21 { animation-name: kn21; }
-.n22 { animation-name: kn22; }
-.n23 { animation-name: kn23; }
-.n24 { animation-name: kn24; }
-.n31 { animation-name: kn31; }
-.n32 { animation-name: kn32; }
-.n33 { animation-name: kn33; }
-.n34 { animation-name: kn34; }
-.n42 { animation-name: kn42; }
-.n43 { animation-name: kn43; }
-.n44 { animation-name: kn44; }
-.nc0 { animation-name: knc0; }
-.nc1 { animation-name: knc1; }
-.nc2 { animation-name: knc2; }
-.nc3 { animation-name: knc3; }
-.nc4 { animation-name: knc4; }
-.ncS { animation-name: kncS; }
-
-/* ---------- modal: rounds, Sheaf, Orbit, Nonet, Skein, the bar ---------- */
-@keyframes kmrA0 {0.000%{opacity:1}32.222%{opacity:1}33.333%{opacity:0}98.889%{opacity:0}100.000%{opacity:1}}
-@keyframes kmrA1 {0.000%{opacity:0}32.222%{opacity:0}33.333%{opacity:1}65.556%{opacity:1}66.667%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrA2 {0.000%{opacity:0}65.556%{opacity:0}66.667%{opacity:1}98.889%{opacity:1}100.000%{opacity:0}}
-@keyframes kshM0 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(122px,90px)}44.722%{transform:translate(122px,90px)}45.972%{transform:translate(61px,45px)}66.389%{transform:translate(61px,45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS0 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}43.222%{background-color:#ffffff;color:#2A1500;opacity:1}43.556%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.250%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.528%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM1 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(122px,135px)}51.944%{transform:translate(122px,135px)}53.194%{transform:translate(-61px,90px)}66.389%{transform:translate(-61px,90px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS1 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}49.444%{background-color:#ffffff;color:#2A1500;opacity:1}49.778%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.472%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.750%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM2 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(61px,45px)}44.722%{transform:translate(61px,45px)}45.972%{transform:translate(61px,90px)}51.944%{transform:translate(61px,90px)}53.194%{transform:translate(61px,135px)}66.389%{transform:translate(61px,135px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS2 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}56.667%{background-color:#ffffff;color:#2A1500;opacity:1}57.000%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.694%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.972%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM3 {0.000%{transform:translate(0px,0px)}66.389%{transform:translate(0px,0px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS3 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}36.500%{background-color:#ffffff;color:#2A1500;opacity:1}36.833%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.028%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.306%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM4 {0.000%{transform:translate(0px,0px)}44.722%{transform:translate(0px,0px)}45.972%{transform:translate(122px,45px)}66.389%{transform:translate(122px,45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS4 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}49.944%{background-color:#ffffff;color:#2A1500;opacity:1}50.278%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.472%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.750%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM5 {0.000%{transform:translate(0px,0px)}44.722%{transform:translate(0px,0px)}45.972%{transform:translate(61px,90px)}66.389%{transform:translate(61px,90px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS5 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}57.167%{background-color:#ffffff;color:#2A1500;opacity:1}57.500%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.694%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.972%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM6 {0.000%{transform:translate(0px,0px)}66.389%{transform:translate(0px,0px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS6 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}42.222%{background-color:#ffffff;color:#2A1500;opacity:1}42.556%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.250%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.528%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM7 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(-61px,-45px)}66.389%{transform:translate(-61px,-45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS7 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}36.000%{background-color:#ffffff;color:#2A1500;opacity:1}36.333%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.028%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.306%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM8 {0.000%{transform:translate(0px,0px)}51.944%{transform:translate(0px,0px)}53.194%{transform:translate(0px,45px)}66.389%{transform:translate(0px,45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS8 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}57.667%{background-color:#ffffff;color:#2A1500;opacity:1}58.000%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.694%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.972%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM9 {0.000%{transform:translate(0px,0px)}66.389%{transform:translate(0px,0px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS9 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}50.444%{background-color:#ffffff;color:#2A1500;opacity:1}50.778%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.472%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.750%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM10 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(-122px,-90px)}66.389%{transform:translate(-122px,-90px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS10 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}35.000%{background-color:#ffffff;color:#2A1500;opacity:1}35.333%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.028%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.306%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM11 {0.000%{transform:translate(0px,0px)}44.722%{transform:translate(0px,0px)}45.972%{transform:translate(-183px,-45px)}66.389%{transform:translate(-183px,-45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS11 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}42.722%{background-color:#ffffff;color:#2A1500;opacity:1}43.056%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.250%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.528%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM12 {0.000%{transform:translate(0px,0px)}51.944%{transform:translate(0px,0px)}53.194%{transform:translate(183px,-45px)}66.389%{transform:translate(183px,-45px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS12 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}50.944%{background-color:#ffffff;color:#2A1500;opacity:1}51.278%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.472%{background-color:#EE8A2C;color:#ffffff;opacity:1}53.750%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM13 {0.000%{transform:translate(0px,0px)}66.389%{transform:translate(0px,0px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS13 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}58.167%{background-color:#ffffff;color:#2A1500;opacity:1}58.500%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.694%{background-color:#EE8A2C;color:#ffffff;opacity:1}60.972%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM14 {0.000%{transform:translate(0px,0px)}44.722%{transform:translate(0px,0px)}45.972%{transform:translate(61px,-90px)}66.389%{transform:translate(61px,-90px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS14 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}43.722%{background-color:#ffffff;color:#2A1500;opacity:1}44.056%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.250%{background-color:#EE8A2C;color:#ffffff;opacity:1}46.528%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshM15 {0.000%{transform:translate(0px,0px)}37.500%{transform:translate(0px,0px)}38.750%{transform:translate(-122px,-135px)}66.389%{transform:translate(-122px,-135px)}66.667%{transform:translate(0px,0px)}100.000%{transform:translate(0px,0px)}}
-@keyframes kshS15 {0.000%{background-color:#ffffff;color:#2A1500;opacity:1}35.500%{background-color:#ffffff;color:#2A1500;opacity:1}35.833%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.028%{background-color:#EE8A2C;color:#ffffff;opacity:1}39.306%{background-color:#EE8A2C;color:#ffffff;opacity:0}66.667%{background-color:#ffffff;color:#2A1500;opacity:0}100.000%{background-color:#ffffff;color:#2A1500;opacity:1}}
-@keyframes kshB0 {0.000%{opacity:0;transform:scale(.94)}38.889%{opacity:0;transform:scale(.94)}39.722%{opacity:1;transform:none}66.389%{opacity:1;transform:none}66.667%{opacity:0;transform:scale(.94)}100.000%{opacity:0;transform:scale(.94)}}
-@keyframes kshB1 {0.000%{opacity:0;transform:scale(.94)}46.111%{opacity:0;transform:scale(.94)}46.944%{opacity:1;transform:none}66.389%{opacity:1;transform:none}66.667%{opacity:0;transform:scale(.94)}100.000%{opacity:0;transform:scale(.94)}}
-@keyframes kshB2 {0.000%{opacity:0;transform:scale(.94)}53.333%{opacity:0;transform:scale(.94)}54.167%{opacity:1;transform:none}66.389%{opacity:1;transform:none}66.667%{opacity:0;transform:scale(.94)}100.000%{opacity:0;transform:scale(.94)}}
-@keyframes kshB3 {0.000%{opacity:0;transform:scale(.94)}60.556%{opacity:0;transform:scale(.94)}61.389%{opacity:1;transform:none}66.389%{opacity:1;transform:none}66.667%{opacity:0;transform:scale(.94)}100.000%{opacity:0;transform:scale(.94)}}
-@keyframes knnB0 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}67.889%{background-color:#ffffff;color:rgba(3,92,85,0)}68.056%{background-color:#afddd9;color:rgba(3,92,85,0)}68.333%{background-color:#afddd9;color:#035C55}68.722%{background-color:#ffffff;color:#035C55}92.778%{background-color:#ffffff;color:#035C55}93.333%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG1 {0.000%{background-color:#ffffff}92.861%{background-color:#ffffff}93.417%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB2 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}68.331%{background-color:#ffffff;color:rgba(3,92,85,0)}68.498%{background-color:#afddd9;color:rgba(3,92,85,0)}68.776%{background-color:#afddd9;color:#035C55}69.165%{background-color:#ffffff;color:#035C55}92.944%{background-color:#ffffff;color:#035C55}93.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB3 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}70.543%{background-color:#ffffff;color:rgba(3,92,85,0)}70.710%{background-color:#afddd9;color:rgba(3,92,85,0)}70.988%{background-color:#afddd9;color:#035C55}71.377%{background-color:#ffffff;color:#035C55}93.028%{background-color:#ffffff;color:#035C55}93.583%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB4 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}70.986%{background-color:#ffffff;color:rgba(3,92,85,0)}71.152%{background-color:#afddd9;color:rgba(3,92,85,0)}71.430%{background-color:#afddd9;color:#035C55}71.819%{background-color:#ffffff;color:#035C55}93.111%{background-color:#ffffff;color:#035C55}93.667%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB5 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}71.428%{background-color:#ffffff;color:rgba(3,92,85,0)}71.595%{background-color:#afddd9;color:rgba(3,92,85,0)}71.872%{background-color:#afddd9;color:#035C55}72.261%{background-color:#ffffff;color:#035C55}93.194%{background-color:#ffffff;color:#035C55}93.750%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB6 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}73.640%{background-color:#ffffff;color:rgba(3,92,85,0)}73.807%{background-color:#afddd9;color:rgba(3,92,85,0)}74.084%{background-color:#afddd9;color:#035C55}74.473%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB7 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}74.082%{background-color:#ffffff;color:rgba(3,92,85,0)}74.249%{background-color:#afddd9;color:rgba(3,92,85,0)}74.527%{background-color:#afddd9;color:#035C55}74.916%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB8 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}74.525%{background-color:#ffffff;color:rgba(3,92,85,0)}74.691%{background-color:#afddd9;color:rgba(3,92,85,0)}74.969%{background-color:#afddd9;color:#035C55}75.358%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB9 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}68.774%{background-color:#ffffff;color:rgba(3,92,85,0)}68.940%{background-color:#afddd9;color:rgba(3,92,85,0)}69.218%{background-color:#afddd9;color:#035C55}69.607%{background-color:#ffffff;color:#035C55}92.861%{background-color:#ffffff;color:#035C55}93.417%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB10 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}69.216%{background-color:#ffffff;color:rgba(3,92,85,0)}69.383%{background-color:#afddd9;color:rgba(3,92,85,0)}69.660%{background-color:#afddd9;color:#035C55}70.049%{background-color:#ffffff;color:#035C55}92.944%{background-color:#ffffff;color:#035C55}93.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG11 {0.000%{background-color:#ffffff}93.028%{background-color:#ffffff}93.583%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB12 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}71.870%{background-color:#ffffff;color:rgba(3,92,85,0)}72.037%{background-color:#afddd9;color:rgba(3,92,85,0)}72.315%{background-color:#afddd9;color:#035C55}72.704%{background-color:#ffffff;color:#035C55}93.111%{background-color:#ffffff;color:#035C55}93.667%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG13 {0.000%{background-color:#ffffff}93.194%{background-color:#ffffff}93.750%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB14 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}72.313%{background-color:#ffffff;color:rgba(3,92,85,0)}72.479%{background-color:#afddd9;color:rgba(3,92,85,0)}72.757%{background-color:#afddd9;color:#035C55}73.146%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB15 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}74.967%{background-color:#ffffff;color:rgba(3,92,85,0)}75.134%{background-color:#afddd9;color:rgba(3,92,85,0)}75.412%{background-color:#afddd9;color:#035C55}75.800%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB16 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}75.409%{background-color:#ffffff;color:rgba(3,92,85,0)}75.576%{background-color:#afddd9;color:rgba(3,92,85,0)}75.854%{background-color:#afddd9;color:#035C55}76.243%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB17 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}75.852%{background-color:#ffffff;color:rgba(3,92,85,0)}76.019%{background-color:#afddd9;color:rgba(3,92,85,0)}76.296%{background-color:#afddd9;color:#035C55}76.685%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB18 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}69.658%{background-color:#ffffff;color:rgba(3,92,85,0)}69.825%{background-color:#afddd9;color:rgba(3,92,85,0)}70.103%{background-color:#afddd9;color:#035C55}70.492%{background-color:#ffffff;color:#035C55}92.944%{background-color:#ffffff;color:#035C55}93.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB19 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}70.101%{background-color:#ffffff;color:rgba(3,92,85,0)}70.267%{background-color:#afddd9;color:rgba(3,92,85,0)}70.545%{background-color:#afddd9;color:#035C55}70.934%{background-color:#ffffff;color:#035C55}93.028%{background-color:#ffffff;color:#035C55}93.583%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG20 {0.000%{background-color:#ffffff}93.111%{background-color:#ffffff}93.667%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG21 {0.000%{background-color:#ffffff}93.194%{background-color:#ffffff}93.750%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB22 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}72.755%{background-color:#ffffff;color:rgba(3,92,85,0)}72.922%{background-color:#afddd9;color:rgba(3,92,85,0)}73.200%{background-color:#afddd9;color:#035C55}73.588%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB23 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}73.198%{background-color:#ffffff;color:rgba(3,92,85,0)}73.364%{background-color:#afddd9;color:rgba(3,92,85,0)}73.642%{background-color:#afddd9;color:#035C55}74.031%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG24 {0.000%{background-color:#ffffff}93.444%{background-color:#ffffff}94.000%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG25 {0.000%{background-color:#ffffff}93.528%{background-color:#ffffff}94.083%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB26 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}76.294%{background-color:#ffffff;color:rgba(3,92,85,0)}76.461%{background-color:#afddd9;color:rgba(3,92,85,0)}76.739%{background-color:#afddd9;color:#035C55}77.128%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG27 {0.000%{background-color:#ffffff}93.028%{background-color:#ffffff}93.583%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB28 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}76.737%{background-color:#ffffff;color:rgba(3,92,85,0)}76.903%{background-color:#afddd9;color:rgba(3,92,85,0)}77.181%{background-color:#afddd9;color:#035C55}77.570%{background-color:#ffffff;color:#035C55}93.111%{background-color:#ffffff;color:#035C55}93.667%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG29 {0.000%{background-color:#ffffff}93.194%{background-color:#ffffff}93.750%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB30 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}78.506%{background-color:#ffffff;color:rgba(3,92,85,0)}78.673%{background-color:#afddd9;color:rgba(3,92,85,0)}78.951%{background-color:#afddd9;color:#035C55}79.340%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG31 {0.000%{background-color:#ffffff}93.361%{background-color:#ffffff}93.917%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB32 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}78.949%{background-color:#ffffff;color:rgba(3,92,85,0)}79.115%{background-color:#afddd9;color:rgba(3,92,85,0)}79.393%{background-color:#afddd9;color:#035C55}79.782%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB33 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}81.160%{background-color:#ffffff;color:rgba(3,92,85,0)}81.327%{background-color:#afddd9;color:rgba(3,92,85,0)}81.605%{background-color:#afddd9;color:#035C55}81.994%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG34 {0.000%{background-color:#ffffff}93.611%{background-color:#ffffff}94.167%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB35 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}81.603%{background-color:#ffffff;color:rgba(3,92,85,0)}81.770%{background-color:#afddd9;color:rgba(3,92,85,0)}82.047%{background-color:#afddd9;color:#035C55}82.436%{background-color:#ffffff;color:#035C55}93.694%{background-color:#ffffff;color:#035C55}94.250%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG36 {0.000%{background-color:#ffffff}93.111%{background-color:#ffffff}93.667%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG37 {0.000%{background-color:#ffffff}93.194%{background-color:#ffffff}93.750%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB38 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}77.179%{background-color:#ffffff;color:rgba(3,92,85,0)}77.346%{background-color:#afddd9;color:rgba(3,92,85,0)}77.623%{background-color:#afddd9;color:#035C55}78.012%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB39 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}79.391%{background-color:#ffffff;color:rgba(3,92,85,0)}79.558%{background-color:#afddd9;color:rgba(3,92,85,0)}79.835%{background-color:#afddd9;color:#035C55}80.224%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG40 {0.000%{background-color:#ffffff}93.444%{background-color:#ffffff}94.000%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB41 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}79.833%{background-color:#ffffff;color:rgba(3,92,85,0)}80.000%{background-color:#afddd9;color:rgba(3,92,85,0)}80.278%{background-color:#afddd9;color:#035C55}80.667%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB42 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}82.045%{background-color:#ffffff;color:rgba(3,92,85,0)}82.212%{background-color:#afddd9;color:rgba(3,92,85,0)}82.490%{background-color:#afddd9;color:#035C55}82.879%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG43 {0.000%{background-color:#ffffff}93.694%{background-color:#ffffff}94.250%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG44 {0.000%{background-color:#ffffff}93.778%{background-color:#ffffff}94.333%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB45 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}77.621%{background-color:#ffffff;color:rgba(3,92,85,0)}77.788%{background-color:#afddd9;color:rgba(3,92,85,0)}78.066%{background-color:#afddd9;color:#035C55}78.455%{background-color:#ffffff;color:#035C55}93.194%{background-color:#ffffff;color:#035C55}93.750%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG46 {0.000%{background-color:#ffffff}93.278%{background-color:#ffffff}93.833%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB47 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}78.064%{background-color:#ffffff;color:rgba(3,92,85,0)}78.230%{background-color:#afddd9;color:rgba(3,92,85,0)}78.508%{background-color:#afddd9;color:#035C55}78.897%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB48 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}80.276%{background-color:#ffffff;color:rgba(3,92,85,0)}80.442%{background-color:#afddd9;color:rgba(3,92,85,0)}80.720%{background-color:#afddd9;color:#035C55}81.109%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG49 {0.000%{background-color:#ffffff}93.528%{background-color:#ffffff}94.083%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB50 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}80.718%{background-color:#ffffff;color:rgba(3,92,85,0)}80.885%{background-color:#afddd9;color:rgba(3,92,85,0)}81.163%{background-color:#afddd9;color:#035C55}81.551%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG51 {0.000%{background-color:#ffffff}93.694%{background-color:#ffffff}94.250%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB52 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}82.488%{background-color:#ffffff;color:rgba(3,92,85,0)}82.654%{background-color:#afddd9;color:rgba(3,92,85,0)}82.932%{background-color:#afddd9;color:#035C55}83.321%{background-color:#ffffff;color:#035C55}93.778%{background-color:#ffffff;color:#035C55}94.333%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG53 {0.000%{background-color:#ffffff}93.861%{background-color:#ffffff}94.417%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB54 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}82.930%{background-color:#ffffff;color:rgba(3,92,85,0)}83.097%{background-color:#afddd9;color:rgba(3,92,85,0)}83.374%{background-color:#afddd9;color:#035C55}83.763%{background-color:#ffffff;color:#035C55}93.278%{background-color:#ffffff;color:#035C55}93.833%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG55 {0.000%{background-color:#ffffff}93.361%{background-color:#ffffff}93.917%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG56 {0.000%{background-color:#ffffff}93.444%{background-color:#ffffff}94.000%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB57 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}86.027%{background-color:#ffffff;color:rgba(3,92,85,0)}86.193%{background-color:#afddd9;color:rgba(3,92,85,0)}86.471%{background-color:#afddd9;color:#035C55}86.860%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB58 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}86.469%{background-color:#ffffff;color:rgba(3,92,85,0)}86.636%{background-color:#afddd9;color:rgba(3,92,85,0)}86.914%{background-color:#afddd9;color:#035C55}87.302%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG59 {0.000%{background-color:#ffffff}93.694%{background-color:#ffffff}94.250%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnG60 {0.000%{background-color:#ffffff}93.778%{background-color:#ffffff}94.333%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB61 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}89.123%{background-color:#ffffff;color:rgba(3,92,85,0)}89.290%{background-color:#afddd9;color:rgba(3,92,85,0)}89.568%{background-color:#afddd9;color:#035C55}89.957%{background-color:#ffffff;color:#035C55}93.861%{background-color:#ffffff;color:#035C55}94.417%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB62 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}89.566%{background-color:#ffffff;color:rgba(3,92,85,0)}89.733%{background-color:#afddd9;color:rgba(3,92,85,0)}90.010%{background-color:#afddd9;color:#035C55}90.399%{background-color:#ffffff;color:#035C55}93.944%{background-color:#ffffff;color:#035C55}94.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB63 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}83.372%{background-color:#ffffff;color:rgba(3,92,85,0)}83.539%{background-color:#afddd9;color:rgba(3,92,85,0)}83.817%{background-color:#afddd9;color:#035C55}84.206%{background-color:#ffffff;color:#035C55}93.361%{background-color:#ffffff;color:#035C55}93.917%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB64 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}83.815%{background-color:#ffffff;color:rgba(3,92,85,0)}83.981%{background-color:#afddd9;color:rgba(3,92,85,0)}84.259%{background-color:#afddd9;color:#035C55}84.648%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB65 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}84.257%{background-color:#ffffff;color:rgba(3,92,85,0)}84.424%{background-color:#afddd9;color:rgba(3,92,85,0)}84.702%{background-color:#afddd9;color:#035C55}85.091%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB66 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}86.912%{background-color:#ffffff;color:rgba(3,92,85,0)}87.078%{background-color:#afddd9;color:rgba(3,92,85,0)}87.356%{background-color:#afddd9;color:#035C55}87.745%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG67 {0.000%{background-color:#ffffff}93.694%{background-color:#ffffff}94.250%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB68 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}87.354%{background-color:#ffffff;color:rgba(3,92,85,0)}87.521%{background-color:#afddd9;color:rgba(3,92,85,0)}87.798%{background-color:#afddd9;color:#035C55}88.187%{background-color:#ffffff;color:#035C55}93.778%{background-color:#ffffff;color:#035C55}94.333%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG69 {0.000%{background-color:#ffffff}93.861%{background-color:#ffffff}94.417%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB70 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}90.008%{background-color:#ffffff;color:rgba(3,92,85,0)}90.175%{background-color:#afddd9;color:rgba(3,92,85,0)}90.453%{background-color:#afddd9;color:#035C55}90.842%{background-color:#ffffff;color:#035C55}93.944%{background-color:#ffffff;color:#035C55}94.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB71 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}90.451%{background-color:#ffffff;color:rgba(3,92,85,0)}90.617%{background-color:#afddd9;color:rgba(3,92,85,0)}90.895%{background-color:#afddd9;color:#035C55}91.284%{background-color:#ffffff;color:#035C55}94.028%{background-color:#ffffff;color:#035C55}94.583%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB72 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}84.700%{background-color:#ffffff;color:rgba(3,92,85,0)}84.866%{background-color:#afddd9;color:rgba(3,92,85,0)}85.144%{background-color:#afddd9;color:#035C55}85.533%{background-color:#ffffff;color:#035C55}93.444%{background-color:#ffffff;color:#035C55}94.000%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB73 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}85.142%{background-color:#ffffff;color:rgba(3,92,85,0)}85.309%{background-color:#afddd9;color:rgba(3,92,85,0)}85.586%{background-color:#afddd9;color:#035C55}85.975%{background-color:#ffffff;color:#035C55}93.528%{background-color:#ffffff;color:#035C55}94.083%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB74 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}85.584%{background-color:#ffffff;color:rgba(3,92,85,0)}85.751%{background-color:#afddd9;color:rgba(3,92,85,0)}86.029%{background-color:#afddd9;color:#035C55}86.418%{background-color:#ffffff;color:#035C55}93.611%{background-color:#ffffff;color:#035C55}94.167%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB75 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}87.796%{background-color:#ffffff;color:rgba(3,92,85,0)}87.963%{background-color:#afddd9;color:rgba(3,92,85,0)}88.241%{background-color:#afddd9;color:#035C55}88.630%{background-color:#ffffff;color:#035C55}93.694%{background-color:#ffffff;color:#035C55}94.250%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB76 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}88.239%{background-color:#ffffff;color:rgba(3,92,85,0)}88.405%{background-color:#afddd9;color:rgba(3,92,85,0)}88.683%{background-color:#afddd9;color:#035C55}89.072%{background-color:#ffffff;color:#035C55}93.778%{background-color:#ffffff;color:#035C55}94.333%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB77 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}88.681%{background-color:#ffffff;color:rgba(3,92,85,0)}88.848%{background-color:#afddd9;color:rgba(3,92,85,0)}89.126%{background-color:#afddd9;color:#035C55}89.514%{background-color:#ffffff;color:#035C55}93.861%{background-color:#ffffff;color:#035C55}94.417%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnB78 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}90.893%{background-color:#ffffff;color:rgba(3,92,85,0)}91.060%{background-color:#afddd9;color:rgba(3,92,85,0)}91.337%{background-color:#afddd9;color:#035C55}91.726%{background-color:#ffffff;color:#035C55}93.944%{background-color:#ffffff;color:#035C55}94.500%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes knnG79 {0.000%{background-color:#ffffff}94.028%{background-color:#ffffff}94.583%{background-color:#d6eeec}99.722%{background-color:#d6eeec}100.000%{background-color:#ffffff}}
-@keyframes knnB80 {0.000%{background-color:#ffffff;color:rgba(3,92,85,0)}91.335%{background-color:#ffffff;color:rgba(3,92,85,0)}91.502%{background-color:#afddd9;color:rgba(3,92,85,0)}91.780%{background-color:#afddd9;color:#035C55}92.169%{background-color:#ffffff;color:#035C55}94.111%{background-color:#ffffff;color:#035C55}94.667%{background-color:#d6eeec;color:#035C55}99.722%{background-color:#d6eeec;color:#035C55}100.000%{background-color:#ffffff;color:rgba(3,92,85,0)}}
-@keyframes korL0_0 {0.000%{opacity:0}35.000%{opacity:0}35.139%{opacity:1}38.194%{opacity:1}38.472%{opacity:0}100.000%{opacity:0}}
-@keyframes korL0_1 {0.000%{opacity:0}35.556%{opacity:0}35.694%{opacity:1}38.194%{opacity:1}38.472%{opacity:0}100.000%{opacity:0}}
-@keyframes korL0_2 {0.000%{opacity:0}36.111%{opacity:0}36.250%{opacity:1}38.194%{opacity:1}38.472%{opacity:0}100.000%{opacity:0}}
-@keyframes korL0_3 {0.000%{opacity:0}36.667%{opacity:0}36.806%{opacity:1}38.194%{opacity:1}38.472%{opacity:0}100.000%{opacity:0}}
-@keyframes korC0 {0.000%{opacity:0;transform:translateY(6px)}38.333%{opacity:0;transform:translateY(6px)}38.889%{opacity:1;transform:none}66.111%{opacity:1;transform:none}66.944%{opacity:0;transform:translateY(6px)}100.000%{opacity:0;transform:translateY(6px)}}
-@keyframes korL1_0 {0.000%{opacity:0}39.583%{opacity:0}39.722%{opacity:1}43.333%{opacity:1}43.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korL1_1 {0.000%{opacity:0}40.139%{opacity:0}40.278%{opacity:1}43.333%{opacity:1}43.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korL1_2 {0.000%{opacity:0}40.694%{opacity:0}40.833%{opacity:1}43.333%{opacity:1}43.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korL1_3 {0.000%{opacity:0}41.250%{opacity:0}41.389%{opacity:1}43.333%{opacity:1}43.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korL1_4 {0.000%{opacity:0}41.806%{opacity:0}41.944%{opacity:1}43.333%{opacity:1}43.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korC1 {0.000%{opacity:0;transform:translateY(6px)}43.472%{opacity:0;transform:translateY(6px)}44.028%{opacity:1;transform:none}66.111%{opacity:1;transform:none}66.944%{opacity:0;transform:translateY(6px)}100.000%{opacity:0;transform:translateY(6px)}}
-@keyframes korL2_0 {0.000%{opacity:0}44.722%{opacity:0}44.861%{opacity:1}48.472%{opacity:1}48.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korL2_1 {0.000%{opacity:0}45.278%{opacity:0}45.417%{opacity:1}48.472%{opacity:1}48.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korL2_2 {0.000%{opacity:0}45.833%{opacity:0}45.972%{opacity:1}48.472%{opacity:1}48.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korL2_3 {0.000%{opacity:0}46.389%{opacity:0}46.528%{opacity:1}48.472%{opacity:1}48.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korL2_4 {0.000%{opacity:0}46.944%{opacity:0}47.083%{opacity:1}48.472%{opacity:1}48.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korC2 {0.000%{opacity:0;transform:translateY(6px)}48.611%{opacity:0;transform:translateY(6px)}49.167%{opacity:1;transform:none}66.111%{opacity:1;transform:none}66.944%{opacity:0;transform:translateY(6px)}100.000%{opacity:0;transform:translateY(6px)}}
-@keyframes korL3_0 {0.000%{opacity:0}49.861%{opacity:0}50.000%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korL3_1 {0.000%{opacity:0}50.417%{opacity:0}50.556%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korL3_2 {0.000%{opacity:0}50.972%{opacity:0}51.111%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korL3_3 {0.000%{opacity:0}51.528%{opacity:0}51.667%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korL3_4 {0.000%{opacity:0}52.083%{opacity:0}52.222%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korL3_5 {0.000%{opacity:0}52.639%{opacity:0}52.778%{opacity:1}54.167%{opacity:1}54.444%{opacity:0}100.000%{opacity:0}}
-@keyframes korC3 {0.000%{opacity:0;transform:translateY(6px)}54.306%{opacity:0;transform:translateY(6px)}54.861%{opacity:1;transform:none}66.111%{opacity:1;transform:none}66.944%{opacity:0;transform:translateY(6px)}100.000%{opacity:0;transform:translateY(6px)}}
-@keyframes korL4_0 {0.000%{opacity:0}55.556%{opacity:0}55.694%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_1 {0.000%{opacity:0}56.111%{opacity:0}56.250%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_2 {0.000%{opacity:0}56.667%{opacity:0}56.806%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_3 {0.000%{opacity:0}57.222%{opacity:0}57.361%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_4 {0.000%{opacity:0}57.778%{opacity:0}57.917%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_5 {0.000%{opacity:0}58.333%{opacity:0}58.472%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_6 {0.000%{opacity:0}58.889%{opacity:0}59.028%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korL4_7 {0.000%{opacity:0}59.444%{opacity:0}59.583%{opacity:1}60.972%{opacity:1}61.250%{opacity:0}100.000%{opacity:0}}
-@keyframes korC4 {0.000%{opacity:0;transform:translateY(6px)}61.111%{opacity:0;transform:translateY(6px)}61.667%{opacity:1;transform:none}66.111%{opacity:1;transform:none}66.944%{opacity:0;transform:translateY(6px)}100.000%{opacity:0;transform:translateY(6px)}}
-@keyframes korPd {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}34.972%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}35.139%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}35.611%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}49.833%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}50.000%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}50.472%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}55.528%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}55.694%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}56.167%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}59.417%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}59.583%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}60.056%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPc {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}39.556%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}39.722%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}40.194%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}46.361%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}46.528%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}47.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}58.306%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}58.472%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}58.944%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPe {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}36.639%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}36.806%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}37.278%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}41.222%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}41.389%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}41.861%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}46.917%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}47.083%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}47.556%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}52.056%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}52.222%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}52.694%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}58.861%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}59.028%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}59.500%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPo {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}40.111%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}40.278%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}40.750%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}45.250%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}45.417%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}45.889%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}57.194%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}57.361%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}57.833%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPi {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}35.528%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}35.694%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}36.167%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}45.806%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}45.972%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}46.444%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}50.944%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}51.111%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}51.583%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}56.083%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}56.250%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}56.722%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPr {0.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}41.778%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}41.944%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}42.417%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}50.389%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}50.556%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}51.028%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}52.611%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}52.778%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}53.250%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}57.750%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}57.917%{background-color:#E9B12A;color:#ffffff;transform:scale(1.12)}58.389%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}100.000%{background-color:#ffffff;color:#6E4E00;transform:scale(1)}}
-@keyframes korPv {0.000%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}36.083%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}36.250%{background-color:#6E4E00;color:#ffffff;transform:scale(1.12)}36.722%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}40.667%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}40.833%{background-color:#6E4E00;color:#ffffff;transform:scale(1.12)}41.306%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}44.694%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}44.861%{background-color:#6E4E00;color:#ffffff;transform:scale(1.12)}45.333%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}51.500%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}51.667%{background-color:#6E4E00;color:#ffffff;transform:scale(1.12)}52.139%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}56.639%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}56.806%{background-color:#6E4E00;color:#ffffff;transform:scale(1.12)}57.278%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}100.000%{background-color:#E9B12A;color:#ffffff;transform:scale(1)}}
-@keyframes korS0 {0.000%{opacity:0}33.333%{opacity:0}33.611%{opacity:1}38.333%{opacity:1}38.611%{opacity:0}100.000%{opacity:0}}
-@keyframes korS1 {0.000%{opacity:0}38.333%{opacity:0}38.611%{opacity:1}43.472%{opacity:1}43.750%{opacity:0}100.000%{opacity:0}}
-@keyframes korS2 {0.000%{opacity:0}43.472%{opacity:0}43.750%{opacity:1}48.611%{opacity:1}48.889%{opacity:0}100.000%{opacity:0}}
-@keyframes korS3 {0.000%{opacity:0}48.611%{opacity:0}48.889%{opacity:1}54.306%{opacity:1}54.583%{opacity:0}100.000%{opacity:0}}
-@keyframes korS4 {0.000%{opacity:0}54.306%{opacity:0}54.583%{opacity:1}61.111%{opacity:1}61.389%{opacity:0}100.000%{opacity:0}}
-@keyframes korS5 {0.000%{opacity:0}61.111%{opacity:0}61.389%{opacity:1}66.111%{opacity:1}66.389%{opacity:0}100.000%{opacity:0}}
-@keyframes kskT0 {0.000%{stroke-dashoffset:1}68.056%{stroke-dashoffset:1}69.889%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskT1 {0.000%{stroke-dashoffset:1}70.861%{stroke-dashoffset:1}72.694%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskT2 {0.000%{stroke-dashoffset:1}73.667%{stroke-dashoffset:1}75.500%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskT3 {0.000%{stroke-dashoffset:1}76.472%{stroke-dashoffset:1}78.611%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskT4 {0.000%{stroke-dashoffset:1}79.583%{stroke-dashoffset:1}81.722%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskT5 {0.000%{stroke-dashoffset:1}82.694%{stroke-dashoffset:1}86.056%{stroke-dashoffset:0}99.722%{stroke-dashoffset:0}100.000%{stroke-dashoffset:1}}
-@keyframes kskC0_0 {0.000%{background-color:#ffffff;color:#3E1FA0}84.528%{background-color:#ffffff;color:#3E1FA0}85.083%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC0_1 {0.000%{background-color:#ffffff;color:#3E1FA0}84.222%{background-color:#ffffff;color:#3E1FA0}84.778%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC0_2 {0.000%{background-color:#ffffff;color:#3E1FA0}83.917%{background-color:#ffffff;color:#3E1FA0}84.472%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC0_3 {0.000%{background-color:#ffffff;color:#3E1FA0}83.611%{background-color:#ffffff;color:#3E1FA0}84.167%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC0_4 {0.000%{background-color:#ffffff;color:#3E1FA0}83.306%{background-color:#ffffff;color:#3E1FA0}83.861%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC0_5 {0.000%{background-color:#ffffff;color:#3E1FA0}82.694%{background-color:#ffffff;color:#3E1FA0}83.250%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_0 {0.000%{background-color:#ffffff;color:#3E1FA0}84.833%{background-color:#ffffff;color:#3E1FA0}85.389%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_1 {0.000%{background-color:#ffffff;color:#3E1FA0}85.444%{background-color:#ffffff;color:#3E1FA0}86.000%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_2 {0.000%{background-color:#ffffff;color:#3E1FA0}85.750%{background-color:#ffffff;color:#3E1FA0}86.306%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_3 {0.000%{background-color:#ffffff;color:#3E1FA0}74.278%{background-color:#ffffff;color:#3E1FA0}74.833%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_4 {0.000%{background-color:#ffffff;color:#3E1FA0}73.972%{background-color:#ffffff;color:#3E1FA0}74.528%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC1_5 {0.000%{background-color:#ffffff;color:#3E1FA0}83.000%{background-color:#ffffff;color:#3E1FA0}83.556%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_0 {0.000%{background-color:#ffffff;color:#3E1FA0}85.139%{background-color:#ffffff;color:#3E1FA0}85.694%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_1 {0.000%{background-color:#ffffff;color:#3E1FA0}69.583%{background-color:#ffffff;color:#3E1FA0}70.139%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_2 {0.000%{background-color:#ffffff;color:#3E1FA0}74.583%{background-color:#ffffff;color:#3E1FA0}75.139%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_3 {0.000%{background-color:#ffffff;color:#3E1FA0}72.083%{background-color:#ffffff;color:#3E1FA0}72.639%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_4 {0.000%{background-color:#ffffff;color:#3E1FA0}72.389%{background-color:#ffffff;color:#3E1FA0}72.944%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC2_5 {0.000%{background-color:#ffffff;color:#3E1FA0}73.667%{background-color:#ffffff;color:#3E1FA0}74.222%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_0 {0.000%{background-color:#ffffff;color:#3E1FA0}69.278%{background-color:#ffffff;color:#3E1FA0}69.833%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_1 {0.000%{background-color:#ffffff;color:#3E1FA0}74.889%{background-color:#ffffff;color:#3E1FA0}75.444%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_2 {0.000%{background-color:#ffffff;color:#3E1FA0}71.778%{background-color:#ffffff;color:#3E1FA0}72.333%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_3 {0.000%{background-color:#ffffff;color:#3E1FA0}87.861%{background-color:#ffffff;color:#3E1FA0}88.417%{background-color:#3E1FA0;color:#ffffff}99.583%{background-color:#3E1FA0;color:#ffffff}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_4 {0.000%{background-color:#ffffff;color:#3E1FA0}88.083%{background-color:#ffffff;color:#3E1FA0}88.639%{background-color:#3E1FA0;color:#ffffff}99.583%{background-color:#3E1FA0;color:#ffffff}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC3_5 {0.000%{background-color:#ffffff;color:#3E1FA0}88.306%{background-color:#ffffff;color:#3E1FA0}88.861%{background-color:#3E1FA0;color:#ffffff}99.583%{background-color:#3E1FA0;color:#ffffff}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_0 {0.000%{background-color:#ffffff;color:#3E1FA0}68.972%{background-color:#ffffff;color:#3E1FA0}69.528%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_1 {0.000%{background-color:#ffffff;color:#3E1FA0}75.194%{background-color:#ffffff;color:#3E1FA0}75.750%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_2 {0.000%{background-color:#ffffff;color:#3E1FA0}71.472%{background-color:#ffffff;color:#3E1FA0}72.028%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_3 {0.000%{background-color:#ffffff;color:#3E1FA0}88.528%{background-color:#ffffff;color:#3E1FA0}89.083%{background-color:#3E1FA0;color:#ffffff}99.583%{background-color:#3E1FA0;color:#ffffff}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_4 {0.000%{background-color:#ffffff;color:#3E1FA0}88.750%{background-color:#ffffff;color:#3E1FA0}89.306%{background-color:#3E1FA0;color:#ffffff}99.583%{background-color:#3E1FA0;color:#ffffff}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC4_5 {0.000%{background-color:#ffffff;color:#3E1FA0}81.111%{background-color:#ffffff;color:#3E1FA0}81.667%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_0 {0.000%{background-color:#ffffff;color:#3E1FA0}77.389%{background-color:#ffffff;color:#3E1FA0}77.944%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_1 {0.000%{background-color:#ffffff;color:#3E1FA0}68.667%{background-color:#ffffff;color:#3E1FA0}69.222%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_2 {0.000%{background-color:#ffffff;color:#3E1FA0}70.861%{background-color:#ffffff;color:#3E1FA0}71.417%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_3 {0.000%{background-color:#ffffff;color:#3E1FA0}71.167%{background-color:#ffffff;color:#3E1FA0}71.722%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_4 {0.000%{background-color:#ffffff;color:#3E1FA0}81.417%{background-color:#ffffff;color:#3E1FA0}81.972%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC5_5 {0.000%{background-color:#ffffff;color:#3E1FA0}80.806%{background-color:#ffffff;color:#3E1FA0}81.361%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_0 {0.000%{background-color:#ffffff;color:#3E1FA0}77.083%{background-color:#ffffff;color:#3E1FA0}77.639%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_1 {0.000%{background-color:#ffffff;color:#3E1FA0}77.694%{background-color:#ffffff;color:#3E1FA0}78.250%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_2 {0.000%{background-color:#ffffff;color:#3E1FA0}68.361%{background-color:#ffffff;color:#3E1FA0}68.917%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_3 {0.000%{background-color:#ffffff;color:#3E1FA0}68.056%{background-color:#ffffff;color:#3E1FA0}68.611%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_4 {0.000%{background-color:#ffffff;color:#3E1FA0}80.500%{background-color:#ffffff;color:#3E1FA0}81.056%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC6_5 {0.000%{background-color:#ffffff;color:#3E1FA0}80.194%{background-color:#ffffff;color:#3E1FA0}80.750%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_0 {0.000%{background-color:#ffffff;color:#3E1FA0}76.472%{background-color:#ffffff;color:#3E1FA0}77.028%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_1 {0.000%{background-color:#ffffff;color:#3E1FA0}76.778%{background-color:#ffffff;color:#3E1FA0}77.333%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_2 {0.000%{background-color:#ffffff;color:#3E1FA0}78.000%{background-color:#ffffff;color:#3E1FA0}78.556%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_3 {0.000%{background-color:#ffffff;color:#3E1FA0}78.306%{background-color:#ffffff;color:#3E1FA0}78.861%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_4 {0.000%{background-color:#ffffff;color:#3E1FA0}79.889%{background-color:#ffffff;color:#3E1FA0}80.444%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskC7_5 {0.000%{background-color:#ffffff;color:#3E1FA0}79.583%{background-color:#ffffff;color:#3E1FA0}80.139%{background-color:#dcd5f9;color:#3E1FA0}99.583%{background-color:#dcd5f9;color:#3E1FA0}100.000%{background-color:#ffffff;color:#3E1FA0}}
-@keyframes kskS0 {0.000%{opacity:0}69.889%{opacity:0}70.167%{opacity:1}72.694%{opacity:1}72.972%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS1 {0.000%{opacity:0}72.694%{opacity:0}72.972%{opacity:1}75.500%{opacity:1}75.778%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS2 {0.000%{opacity:0}75.500%{opacity:0}75.778%{opacity:1}78.611%{opacity:1}78.889%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS3 {0.000%{opacity:0}78.611%{opacity:0}78.889%{opacity:1}81.722%{opacity:1}82.000%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS4 {0.000%{opacity:0}81.722%{opacity:0}82.000%{opacity:1}86.056%{opacity:1}86.333%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS5 {0.000%{opacity:0}86.056%{opacity:0}86.333%{opacity:1}88.972%{opacity:1}89.250%{opacity:0}100.000%{opacity:0}}
-@keyframes kskS6 {0.000%{opacity:0}88.972%{opacity:0}89.250%{opacity:1}99.444%{opacity:1}99.722%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrSeg1 {0.000%{transform:scaleX(0)}23.750%{transform:scaleX(0)}25.139%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrSeg2 {0.000%{transform:scaleX(0)}61.111%{transform:scaleX(0)}62.500%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrSeg3 {0.000%{transform:scaleX(0)}89.250%{transform:scaleX(0)}90.639%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrSeg4 {0.000%{transform:scaleX(0)}61.944%{transform:scaleX(0)}63.333%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrSeg5 {0.000%{transform:scaleX(0)}26.583%{transform:scaleX(0)}27.972%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrSeg6 {0.000%{transform:scaleX(0)}93.611%{transform:scaleX(0)}95.000%{transform:scaleX(1)}98.611%{transform:scaleX(1)}99.722%{transform:scaleX(0)}100.000%{transform:scaleX(0)}}
-@keyframes kmrN0 {0.000%{opacity:1}23.750%{opacity:1}24.028%{opacity:0}99.167%{opacity:0}99.444%{opacity:1}100.000%{opacity:1}}
-@keyframes kmrN1 {0.000%{opacity:0}23.750%{opacity:0}24.028%{opacity:1}26.583%{opacity:1}26.861%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrN2 {0.000%{opacity:0}26.583%{opacity:0}26.861%{opacity:1}61.111%{opacity:1}61.389%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrN3 {0.000%{opacity:0}61.111%{opacity:0}61.389%{opacity:1}61.944%{opacity:1}62.222%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrN4 {0.000%{opacity:0}61.944%{opacity:0}62.222%{opacity:1}89.250%{opacity:1}89.528%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrN5 {0.000%{opacity:0}89.250%{opacity:0}89.528%{opacity:1}93.611%{opacity:1}93.889%{opacity:0}100.000%{opacity:0}}
-@keyframes kmrN6 {0.000%{opacity:0}93.611%{opacity:0}93.889%{opacity:1}99.167%{opacity:1}99.444%{opacity:0}100.000%{opacity:0}}
-.mrA0 { animation: kmrA0 36s linear infinite; }
-.mrA1 { animation: kmrA1 36s linear infinite; }
-.mrA2 { animation: kmrA2 36s linear infinite; }
-.shM0 { animation: kshM0 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS0 { animation: kshS0 36s ease infinite; }
-.shM1 { animation: kshM1 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS1 { animation: kshS1 36s ease infinite; }
-.shM2 { animation: kshM2 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS2 { animation: kshS2 36s ease infinite; }
-.shM3 { animation: kshM3 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS3 { animation: kshS3 36s ease infinite; }
-.shM4 { animation: kshM4 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS4 { animation: kshS4 36s ease infinite; }
-.shM5 { animation: kshM5 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS5 { animation: kshS5 36s ease infinite; }
-.shM6 { animation: kshM6 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS6 { animation: kshS6 36s ease infinite; }
-.shM7 { animation: kshM7 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS7 { animation: kshS7 36s ease infinite; }
-.shM8 { animation: kshM8 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS8 { animation: kshS8 36s ease infinite; }
-.shM9 { animation: kshM9 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS9 { animation: kshS9 36s ease infinite; }
-.shM10 { animation: kshM10 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS10 { animation: kshS10 36s ease infinite; }
-.shM11 { animation: kshM11 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS11 { animation: kshS11 36s ease infinite; }
-.shM12 { animation: kshM12 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS12 { animation: kshS12 36s ease infinite; }
-.shM13 { animation: kshM13 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS13 { animation: kshS13 36s ease infinite; }
-.shM14 { animation: kshM14 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS14 { animation: kshS14 36s ease infinite; }
-.shM15 { animation: kshM15 36s cubic-bezier(0.45, 0, 0.2, 1) infinite; }
-.shS15 { animation: kshS15 36s ease infinite; }
-.shB0 { animation: kshB0 36s ease infinite; }
-.shB1 { animation: kshB1 36s ease infinite; }
-.shB2 { animation: kshB2 36s ease infinite; }
-.shB3 { animation: kshB3 36s ease infinite; }
-.nnB0 { animation: knnB0 36s linear infinite; }
-.nnG1 { animation: knnG1 36s ease infinite; }
-.nnB2 { animation: knnB2 36s linear infinite; }
-.nnB3 { animation: knnB3 36s linear infinite; }
-.nnB4 { animation: knnB4 36s linear infinite; }
-.nnB5 { animation: knnB5 36s linear infinite; }
-.nnB6 { animation: knnB6 36s linear infinite; }
-.nnB7 { animation: knnB7 36s linear infinite; }
-.nnB8 { animation: knnB8 36s linear infinite; }
-.nnB9 { animation: knnB9 36s linear infinite; }
-.nnB10 { animation: knnB10 36s linear infinite; }
-.nnG11 { animation: knnG11 36s ease infinite; }
-.nnB12 { animation: knnB12 36s linear infinite; }
-.nnG13 { animation: knnG13 36s ease infinite; }
-.nnB14 { animation: knnB14 36s linear infinite; }
-.nnB15 { animation: knnB15 36s linear infinite; }
-.nnB16 { animation: knnB16 36s linear infinite; }
-.nnB17 { animation: knnB17 36s linear infinite; }
-.nnB18 { animation: knnB18 36s linear infinite; }
-.nnB19 { animation: knnB19 36s linear infinite; }
-.nnG20 { animation: knnG20 36s ease infinite; }
-.nnG21 { animation: knnG21 36s ease infinite; }
-.nnB22 { animation: knnB22 36s linear infinite; }
-.nnB23 { animation: knnB23 36s linear infinite; }
-.nnG24 { animation: knnG24 36s ease infinite; }
-.nnG25 { animation: knnG25 36s ease infinite; }
-.nnB26 { animation: knnB26 36s linear infinite; }
-.nnG27 { animation: knnG27 36s ease infinite; }
-.nnB28 { animation: knnB28 36s linear infinite; }
-.nnG29 { animation: knnG29 36s ease infinite; }
-.nnB30 { animation: knnB30 36s linear infinite; }
-.nnG31 { animation: knnG31 36s ease infinite; }
-.nnB32 { animation: knnB32 36s linear infinite; }
-.nnB33 { animation: knnB33 36s linear infinite; }
-.nnG34 { animation: knnG34 36s ease infinite; }
-.nnB35 { animation: knnB35 36s linear infinite; }
-.nnG36 { animation: knnG36 36s ease infinite; }
-.nnG37 { animation: knnG37 36s ease infinite; }
-.nnB38 { animation: knnB38 36s linear infinite; }
-.nnB39 { animation: knnB39 36s linear infinite; }
-.nnG40 { animation: knnG40 36s ease infinite; }
-.nnB41 { animation: knnB41 36s linear infinite; }
-.nnB42 { animation: knnB42 36s linear infinite; }
-.nnG43 { animation: knnG43 36s ease infinite; }
-.nnG44 { animation: knnG44 36s ease infinite; }
-.nnB45 { animation: knnB45 36s linear infinite; }
-.nnG46 { animation: knnG46 36s ease infinite; }
-.nnB47 { animation: knnB47 36s linear infinite; }
-.nnB48 { animation: knnB48 36s linear infinite; }
-.nnG49 { animation: knnG49 36s ease infinite; }
-.nnB50 { animation: knnB50 36s linear infinite; }
-.nnG51 { animation: knnG51 36s ease infinite; }
-.nnB52 { animation: knnB52 36s linear infinite; }
-.nnG53 { animation: knnG53 36s ease infinite; }
-.nnB54 { animation: knnB54 36s linear infinite; }
-.nnG55 { animation: knnG55 36s ease infinite; }
-.nnG56 { animation: knnG56 36s ease infinite; }
-.nnB57 { animation: knnB57 36s linear infinite; }
-.nnB58 { animation: knnB58 36s linear infinite; }
-.nnG59 { animation: knnG59 36s ease infinite; }
-.nnG60 { animation: knnG60 36s ease infinite; }
-.nnB61 { animation: knnB61 36s linear infinite; }
-.nnB62 { animation: knnB62 36s linear infinite; }
-.nnB63 { animation: knnB63 36s linear infinite; }
-.nnB64 { animation: knnB64 36s linear infinite; }
-.nnB65 { animation: knnB65 36s linear infinite; }
-.nnB66 { animation: knnB66 36s linear infinite; }
-.nnG67 { animation: knnG67 36s ease infinite; }
-.nnB68 { animation: knnB68 36s linear infinite; }
-.nnG69 { animation: knnG69 36s ease infinite; }
-.nnB70 { animation: knnB70 36s linear infinite; }
-.nnB71 { animation: knnB71 36s linear infinite; }
-.nnB72 { animation: knnB72 36s linear infinite; }
-.nnB73 { animation: knnB73 36s linear infinite; }
-.nnB74 { animation: knnB74 36s linear infinite; }
-.nnB75 { animation: knnB75 36s linear infinite; }
-.nnB76 { animation: knnB76 36s linear infinite; }
-.nnB77 { animation: knnB77 36s linear infinite; }
-.nnB78 { animation: knnB78 36s linear infinite; }
-.nnG79 { animation: knnG79 36s ease infinite; }
-.nnB80 { animation: knnB80 36s linear infinite; }
-.orL0_0 { animation: korL0_0 36s linear infinite; }
-.orL0_1 { animation: korL0_1 36s linear infinite; }
-.orL0_2 { animation: korL0_2 36s linear infinite; }
-.orL0_3 { animation: korL0_3 36s linear infinite; }
-.orC0 { animation: korC0 36s ease infinite; }
-.orL1_0 { animation: korL1_0 36s linear infinite; }
-.orL1_1 { animation: korL1_1 36s linear infinite; }
-.orL1_2 { animation: korL1_2 36s linear infinite; }
-.orL1_3 { animation: korL1_3 36s linear infinite; }
-.orL1_4 { animation: korL1_4 36s linear infinite; }
-.orC1 { animation: korC1 36s ease infinite; }
-.orL2_0 { animation: korL2_0 36s linear infinite; }
-.orL2_1 { animation: korL2_1 36s linear infinite; }
-.orL2_2 { animation: korL2_2 36s linear infinite; }
-.orL2_3 { animation: korL2_3 36s linear infinite; }
-.orL2_4 { animation: korL2_4 36s linear infinite; }
-.orC2 { animation: korC2 36s ease infinite; }
-.orL3_0 { animation: korL3_0 36s linear infinite; }
-.orL3_1 { animation: korL3_1 36s linear infinite; }
-.orL3_2 { animation: korL3_2 36s linear infinite; }
-.orL3_3 { animation: korL3_3 36s linear infinite; }
-.orL3_4 { animation: korL3_4 36s linear infinite; }
-.orL3_5 { animation: korL3_5 36s linear infinite; }
-.orC3 { animation: korC3 36s ease infinite; }
-.orL4_0 { animation: korL4_0 36s linear infinite; }
-.orL4_1 { animation: korL4_1 36s linear infinite; }
-.orL4_2 { animation: korL4_2 36s linear infinite; }
-.orL4_3 { animation: korL4_3 36s linear infinite; }
-.orL4_4 { animation: korL4_4 36s linear infinite; }
-.orL4_5 { animation: korL4_5 36s linear infinite; }
-.orL4_6 { animation: korL4_6 36s linear infinite; }
-.orL4_7 { animation: korL4_7 36s linear infinite; }
-.orC4 { animation: korC4 36s ease infinite; }
-.orPd { animation: korPd 36s linear infinite; }
-.orPc { animation: korPc 36s linear infinite; }
-.orPe { animation: korPe 36s linear infinite; }
-.orPo { animation: korPo 36s linear infinite; }
-.orPi { animation: korPi 36s linear infinite; }
-.orPr { animation: korPr 36s linear infinite; }
-.orPv { animation: korPv 36s linear infinite; }
-.orS0 { animation: korS0 36s linear infinite; }
-.orS1 { animation: korS1 36s linear infinite; }
-.orS2 { animation: korS2 36s linear infinite; }
-.orS3 { animation: korS3 36s linear infinite; }
-.orS4 { animation: korS4 36s linear infinite; }
-.orS5 { animation: korS5 36s linear infinite; }
-.skT0 { animation: kskT0 36s linear infinite; }
-.skT1 { animation: kskT1 36s linear infinite; }
-.skT2 { animation: kskT2 36s linear infinite; }
-.skT3 { animation: kskT3 36s linear infinite; }
-.skT4 { animation: kskT4 36s linear infinite; }
-.skT5 { animation: kskT5 36s linear infinite; }
-.skC0_0 { animation: kskC0_0 36s ease infinite; }
-.skC0_1 { animation: kskC0_1 36s ease infinite; }
-.skC0_2 { animation: kskC0_2 36s ease infinite; }
-.skC0_3 { animation: kskC0_3 36s ease infinite; }
-.skC0_4 { animation: kskC0_4 36s ease infinite; }
-.skC0_5 { animation: kskC0_5 36s ease infinite; }
-.skC1_0 { animation: kskC1_0 36s ease infinite; }
-.skC1_1 { animation: kskC1_1 36s ease infinite; }
-.skC1_2 { animation: kskC1_2 36s ease infinite; }
-.skC1_3 { animation: kskC1_3 36s ease infinite; }
-.skC1_4 { animation: kskC1_4 36s ease infinite; }
-.skC1_5 { animation: kskC1_5 36s ease infinite; }
-.skC2_0 { animation: kskC2_0 36s ease infinite; }
-.skC2_1 { animation: kskC2_1 36s ease infinite; }
-.skC2_2 { animation: kskC2_2 36s ease infinite; }
-.skC2_3 { animation: kskC2_3 36s ease infinite; }
-.skC2_4 { animation: kskC2_4 36s ease infinite; }
-.skC2_5 { animation: kskC2_5 36s ease infinite; }
-.skC3_0 { animation: kskC3_0 36s ease infinite; }
-.skC3_1 { animation: kskC3_1 36s ease infinite; }
-.skC3_2 { animation: kskC3_2 36s ease infinite; }
-.skC3_3 { animation: kskC3_3 36s ease infinite; }
-.skC3_4 { animation: kskC3_4 36s ease infinite; }
-.skC3_5 { animation: kskC3_5 36s ease infinite; }
-.skC4_0 { animation: kskC4_0 36s ease infinite; }
-.skC4_1 { animation: kskC4_1 36s ease infinite; }
-.skC4_2 { animation: kskC4_2 36s ease infinite; }
-.skC4_3 { animation: kskC4_3 36s ease infinite; }
-.skC4_4 { animation: kskC4_4 36s ease infinite; }
-.skC4_5 { animation: kskC4_5 36s ease infinite; }
-.skC5_0 { animation: kskC5_0 36s ease infinite; }
-.skC5_1 { animation: kskC5_1 36s ease infinite; }
-.skC5_2 { animation: kskC5_2 36s ease infinite; }
-.skC5_3 { animation: kskC5_3 36s ease infinite; }
-.skC5_4 { animation: kskC5_4 36s ease infinite; }
-.skC5_5 { animation: kskC5_5 36s ease infinite; }
-.skC6_0 { animation: kskC6_0 36s ease infinite; }
-.skC6_1 { animation: kskC6_1 36s ease infinite; }
-.skC6_2 { animation: kskC6_2 36s ease infinite; }
-.skC6_3 { animation: kskC6_3 36s ease infinite; }
-.skC6_4 { animation: kskC6_4 36s ease infinite; }
-.skC6_5 { animation: kskC6_5 36s ease infinite; }
-.skC7_0 { animation: kskC7_0 36s ease infinite; }
-.skC7_1 { animation: kskC7_1 36s ease infinite; }
-.skC7_2 { animation: kskC7_2 36s ease infinite; }
-.skC7_3 { animation: kskC7_3 36s ease infinite; }
-.skC7_4 { animation: kskC7_4 36s ease infinite; }
-.skC7_5 { animation: kskC7_5 36s ease infinite; }
-.skS0 { animation: kskS0 36s linear infinite; }
-.skS1 { animation: kskS1 36s linear infinite; }
-.skS2 { animation: kskS2 36s linear infinite; }
-.skS3 { animation: kskS3 36s linear infinite; }
-.skS4 { animation: kskS4 36s linear infinite; }
-.skS5 { animation: kskS5 36s linear infinite; }
-.skS6 { animation: kskS6 36s linear infinite; }
-.mrSeg1 { animation: kmrSeg1 36s linear infinite; }
-.mrSeg2 { animation: kmrSeg2 36s linear infinite; }
-.mrSeg3 { animation: kmrSeg3 36s linear infinite; }
-.mrSeg4 { animation: kmrSeg4 36s linear infinite; }
-.mrSeg5 { animation: kmrSeg5 36s linear infinite; }
-.mrSeg6 { animation: kmrSeg6 36s linear infinite; }
-.mrN0 { animation: kmrN0 36s linear infinite; }
-.mrN1 { animation: kmrN1 36s linear infinite; }
-.mrN2 { animation: kmrN2 36s linear infinite; }
-.mrN3 { animation: kmrN3 36s linear infinite; }
-.mrN4 { animation: kmrN4 36s linear infinite; }
-.mrN5 { animation: kmrN5 36s linear infinite; }
-.mrN6 { animation: kmrN6 36s linear infinite; }
-
-/* Rests offscreen (PlayWhenVisible sets data-playing) and before hydration. */
-@media (scripting: enabled) {
-  .root:not([data-playing]) * {
-    animation-play-state: paused !important;
-  }
-}
-
-/* Reduced motion: one still frame. The card shows Quint solved; the modal shows
-   round 1 (Quint and Nib) solved, with 3 of 11 on the bar. */
 @media (prefers-reduced-motion: reduce) {
-  .root * {
-    animation: none !important;
-    transition-duration: 0.01ms !important;
-  }
-  .qt:not(.empty) {
-    background: #24a26a;
-    color: #fff;
-  }
-  .nc {
-    color: #8c1237;
-  }
-  .root .clue {
-    opacity: 0;
-  }
-  .root .ncS {
-    opacity: 1;
-  }
-  .root .mrN0 {
-    opacity: 0;
-  }
-  .root .mrN2 {
-    opacity: 1;
-  }
-  .root .mrSeg2,
-  .root .mrSeg3,
-  .root .mrSeg4,
-  .root .mrSeg6 {
-    transform: scaleX(0);
+  .film {
+    animation: none;
   }
 }

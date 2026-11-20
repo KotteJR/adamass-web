@@ -14,7 +14,7 @@ const bySlug = (slug: WorkProduct["slug"]) => {
 const murmur = bySlug("murmur");
 const morrow = bySlug("morrow");
 const compliance = bySlug("compliance-slm");
-const extraction = bySlug("library-extraction");
+const studio = bySlug("paint-by-numbers");
 
 export const workProducts: WorkProduct[] = [
   {
@@ -67,12 +67,12 @@ export const workProducts: WorkProduct[] = [
   },
   {
     ...morrow,
-    tags: ["Vår produkt", "Egen modell", "Kommer snart"],
+    tags: ["Vår produkt", "Egen modell", "Endast med inbjudan"],
     line: "De dagliga pussel som andra tar betalt för, gratis varje morgon. En modell vi har tränat själva skriver dem.",
     cardLine: "Pusslen som andra tar betalt för, gratis varje morgon. Skrivna av vår modell.",
     modal: {
       ...morrow.modal,
-      label: "Vår produkt · Webb · Kommer snart",
+      label: "Vår produkt · Webb · Endast med inbjudan",
       title: { lead: "Pusslen som andra tar betalt för,", rest: "gratis varje morgon." },
       overview: {
         body: "Morrow har den sortens dagliga pussel som man vanligtvis betalar en prenumeration för: ett korsord och ett minikorsord, ord på fem bokstäver, ordgrupper, ordtrådar, sifferpussel och mer. AI skriver dem, vilket gör dem så billiga att ta fram att de kan ges bort, så vid midnatt kommer samma elva till alla, gratis. Åtta Odds-spel, där man spelar mot en språkmodells gissningar, en onsdagsspecial och en månatlig almanacka finns runt omkring.",
@@ -114,20 +114,59 @@ export const workProducts: WorkProduct[] = [
         { name: "Kvalitet", items: ["Playwright", "Vitest", "pytest", "mypy", "Ruff"] },
         { name: "Drift", items: ["Render"] },
       ],
-      cta: { label: "Ställ er i kö", href: "#contact" },
+      cta: { label: "Öppna Morrow", href: "https://morrow.adamass.se" },
+    },
+  },
+  {
+    ...studio,
+    tags: ["Vår produkt", "Diffusionsmodell", "Lanserad"],
+    line: "Måla efter nummer-satser från vilken bild som helst. En diffusionsmodell som vi har tränat målar om den så att den går att måla, och vår kod hittar varje färg den använde och numrerar den.",
+    cardLine: "Måla efter nummer-satser från vilken bild som helst, nära fotot de kom från.",
+    modal: {
+      ...studio.modal,
+      label: "Vår produkt · Webb · Lanserad",
+      title: { lead: "Vilken bild som helst,", rest: "redo att måla efter nummer." },
+      overview: {
+        body: "Adamass Studio gör en bild till en måla efter nummer-sats: den numrerade mallen, en färgnyckel med vanliga färgnamn och en förhandsvisning av den färdiga målningen, som en utskrivbar A4 i låg, mellan eller hög detaljnivå. Originalverk finns i samlingar, och att göra ert eget foto till en sats är nästa steg.",
+        stats: [
+          { value: "3 nivåer", label: "av detaljer för varje verk" },
+          { value: "Gratis", label: "A4-satser att skriva ut, med färgnyckeln" },
+          { value: "Ert foto", label: "som en sats, nästa steg" },
+        ],
+      },
+      model: {
+        // TODO founders: bekräfta hur diffusionsmodellen tränades (basmodell, data) innan mer nämns.
+        body: "Vi har tränat en diffusionsmodell att måla om en bild så som en sats behöver den: tydliga färgytor, med detaljerna kvar. Vår kod läser sedan exakt de färger som modellen målade, grupperar dem så som ögat ser färg i stället för efter deras hexkoder, och slår ihop varje fläck som är för liten att måla med sin granne. Eftersom modellen målar med hög detaljrikedom kan en sats komma nära fotots kvalitet.",
+        figure: {
+          key: "pnb",
+          steps: ["En bild in", "Vår modell målar den platt", "Varje färg hittas och numreras"],
+          label:
+            "Ett inramat foto glider in i modellen; dess lager tänds ett i taget när den målar bilden platt; en skanningslinje korsar tavlan av platta, inramade ytor och fem färgburkar öppnas en efter en",
+        },
+        stats: [
+          { value: "35 684 → 431", label: "ytor på ett foto, efter rensningen" },
+          { value: "0", label: "ytor för små för att rymma en siffra" },
+          { value: "< 10 s", label: "för att dela en målad bild till en sats" },
+        ],
+      },
+      stack: [
+        { name: "Modell", items: ["Diffusionsmodell tränad internt", "Färggruppering i OKLab", "Färgmatchning med ΔE2000"] },
+        ...studio.modal.stack.slice(1),
+      ],
+      cta: { label: "Öppna Adamass Studio", href: "https://adamass.studio" },
     },
   },
   {
     ...compliance,
-    tags: ["Kunduppdrag", "27B-modell", "Privat moln"],
-    line: "En första granskare av regelverk, privat i kundens moln. 94 av 100 av dess svar stämmer med granskarens.",
+    tags: ["Kunduppdrag", "27B-modell, dubbel RAG", "Privat moln"],
+    line: "En första granskare av regelverk, privat i kundens moln. En 27B-modell och ett bibliotek av kända kontroller, och 94 av 100 av dess svar stämmer med granskarens.",
     cardLine: "En första granskare i kundens moln. 94 av 100 stämmer med granskaren.",
     modal: {
       ...compliance.modal,
       label: "Kunduppdrag · Regelverksmodell",
       title: { lead: "En språkmodell för regelefterlevnad,", rest: "privat i kundens moln." },
       overview: {
-        body: "Den läser en artikel i ett regelverk och returnerar de risker och kontroller som blir bindande, eller ingenting när texten inte binder. En granskare skriver fortfarande under. Den är byggd för en kund i en reglerad bransch och körs i kundens eget AWS-konto.",
+        body: "Den läser en artikel i ett regelverk eller en policy och returnerar de risker och kontroller som blir bindande, eller ingenting när texten inte binder. Två delar arbetar tillsammans: en 27B-modell som vi har finjusterat för uppgiften, och extraktion mot ett bibliotek, där varje svar är bundet till ett bibliotek av kända risker och kontroller, så att det är ett som granskarna redan känner igen. En granskare skriver fortfarande under. Den är byggd för en kund i en reglerad bransch och körs i kundens eget AWS-konto.",
         charts: {
           size: {
             label: "Modellens storlek",
@@ -147,7 +186,7 @@ export const workProducts: WorkProduct[] = [
         },
       },
       model: {
-        body: "En specialiserad modell med 27 miljarder parametrar, framtagen ur ett arbetsflöde som experter har märkt upp och byggd med övervakad finjustering och förstärkningsinlärning. Syntetiska data täcker de ovanliga etiketterna. Den poängsätts mot en reserverad guldstandard, där experternas etiketter har hållits utanför träningen.",
+        body: "En specialiserad modell med 27 miljarder parametrar, framtagen ur ett arbetsflöde som experter har märkt upp och byggd med övervakad finjustering och förstärkningsinlärning. Syntetiska data täcker de ovanliga etiketterna. Den poängsätts mot en reserverad guldstandard, där experternas etiketter har hållits utanför träningen. Vid sidan av den körs två sökvägar parallellt, en i dokumentet och en i biblioteket, och extraktionen är bunden till biblioteket: i standardiserade domäner, där det redan finns, och i nya, där vi först bygger det tillsammans med kunden.",
         figure: {
           key: "slm",
           steps: ["Expertmärkt arbete", "Syntetiska data för ovanliga etiketter", "Finjusterad, sedan förstärkt", "Reserverad guldstandard"],
@@ -159,6 +198,7 @@ export const workProducts: WorkProduct[] = [
           items: [
             { text: "Returnerar de risker en artikel i regelverket skapar", value: "94 % lika" },
             { text: "Kopplar varje risk till den kontroll som besvarar den", value: "93 % lika" },
+            { text: "Svarar endast med kontroller som finns i biblioteket", value: "Bunden" },
             { text: "Ger utdata som systemet efter kan tolka", value: "100 %" },
             { text: "Täcker ovanliga etiketter med syntetiska data", value: "Syntetiskt" },
             { text: "Returnerar ingenting när texten inte binder", value: "Skyddsräcke" },
@@ -166,6 +206,9 @@ export const workProducts: WorkProduct[] = [
             { text: "Skriver under utlåtandet om regelefterlevnad", value: "Aldrig" },
           ],
         },
+        more: [
+          "Vi utformar AI-ramverk och arkitekturer som denna även för andra behov: agentflöden med en människa i loopen, dokumentgranskning och beslutsstöd. Var och en formas efter uppgiften och körs där data redan finns.",
+        ],
       },
       stack: [
         {
@@ -178,6 +221,10 @@ export const workProducts: WorkProduct[] = [
             "Reserverad guldstandard",
           ],
         },
+        // TODO founders: bekräfta stacken för extraktionen (samma som i engelskan).
+        { name: "Sökning", items: ["Dubbel RAG", "Extraktion mot ett bibliotek", "Omrankning"] },
+        { name: "Bibliotek", items: ["Standardiserade kontrollbibliotek", "Egna bibliotek som byggs tillsammans med kunden"] },
+        { name: "Arbetsflöde", items: ["Granskning med en människa i loopen", "Motor för agentflöden"] },
         {
           name: "AWS",
           items: ["Control Tower", "Organizations", "IAM", "Amazon S3", "SageMaker", "Amazon VPC", "CloudWatch", "Budgets"],
@@ -186,62 +233,12 @@ export const workProducts: WorkProduct[] = [
       cta: { label: "Fråga om en liknande modell", href: "#contact" },
     },
   },
-  {
-    ...extraction,
-    tags: ["Kunduppdrag", "Dubbel RAG", "Alla domäner"],
-    line: "Läser ett dokument och returnerar endast det som ett bibliotek av kända kontroller redan innehåller, i standardiserade domäner eller i nya.",
-    cardLine: "Returnerar endast det som ett bibliotek av kända kontroller innehåller, i alla domäner.",
-    face: {
-      ...extraction.face,
-      feature: {
-        kind: "library",
-        sentence: { before: "Användare får ", marked: "åtkomst endast via en begäran", after: " som chefen godkänner." },
-        controls: [
-          { code: "AC-2", name: "Account management" },
-          { code: "AC-6", name: "Least privilege" },
-          { code: "AU-6", name: "Audit record review" },
-        ],
-      },
-    },
-    modal: {
-      ...extraction.modal,
-      label: "Kunduppdrag · AI-arkitektur",
-      title: { lead: "Extraktion mot ett bibliotek.", rest: "Varje svar är ett ni känner igen." },
-      overview: {
-        body: "Två sökvägar körs parallellt: den ena läser dokumentet, den andra söker i ett bibliotek av risker och kontroller. Extraktionen är bunden till biblioteket, så varje svar är en kontroll som granskarna redan känner igen, eller ingenting alls.",
-        stats: [
-          { value: "2 vägar", label: "dokumentet och biblioteket" },
-          { value: "Bunden", label: "varje svar hör till biblioteket" },
-          { value: "Alla domäner", label: "standardiserade, eller byggda tillsammans med er" },
-        ],
-      },
-      model: {
-        body: "Den fungerar i standardiserade domäner, där biblioteket redan finns, och i domäner utan standard, där vi först bygger biblioteket tillsammans med kunden och samma flöde sedan körs på det.",
-        figure: {
-          key: "extract",
-          steps: ["Läser dokumentet", "Söker i biblioteket", "Extraherar, bundet till det", "En granskare skriver under"],
-          label:
-            "Regelverket läses på den ena vägen och biblioteket av risker och kontroller genomsöks på den andra; båda matar en extraktion, och en granskare skriver under resultatet",
-        },
-        more: [
-          "Vi utformar AI-ramverk och arkitekturer som denna även för andra behov: agentflöden med en människa i loopen, dokumentgranskning och beslutsstöd. Var och en formas efter uppgiften och körs där data redan finns.",
-        ],
-      },
-      stack: [
-        // TODO founders: bekräfta stacken för extraktionen (samma som i engelskan).
-        { name: "Sökning", items: ["Dubbel RAG", "Extraktion mot ett bibliotek", "Omrankning"] },
-        { name: "Bibliotek", items: ["Standardiserade kontrollbibliotek", "Egna bibliotek som byggs tillsammans med kunden"] },
-        { name: "Arbetsflöde", items: ["Granskning med en människa i loopen", "Motor för agentflöden"] },
-      ],
-      cta: { label: "Skicka en kort förfrågan", href: "#contact" },
-    },
-  },
 ];
 
 export const workSection: WorkSectionContent = {
   ...en.workSection,
-  headline: { lead: "Utvalda arbeten.", rest: "Våra egna, och två vi kan visa." },
-  intro: "Två är produkter som vi bygger och driver själva. Två är AI-system som vi har byggt för kunder i reglerade verksamheter.",
+  headline: { lead: "Utvalda arbeten.", rest: "Våra egna, och ett vi kan visa." },
+  intro: "Tre är produkter som vi bygger och driver själva. Ett är ett AI-system som vi har byggt för en kund i en reglerad verksamhet.",
   learnMore: "Läs mer",
   ask: {
     ...en.workSection.ask,
@@ -257,5 +254,6 @@ export const workSection: WorkSectionContent = {
     previous: "Föregående",
     next: "Nästa",
     write: { ...en.workSection.modal.write, label: "Skriv till Aleksandar" },
+    newTab: "(öppnas i en ny flik)",
   },
 };

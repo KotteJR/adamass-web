@@ -1,4 +1,4 @@
-// Selected work: a grid of our two products and two client systems, each with
+// Selected work: a grid of our three products and one client system, each with
 // a "Learn more" modal, and a fifth card that asks about other work. Source: design/handoff/HANDOFF-round2.md, the boards
 // Work.dc.html and WorkModal*.dc.html, and generators/round2/build.py (P).
 // The client is never named.
@@ -6,13 +6,13 @@
 import { anchors, founders } from "./site";
 import type { Headline, LinkAction } from "./types";
 
-export type ProductSlug = "murmur" | "morrow" | "compliance-slm" | "library-extraction";
+export type ProductSlug = "murmur" | "morrow" | "paint-by-numbers" | "compliance-slm";
 
 /** Which live stage a product shows (components/products/stages). */
-export type StageKey = "murmur" | "morrow" | "compliance" | "extraction";
+export type StageKey = "murmur" | "morrow" | "studio" | "compliance";
 
 /** Which isometric figure the modal's "The model" tab shows (components/products/models). */
-export type ModelFigureKey = "murmur" | "morrow" | "slm" | "extract";
+export type ModelFigureKey = "murmur" | "morrow" | "pnb" | "slm";
 
 export type Stat = { value: string; label: string };
 
@@ -35,14 +35,11 @@ export type PaintingName = "wide" | "tall" | "diag";
 /** The one still thing on a card's face, from the work itself. */
 export type CardFeature =
   | { kind: "loop" }
-  | { kind: "tiles"; guesses: string[]; answer: string }
+  /** One of Morrow's 3D game films (public/morrow/films). */
+  | { kind: "film"; id: string }
   | { kind: "dots"; filled: number; total: number }
-  | {
-      kind: "library";
-      sentence: { before: string; marked: string; after: string };
-      /** The first is the match; the rest are the library around it. */
-      controls: { code: string; name: string }[];
-    }
+  /** A close-up of a real paint-by-numbers template, in white lines. */
+  | { kind: "lines" }
   | { kind: "nda" };
 
 /**
@@ -156,7 +153,7 @@ export const workProducts: WorkProduct[] = [
     slug: "morrow",
     stage: "morrow",
     name: "Morrow",
-    tags: ["Our product", "In-house model", "Coming soon"],
+    tags: ["Our product", "In-house model", "Invite only"],
     line: "The daily puzzles people pay a subscription for, free every morning. A model we trained in house writes them.",
     cardLine: "The puzzles people pay for, free every morning. Written by our model.",
     face: {
@@ -164,11 +161,11 @@ export const workProducts: WorkProduct[] = [
       position: "60% 50%",
       accent: { color: "#4e8a6a", strength: 0.86 },
       shade: [0.06, 0.3],
-      feature: { kind: "tiles", guesses: ["CRANE", "SLACK"], answer: "STACK" },
+      feature: { kind: "film", id: "lattice" },
       mark: true,
     },
     modal: {
-      label: "Our product · Web · Coming soon",
+      label: "Our product · Web · Invite only",
       title: { lead: "The puzzles people pay for,", rest: "free every morning." },
       overview: {
         body: "Morrow has the kinds of daily puzzles people usually pay a subscription for: a crossword and a mini, five-letter words, bundles, word threads, number place and more. AI writes them, which makes them cheap enough to give away, so at midnight the same eleven arrive for everyone, free. Eight Odds games, where you play against a language model’s guesses, a Wednesday special and a monthly Almanac sit around them.",
@@ -206,15 +203,63 @@ export const workProducts: WorkProduct[] = [
         { name: "Quality", items: ["Playwright", "Vitest", "pytest", "mypy", "Ruff"] },
         { name: "Hosting", items: ["Render"] },
       ],
-      cta: { label: "Join the waitlist", href: "#contact" },
+      cta: { label: "Open Morrow", href: "https://morrow.adamass.se" },
+    },
+  },
+  {
+    slug: "paint-by-numbers",
+    stage: "studio",
+    name: "Adamass Studio",
+    tags: ["Our product", "Diffusion model", "Live"],
+    line: "Paint-by-numbers kits from any picture. A diffusion model we trained repaints it to be painted, and our code finds every colour it used and numbers it.",
+    cardLine: "Paint-by-numbers kits from any picture, close to the photo it came from.",
+    face: {
+      painting: "tall",
+      position: "40% 30%",
+      accent: { color: "#9a4b5e", strength: 0.78 },
+      shade: [0.06, 0.32],
+      feature: { kind: "lines" },
+      mark: true,
+    },
+    modal: {
+      label: "Our product · Web · Live",
+      title: { lead: "Any picture,", rest: "ready to paint by numbers." },
+      overview: {
+        body: "Adamass Studio turns a picture into a paint-by-numbers kit: the numbered template, a colour key with plain paint names, and a preview of the finished painting, as a printable A4 at low, medium or high detail. Original works come in collections, and turning your own photo into a kit is next.",
+        stats: [
+          { value: "3 levels", label: "of detail on every work" },
+          { value: "Free", label: "A4 kits to print, with the colour key" },
+          { value: "Your photo", label: "turned into a kit, coming next" },
+        ],
+      },
+      model: {
+        // TODO founders: confirm how the diffusion model was trained (base model, data) before naming more.
+        body: "We trained a diffusion model to repaint a picture the way a kit needs it: clear areas of colour, with the detail kept. Our code then reads the exact colours the model painted, groups them the way eyes see colour rather than by their hex codes, and merges every patch too small to paint into its neighbour. Because the model paints in high detail, a kit can come close to the quality of the photo.",
+        figure: { key: "pnb", steps: ["A picture in", "Our model paints it flat", "Each colour found and numbered"] },
+        stats: [
+          { value: "35,684 → 431", label: "areas on one photo, after the clean-up" },
+          { value: "0", label: "areas too small to hold a number" },
+          { value: "< 10 s", label: "to cut a painted picture into a kit" },
+        ],
+      },
+      stack: [
+        { name: "Model", items: ["Diffusion model trained in house", "Colour grouping in OKLab", "ΔE2000 colour matching"] },
+        {
+          name: "Generator",
+          items: ["Python", "NumPy", "SciPy", "scikit-image", "scikit-learn", "OpenCV", "ReportLab"],
+        },
+        { name: "Web app", items: ["FastAPI", "Jinja2", "PostgreSQL 17", "psycopg 3", "Pydantic"] },
+        { name: "Hosting", items: ["Vercel", "Neon Postgres", "Vercel Blob"] },
+      ],
+      cta: { label: "Open Adamass Studio", href: "https://adamass.studio" },
     },
   },
   {
     slug: "compliance-slm",
     stage: "compliance",
     name: "Compliance SLM",
-    tags: ["Client work", "27B model", "Private cloud"],
-    line: "A first-pass regulatory auditor, private to the client’s cloud. 94 in 100 of its answers match the reviewer.",
+    tags: ["Client work", "27B model, dual RAG", "Private cloud"],
+    line: "A first-pass regulatory auditor, private to the client’s cloud. A 27B model and a library of known controls, and 94 in 100 of its answers match the reviewer.",
     cardLine: "A first-pass auditor in the client’s cloud. 94 in 100 match the reviewer.",
     face: {
       painting: "wide",
@@ -226,7 +271,7 @@ export const workProducts: WorkProduct[] = [
       label: "Client work · Regulatory model",
       title: { lead: "A compliance SLM,", rest: "private to the client’s cloud." },
       overview: {
-        body: "It reads one regulatory article and returns the risks and controls that bind, or nothing when the text does not. A reviewer still signs. Built for a client in a regulated industry, it runs inside their own AWS account.",
+        body: "It reads a regulatory article or a policy and returns the risks and controls that bind, or nothing when the text does not. Two parts work together: a 27B model we fine-tuned for the job, and library-backed extraction, where every answer is bound to a library of known risks and controls, so it is one the reviewers already recognise. A reviewer still signs. Built for a client in a regulated industry, it runs inside their own AWS account.",
         charts: {
           size: {
             label: "Model size",
@@ -246,7 +291,7 @@ export const workProducts: WorkProduct[] = [
         },
       },
       model: {
-        body: "A 27B specialist model, developed from an expert-labelled workflow and built with supervised fine-tuning and reinforcement learning. Synthetic data covers the rare labels. It is scored on a held-out gold set, with the expert labels withheld from training.",
+        body: "A 27B specialist model, developed from an expert-labelled workflow and built with supervised fine-tuning and reinforcement learning. Synthetic data covers the rare labels. It is scored on a held-out gold set, with the expert labels withheld from training. Beside it, two retrieval paths run side by side, one over the document and one over the library, and extraction is bound to that library: in standardized domains, where it already exists, and in new ones, where we build it with the client first.",
         figure: {
           key: "slm",
           steps: ["Expert-labelled work", "Synthetic data for rare labels", "Fine-tuned, then reinforced", "Held-out gold set"],
@@ -256,6 +301,7 @@ export const workProducts: WorkProduct[] = [
           items: [
             { text: "Returns the risks a regulatory article creates", value: "94% match" },
             { text: "Maps every risk to the control that answers it", value: "93% match" },
+            { text: "Answers only with controls the library holds", value: "Bound" },
             { text: "Emits output the downstream system can parse", value: "100%" },
             { text: "Covers rare labels through synthetic data", value: "Synthetic" },
             { text: "Returns nothing when the text does not bind", value: "Guardrail" },
@@ -263,70 +309,25 @@ export const workProducts: WorkProduct[] = [
             { text: "Signs the compliance opinion", value: "Never" },
           ],
         },
+        more: [
+          "We design AI frameworks and architectures like this for other needs too: agent workflows with a person in the loop, document review, decision support. Each one is shaped around the job, and runs where the data already lives.",
+        ],
       },
       stack: [
         {
           name: "Model",
           items: ["27B specialist model", "Supervised fine-tuning", "Reinforcement learning", "Synthetic data", "Held-out gold set"],
         },
+        // TODO founders: confirm the extraction stack (Retrieval, Libraries and Workflow items).
+        { name: "Retrieval", items: ["Dual RAG", "Library-backed extraction", "Reranking"] },
+        { name: "Libraries", items: ["Standard control libraries", "Custom libraries built with the client"] },
+        { name: "Workflow", items: ["Human-in-the-loop review", "Agentic workflow engine"] },
         {
           name: "AWS",
           items: ["Control Tower", "Organisations", "IAM", "Amazon S3", "SageMaker", "Amazon VPC", "CloudWatch", "Budgets"],
         },
       ],
       cta: { label: "Ask about a similar model", href: "#contact" },
-    },
-  },
-  {
-    slug: "library-extraction",
-    stage: "extraction",
-    name: "Library-backed extraction",
-    tags: ["Client work", "Dual RAG", "Any domain"],
-    line: "Reads a document and returns only what a library of known controls already holds, in standardized domains or new ones.",
-    cardLine: "Returns only what a library of known controls holds, in any domain.",
-    face: {
-      painting: "wide",
-      position: "85% 30%",
-      accent: { color: "#62689c", strength: 0.72 },
-      shade: [0.08, 0.32],
-      feature: {
-        kind: "library",
-        sentence: { before: "Users get ", marked: "access only through a request", after: " their manager approves." },
-        controls: [
-          { code: "AC-2", name: "Account management" },
-          { code: "AC-6", name: "Least privilege" },
-          { code: "AU-6", name: "Audit record review" },
-        ],
-      },
-    },
-    modal: {
-      label: "Client work · AI architecture",
-      title: { lead: "Library-backed extraction.", rest: "Every answer is one you know." },
-      overview: {
-        body: "Two retrieval paths run side by side: one reads the document, the other searches a library of risks and controls. Extraction is bound to that library, so every answer is a control the reviewers already recognise, or nothing at all.",
-        stats: [
-          { value: "2 paths", label: "the document and the library" },
-          { value: "Bound", label: "every answer maps to the library" },
-          { value: "Any domain", label: "standardized, or built with you" },
-        ],
-      },
-      model: {
-        body: "It works in standardized domains, where that library already exists, and in unstandardized ones, where we build the library with the client first and the same pipeline runs on it.",
-        figure: {
-          key: "extract",
-          steps: ["Reads the document", "Searches the library", "Extracts, bound to it", "A reviewer signs"],
-        },
-        more: [
-          "We design AI frameworks and architectures like this for other needs too: agent workflows with a person in the loop, document review, decision support. Each one is shaped around the job, and runs where the data already lives.",
-        ],
-      },
-      stack: [
-        // TODO founders: confirm the extraction stack (Retrieval, Libraries and Workflow items).
-        { name: "Retrieval", items: ["Dual RAG", "Library-backed extraction", "Reranking"] },
-        { name: "Libraries", items: ["Standard control libraries", "Custom libraries built with the client"] },
-        { name: "Workflow", items: ["Human-in-the-loop review", "Agentic workflow engine"] },
-      ],
-      cta: { label: "Send a short brief", href: "#contact" },
     },
   },
 ];
@@ -347,6 +348,8 @@ export type WorkSectionContent = {
     tabs: { overview: string; model: string; stack: string };
     close: string;
     escapeHint: string;
+    /** Read after a link to one of our product sites, which opens in a new tab. */
+    newTab: string;
     previous: string;
     next: string;
     write: LinkAction;
@@ -354,8 +357,8 @@ export type WorkSectionContent = {
 };
 
 export const workSection: WorkSectionContent = {
-  headline: { lead: "Selected work.", rest: "Ours, and two we can show." },
-  intro: "Two are products we build and run ourselves. Two are AI systems we built for clients in regulated work.",
+  headline: { lead: "Selected work.", rest: "Ours, and one we can show." },
+  intro: "Three are products we build and run ourselves. One is an AI system we built for a client in regulated work.",
   learnMore: "Learn more",
   ask: {
     label: "More work",
@@ -375,6 +378,7 @@ export const workSection: WorkSectionContent = {
     tabs: { overview: "Overview", model: "The model", stack: "Stack" },
     close: "Close",
     escapeHint: "ESC",
+    newTab: "(opens in a new tab)",
     previous: "Previous",
     next: "Next",
     write: {

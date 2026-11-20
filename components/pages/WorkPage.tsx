@@ -58,7 +58,16 @@ export async function WorkPage({ slug }: { slug: ProductSlug }) {
               <StackPanel stack={modal.stack} />
             </section>
             <div className="flex flex-wrap items-center gap-2">
-              <ActionLink href={modal.cta.href}>{modal.cta.label}</ActionLink>
+              <ActionLink href={modal.cta.href}>
+                {modal.cta.label}
+                {/^https?:\/\//.test(modal.cta.href) ? (
+                  <>
+                    {" "}
+                    <span aria-hidden>↗</span>
+                    <span className="sr-only">{workSection.modal.newTab}</span>
+                  </>
+                ) : null}
+              </ActionLink>
               <ActionLink href={workSection.modal.write.href} tone="soft">
                 {workSection.modal.write.label}
               </ActionLink>
